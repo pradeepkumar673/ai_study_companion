@@ -38,6 +38,7 @@ import '../../features/tasks/presentation/screens/task_detail_screen.dart';
 // ── Notes tab ───────────────────────────────────────────────────────────────
 import '../../features/notes/presentation/screens/notes_screen.dart';
 import '../../features/notes/presentation/screens/note_editor_screen.dart';
+import '../../features/notes/presentation/screens/pdf_viewer_screen.dart';
 
 // ── Focus sub-screens (Step 5) ──────────────────────────────────────────────
 import '../../features/focus/presentation/screens/pomodoro_timer_screen.dart';
@@ -222,6 +223,34 @@ GoRouter appRouter(AppRouterRef ref) {
                     path: 'editor',
                     pageBuilder: (context, state) {
                       final noteId = state.uri.queryParameters['noteId'];
+                      return CustomTransitionPage(
+                        key: state.pageKey,
+                        child: NoteEditorScreen(noteId: noteId),
+                        transitionsBuilder: _slideUpTransition,
+                      );
+                    },
+                  ),
+                  // New in Step 5 Notes Feature
+                  GoRoute(
+                    path: 'new',
+                    pageBuilder: (context, state) => CustomTransitionPage(
+                      key: state.pageKey,
+                      child: const NoteEditorScreen(),
+                      transitionsBuilder: _slideUpTransition,
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'pdf',
+                    pageBuilder: (context, state) => CustomTransitionPage(
+                      key: state.pageKey,
+                      child: const PdfViewerScreen(),
+                      transitionsBuilder: _slideUpTransition,
+                    ),
+                  ),
+                  GoRoute(
+                    path: ':noteId',
+                    pageBuilder: (context, state) {
+                      final noteId = state.pathParameters['noteId'];
                       return CustomTransitionPage(
                         key: state.pageKey,
                         child: NoteEditorScreen(noteId: noteId),

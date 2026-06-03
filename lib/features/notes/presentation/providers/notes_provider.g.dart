@@ -1,0 +1,117 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'notes_provider.dart';
+
+// **************************************************************************
+// RiverpodGenerator
+// **************************************************************************
+
+String _$notesStreamHash() => r'ce919faef5b9b0b75b410a7039e95b72981ad97c';
+
+/// See also [notesStream].
+@ProviderFor(notesStream)
+final notesStreamProvider = AutoDisposeStreamProvider<List<NoteModel>>.internal(
+  notesStream,
+  name: r'notesStreamProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$notesStreamHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef NotesStreamRef = AutoDisposeStreamProviderRef<List<NoteModel>>;
+String _$filteredNotesHash() => r'3dbe0ac52c20e30fd31da6c9b4444e51fd5e114e';
+
+/// See also [filteredNotes].
+@ProviderFor(filteredNotes)
+final filteredNotesProvider =
+    AutoDisposeFutureProvider<List<NoteModel>>.internal(
+  filteredNotes,
+  name: r'filteredNotesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$filteredNotesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef FilteredNotesRef = AutoDisposeFutureProviderRef<List<NoteModel>>;
+String _$allNoteTagsHash() => r'7194fca3ecfed05a6352ab379f222af22b9ff2e8';
+
+/// See also [allNoteTags].
+@ProviderFor(allNoteTags)
+final allNoteTagsProvider = AutoDisposeProvider<List<String>>.internal(
+  allNoteTags,
+  name: r'allNoteTagsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$allNoteTagsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AllNoteTagsRef = AutoDisposeProviderRef<List<String>>;
+String _$noteSearchQueryHash() => r'c327b4f00be20f97a9331ec2f428fbd28f991825';
+
+/// See also [NoteSearchQuery].
+@ProviderFor(NoteSearchQuery)
+final noteSearchQueryProvider =
+    AutoDisposeNotifierProvider<NoteSearchQuery, String>.internal(
+  NoteSearchQuery.new,
+  name: r'noteSearchQueryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$noteSearchQueryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$NoteSearchQuery = AutoDisposeNotifier<String>;
+String _$noteTagFilterHash() => r'08f884519a8d37b77ed755a51289c118dc2d6756';
+
+/// See also [NoteTagFilter].
+@ProviderFor(NoteTagFilter)
+final noteTagFilterProvider =
+    AutoDisposeNotifierProvider<NoteTagFilter, String?>.internal(
+  NoteTagFilter.new,
+  name: r'noteTagFilterProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$noteTagFilterHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$NoteTagFilter = AutoDisposeNotifier<String?>;
+String _$notesViewModeHash() => r'3ccf7e88b52bac17bfa3a12f74d51343a0b0c048';
+
+/// See also [NotesViewMode].
+@ProviderFor(NotesViewMode)
+final notesViewModeProvider =
+    AutoDisposeNotifierProvider<NotesViewMode, bool>.internal(
+  NotesViewMode.new,
+  name: r'notesViewModeProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$notesViewModeHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$NotesViewMode = AutoDisposeNotifier<bool>;
+String _$noteEditorHash() => r'da99a4869398130e117c427d4d73a61eedcf8d92';
+
+/// See also [NoteEditor].
+@ProviderFor(NoteEditor)
+final noteEditorProvider =
+    AutoDisposeNotifierProvider<NoteEditor, NoteEditorState>.internal(
+  NoteEditor.new,
+  name: r'noteEditorProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$noteEditorHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$NoteEditor = AutoDisposeNotifier<NoteEditorState>;
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

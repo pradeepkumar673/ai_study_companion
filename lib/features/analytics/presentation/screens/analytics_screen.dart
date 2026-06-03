@@ -21,7 +21,7 @@ import 'package:isar/isar.dart';
 import '../../../../core/enums/app_enums.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../shared/providers/isar_provider.dart';
-import '../../data/models/pomodoro_session_model.dart';
+import '../../../focus/data/models/pomodoro_session_model.dart';
 
 // ─── Data helpers ─────────────────────────────────────────────────────────────
 
@@ -60,7 +60,7 @@ final weeklyMinutesProvider =
         .wasCompletedEqualTo(true)
         .findAll();
     final totalSecs = sessions
-        .where((s) => s.mode == PomodoroMode.work)
+        .where((s) => s.mode == PomodoroMode.pomodoro)
         .fold(0, (sum, s) => sum + s.actualDurationSeconds);
     days.add(_DayData(day: day, minutes: totalSecs ~/ 60));
   }
@@ -73,7 +73,7 @@ final totalStatsProvider = FutureProvider<_TotalStats>((ref) async {
   final all = await isar.pomodoroSessionModels
       .filter()
       .wasCompletedEqualTo(true)
-      .modeEqualTo(PomodoroMode.work)
+      .modeEqualTo(PomodoroMode.pomodoro)
       .findAll();
 
   if (all.isEmpty) return const _TotalStats();
@@ -748,7 +748,7 @@ class _SessionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWork = session.mode == PomodoroMode.work;
+    final isWork = session.mode == PomodoroMode.pomodoro;
     final color = isWork ? cs.primary : const Color(0xFF22C55E);
     final mins = session.actualDurationSeconds ~/ 60;
     final plannedMins = session.plannedDurationSeconds ~/ 60;

@@ -38,6 +38,9 @@ dependencies:
   # ─── Forms & Input ───────────────────────────────────────────────
   reactive_forms: ^17.0.1         # Reactive forms with validation
   flutter_colorpicker: ^1.1.0     # HSV color picker widget
+  speech_to_text: ^7.0.0          # Voice-to-Notes live transcription
+  image_picker: ^1.1.2            # Camera / gallery for scanner
+  file_picker: ^8.1.2             # PDF file picker
 
   # ─── Notifications & Scheduling ──────────────────────────────────
   flutter_local_notifications: ^17.2.2   # Local push notifications

@@ -300,7 +300,7 @@ abstract final class AppTheme {
         color: cs.surface,
         surfaceTintColor: cs.primary,
         margin: EdgeInsets.zero,
-      ),
+      ) as CardThemeData?,
 
       // ── Navigation Bar (bottom) ──
       navigationBarTheme: NavigationBarThemeData(
@@ -425,7 +425,7 @@ abstract final class AppTheme {
         contentTextStyle: AppTypography.textTheme.bodyMedium!.copyWith(
           color: cs.onSurfaceVariant,
         ),
-      ),
+      ) as DialogThemeData?,
 
       // ── Bottom Sheet ──
       bottomSheetTheme: BottomSheetThemeData(
@@ -503,7 +503,7 @@ abstract final class AppTheme {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(3)),
         ),
         overlayColor: WidgetStateProperty.all(cs.primary.withOpacity(0.08)),
-      ),
+      ) as TabBarThemeData?,
     );
   }
 
