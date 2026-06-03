@@ -53,7 +53,6 @@ class SubjectRepository {
       colorHex: colorHex,
       iconName: iconName,
       teacherName: teacherName,
-      roomNumber: roomNumber,
       targetAttendancePercent: targetAttendancePercent,
       semesterLabel: semesterLabel,
       scheduleSlots: scheduleSlots,
@@ -151,7 +150,6 @@ class AttendanceRepository {
       classDate: classDate.toUtc(),
       localDateKey: dateKey,
       notes: notes ?? '',
-      periodNumber: periodNumber ?? 1,
       createdAt: now,
       updatedAt: now,
     );
@@ -242,29 +240,24 @@ class ScheduleEventRepository {
     String location = '',
     String colorHex = '#6750A4',
     String description = '',
-    EventType type = EventType.class_,
+    EventType type = EventType.lecture,
     bool isRecurring = false,
-    RepeatFrequency repeat = RepeatFrequency.none,
+    RecurrenceType repeat = RecurrenceType.none,
     int? notificationId,
   }) async {
     final now = DateTime.now().toUtc();
-    final event = ScheduleEventModel(
-      uuid: _uuid.v4(),
-      title: title,
-      startTime: startTime.toUtc(),
-      endTime: endTime.toUtc(),
-      localDateKey: _dateFmt.format(startTime.toLocal()),
-      subjectId: subjectId,
-      location: location,
-      colorHex: colorHex,
-      description: description,
-      type: type,
-      isRecurring: isRecurring,
-      repeatFrequency: repeat,
-      notificationId: notificationId,
-      createdAt: now,
-      updatedAt: now,
-    );
+    final event = ScheduleEventModel()
+      ..uuid = _uuid.v4()
+      ..title = title
+      ..startTime = startTime.toUtc()
+      ..endTime = endTime.toUtc()
+      ..subject = subjectId
+      ..location = location
+      ..subjectColor = colorHex
+      ..description = description
+      ..type = type
+      ..recurrence = repeat
+      ..createdAt = now;
 
     await _isar.writeTxn(() async {
       event.id = await _isar.scheduleEventModels.put(event);
@@ -276,9 +269,14 @@ class ScheduleEventRepository {
 
   /// Reactive stream of events for a given day key (e.g. "2025-06-03").
   Stream<List<ScheduleEventModel>> watchEventsForDay(String dateKey) {
+    // The previous implementation used localDateKey, but we must query by date bounds instead
+    final date = _dateFmt.parse(dateKey);
+    final startOfDay = DateTime(date.year, date.month, date.day).toUtc();
+    final endOfDay = startOfDay.add(const Duration(days: 1));
     return _isar.scheduleEventModels
         .filter()
-        .localDateKeyEqualTo(dateKey)
+        .startTimeGreaterThan(startOfDay)
+        .startTimeLessThan(endOfDay)
         .sortByStartTime()
         .watch(fireImmediately: true);
   }
@@ -302,8 +300,6 @@ class ScheduleEventRepository {
   // ── UPDATE / DELETE ──────────────────────────────────────────────────────
 
   Future<void> updateEvent(ScheduleEventModel updated) async {
-    updated.updatedAt = DateTime.now().toUtc();
-    updated.localDateKey = _dateFmt.format(updated.startTime!.toLocal());
     await _isar.writeTxn(() => _isar.scheduleEventModels.put(updated));
   }
 

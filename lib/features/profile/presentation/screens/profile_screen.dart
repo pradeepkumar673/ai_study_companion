@@ -1,121 +1,129 @@
 // lib/features/profile/presentation/screens/profile_screen.dart
+//
+// StudySpark — Full Profile Screen
+// Features:
+//   • Animated hero header with editable avatar & name
+//   • XP level-up progress bar
+//   • Stats overview (tasks done, focus hours, day streak)
+//   • Achievement Badges showcase with locked/unlocked states
+//   • Settings (theme, notifications, Pomodoro, account)
+//   • Cloud Sync status widget
+//   • Offline banner
+//   • Study Groups preview panel
+//   • Career Guidance quick-access card
+// ─────────────────────────────────────────────────────────────────────────────
 
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../../core/theme/app_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfileScreen extends StatelessWidget {
+import '../../../../core/theme/app_theme.dart';
+import '../../../../shared/providers/theme_provider.dart';
+import '../providers/profile_providers.dart';
+import '../widgets/achievement_badges_section.dart';
+import '../widgets/cloud_sync_card.dart';
+import '../widgets/offline_banner.dart';
+import '../widgets/profile_settings_section.dart';
+import '../widgets/study_groups_preview.dart';
+import '../widgets/career_guidance_card.dart';
+import '../widgets/xp_progress_card.dart';
+import '../widgets/stats_row.dart';
+
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController _headerCtrl;
+  bool _isEditingName = false;
+  final _nameCtrl = TextEditingController(text: 'Student');
+
+  @override
+  void initState() {
+    super.initState();
+    _headerCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    )..forward();
+  }
+
+  @override
+  void dispose() {
+    _headerCtrl.dispose();
+    _nameCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isOffline = ref.watch(isOfflineProvider);
 
     return Scaffold(
       backgroundColor: cs.surface,
-      body: CustomScrollView(
-        slivers: [
-          // ── Gradient App Bar with Avatar ──────────────────────────────────
-          SliverAppBar(
-            expandedHeight: 200,
-            pinned: true,
-            backgroundColor: AppColors.primary,
-            surfaceTintColor: Colors.transparent,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.settings_outlined, color: Colors.white),
-                onPressed: () {},
+      body: Stack(
+        children: [
+          CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              // ── Hero App Bar ──────────────────────────────────────────────
+              _ProfileSliverAppBar(
+                nameCtrl: _nameCtrl,
+                isEditingName: _isEditingName,
+                onEditToggle: () => setState(() => _isEditingName = !_isEditingName),
+                onEditDone: () => setState(() => _isEditingName = false),
+                isDark: isDark,
               ),
-              const SizedBox(width: 8),
-            ],
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [AppColors.primary, const Color(0xFF9B7FFA)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-                child: SafeArea(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 32),
-                      // Avatar
-                      Container(
-                        width: 72,
-                        height: 72,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.25),
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2.5),
-                        ),
-                        child: const Icon(
-                          Icons.person_rounded,
-                          color: Colors.white,
-                          size: 40,
-                        ),
-                      ).animate().scale(duration: 600.ms, curve: Curves.easeOutBack),
-                      const SizedBox(height: 10),
-                      Text(
-                        'Student',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ).animate(delay: 200.ms).fadeIn(),
-                      Text(
-                        'Level 1 • 0 XP',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
-                          fontSize: 13,
-                        ),
-                      ).animate(delay: 300.ms).fadeIn(),
+
+              // ── Body ──────────────────────────────────────────────────────
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 120),
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    // Offline banner (conditional)
+                    if (isOffline) ...[
+                      const OfflineBanner(),
+                      const SizedBox(height: 12),
                     ],
-                  ),
+
+                    // XP Progress
+                    const XpProgressCard(),
+                    const SizedBox(height: 16),
+
+                    // Stats row
+                    const ProfileStatsRow(),
+                    const SizedBox(height: 20),
+
+                    // Cloud Sync status
+                    const CloudSyncCard(),
+                    const SizedBox(height: 20),
+
+                    // Achievement Badges
+                    const AchievementBadgesSection(),
+                    const SizedBox(height: 20),
+
+                    // Study Groups Preview
+                    const StudyGroupsPreview(),
+                    const SizedBox(height: 20),
+
+                    // Career Guidance
+                    const CareerGuidanceCard(),
+                    const SizedBox(height: 20),
+
+                    // Settings
+                    const ProfileSettingsSection(),
+                    const SizedBox(height: 8),
+                  ]),
                 ),
               ),
-            ),
-          ),
-
-          // ── Body ──────────────────────────────────────────────────────────
-          SliverPadding(
-            padding: const EdgeInsets.fromLTRB(20, 24, 20, 100),
-            sliver: SliverList.list(
-              children: [
-                // XP progress bar
-                _XpProgressCard(cs: cs, isDark: isDark),
-                const SizedBox(height: 24),
-
-                // Stats
-                _StatsRow(cs: cs, isDark: isDark),
-                const SizedBox(height: 24),
-
-                // Settings sections
-                _SettingsSection(
-                  title: 'Preferences',
-                  items: [
-                    _SettingsTile(icon: Icons.dark_mode_outlined, label: 'Dark Mode', trailing: Switch(value: isDark, onChanged: (_) {})),
-                    _SettingsTile(icon: Icons.notifications_outlined, label: 'Notifications', trailing: const Icon(Icons.chevron_right_rounded)),
-                    _SettingsTile(icon: Icons.timer_outlined, label: 'Pomodoro Settings', trailing: const Icon(Icons.chevron_right_rounded)),
-                  ],
-                  cs: cs, isDark: isDark,
-                ),
-                const SizedBox(height: 16),
-                _SettingsSection(
-                  title: 'About',
-                  items: [
-                    _SettingsTile(icon: Icons.info_outline_rounded, label: 'App Version', trailing: Text('1.0.0', style: TextStyle(color: cs.onSurfaceVariant))),
-                    _SettingsTile(icon: Icons.privacy_tip_outlined, label: 'Privacy Policy', trailing: const Icon(Icons.chevron_right_rounded)),
-                    _SettingsTile(icon: Icons.star_outline_rounded, label: 'Rate the App', trailing: const Icon(Icons.chevron_right_rounded)),
-                  ],
-                  cs: cs, isDark: isDark,
-                ),
-              ],
-            ),
+            ],
           ),
         ],
       ),
@@ -123,144 +131,238 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class _XpProgressCard extends StatelessWidget {
-  const _XpProgressCard({required this.cs, required this.isDark});
-  final ColorScheme cs;
+// ─── Sliver App Bar ───────────────────────────────────────────────────────────
+
+class _ProfileSliverAppBar extends ConsumerWidget {
+  const _ProfileSliverAppBar({
+    required this.nameCtrl,
+    required this.isEditingName,
+    required this.onEditToggle,
+    required this.onEditDone,
+    required this.isDark,
+  });
+
+  final TextEditingController nameCtrl;
+  final bool isEditingName;
+  final VoidCallback onEditToggle;
+  final VoidCallback onEditDone;
   final bool isDark;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SliverAppBar(
+      expandedHeight: 220,
+      pinned: true,
+      stretch: true,
+      backgroundColor: AppColors.primary,
+      surfaceTintColor: Colors.transparent,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+          onPressed: () {},
+          tooltip: 'Notifications',
+        ),
+        IconButton(
+          icon: const Icon(Icons.share_outlined, color: Colors.white),
+          onPressed: () {},
+          tooltip: 'Share Profile',
+        ),
+        const SizedBox(width: 4),
+      ],
+      flexibleSpace: FlexibleSpaceBar(
+        stretchModes: const [
+          StretchMode.zoomBackground,
+          StretchMode.blurBackground,
+        ],
+        background: _HeaderBackground(
+          nameCtrl: nameCtrl,
+          isEditingName: isEditingName,
+          onEditToggle: onEditToggle,
+          onEditDone: onEditDone,
+        ),
+      ),
+    );
+  }
+}
+
+class _HeaderBackground extends StatelessWidget {
+  const _HeaderBackground({
+    required this.nameCtrl,
+    required this.isEditingName,
+    required this.onEditToggle,
+    required this.onEditDone,
+  });
+
+  final TextEditingController nameCtrl;
+  final bool isEditingName;
+  final VoidCallback onEditToggle;
+  final VoidCallback onEditDone;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.neutral20 : cs.surface,
-        borderRadius: AppShapes.r16,
-        border: Border.all(color: cs.outlineVariant.withOpacity(0.4)),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [AppColors.primary, Color(0xFF7C5FBF), Color(0xFF4F46E5)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Level 1', style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w700)),
-              Text('0 / 500 XP', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: cs.onSurfaceVariant)),
-            ],
-          ),
-          const SizedBox(height: 10),
-          ClipRRect(
-            borderRadius: AppShapes.r8,
-            child: LinearProgressIndicator(
-              value: 0.0,
-              minHeight: 8,
-              backgroundColor: AppColors.primary.withOpacity(0.12),
-              valueColor: AlwaysStoppedAnimation(AppColors.primary),
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text('Complete tasks and focus sessions to earn XP', style: Theme.of(context).textTheme.bodySmall!.copyWith(color: cs.onSurfaceVariant)),
-        ],
-      ),
-    ).animate().fadeIn(delay: 100.ms);
-  }
-}
-
-class _StatsRow extends StatelessWidget {
-  const _StatsRow({required this.cs, required this.isDark});
-  final ColorScheme cs;
-  final bool isDark;
-
-  @override
-  Widget build(BuildContext context) {
-    final stats = [
-      (label: 'Tasks Done', value: '0', icon: Icons.check_circle_rounded, color: AppColors.secondary),
-      (label: 'Focus Hours', value: '0h', icon: Icons.timer_rounded, color: AppColors.primary),
-      (label: 'Day Streak', value: '0', icon: Icons.local_fire_department_rounded, color: AppColors.tertiary),
-    ];
-
-    return Row(
-      children: stats.asMap().entries.map((e) {
-        final s = e.value;
-        return Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: e.key == 0 ? 0 : 6,
-              right: e.key == stats.length - 1 ? 0 : 6,
-            ),
+          // Decorative circles
+          Positioned(
+            top: -30,
+            right: -40,
             child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              width: 160,
+              height: 160,
               decoration: BoxDecoration(
-                color: isDark ? AppColors.neutral20 : cs.surface,
-                borderRadius: AppShapes.r16,
-                border: Border.all(color: cs.outlineVariant.withOpacity(0.4)),
+                shape: BoxShape.circle,
+                color: Colors.white.withOpacity(0.06),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: -20,
+            left: -20,
+            child: Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withOpacity(0.05),
+              ),
+            ),
+          ),
+          // Content
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
               child: Column(
                 children: [
-                  Icon(s.icon, color: s.color, size: 22),
-                  const SizedBox(height: 6),
-                  Text(s.value, style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.w800)),
-                  Text(s.label, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: cs.onSurfaceVariant), textAlign: TextAlign.center),
+                  // Avatar with edit button
+                  Stack(
+                    children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white.withOpacity(0.2),
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 3,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 20,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(
+                          Icons.person_rounded,
+                          color: Colors.white,
+                          size: 44,
+                        ),
+                      )
+                          .animate()
+                          .scale(
+                              duration: 600.ms,
+                              curve: Curves.easeOutBack),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            width: 26,
+                            height: 26,
+                            decoration: BoxDecoration(
+                              color: AppColors.secondary,
+                              shape: BoxShape.circle,
+                              border:
+                                  Border.all(color: Colors.white, width: 2),
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt_rounded,
+                              color: Colors.white,
+                              size: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  // Editable name
+                  GestureDetector(
+                    onTap: onEditToggle,
+                    child: isEditingName
+                        ? SizedBox(
+                            width: 180,
+                            height: 36,
+                            child: TextField(
+                              controller: nameCtrl,
+                              autofocus: true,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              decoration: const InputDecoration(
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 6),
+                                filled: true,
+                                fillColor: Colors.white24,
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8)),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              onSubmitted: (_) => onEditDone(),
+                            ),
+                          )
+                        : Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                nameCtrl.text,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Icon(
+                                Icons.edit_rounded,
+                                color: Colors.white.withOpacity(0.7),
+                                size: 15,
+                              ),
+                            ],
+                          ).animate(delay: 200.ms).fadeIn(),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Level 3 · 1,240 XP · 🔥 7 day streak',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.85),
+                      fontSize: 12,
+                    ),
+                  ).animate(delay: 350.ms).fadeIn(),
                 ],
               ),
-            ).animate(delay: Duration(milliseconds: 80 * e.key)).fadeIn().slideY(begin: 0.2, end: 0),
+            ),
           ),
-        );
-      }).toList(),
-    );
-  }
-}
-
-class _SettingsSection extends StatelessWidget {
-  const _SettingsSection({required this.title, required this.items, required this.cs, required this.isDark});
-  final String title;
-  final List<_SettingsTile> items;
-  final ColorScheme cs;
-  final bool isDark;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: Theme.of(context).textTheme.titleSmall!.copyWith(color: cs.onSurfaceVariant, fontWeight: FontWeight.w600)),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.neutral20 : cs.surface,
-            borderRadius: AppShapes.r16,
-            border: Border.all(color: cs.outlineVariant.withOpacity(0.4)),
-          ),
-          child: Column(
-            children: items.asMap().entries.map((e) {
-              return Column(
-                children: [
-                  e.value,
-                  if (e.key < items.length - 1)
-                    Divider(height: 1, color: cs.outlineVariant.withOpacity(0.3), indent: 52),
-                ],
-              );
-            }).toList(),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _SettingsTile extends StatelessWidget {
-  const _SettingsTile({required this.icon, required this.label, required this.trailing});
-  final IconData icon;
-  final String label;
-  final Widget trailing;
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return ListTile(
-      leading: Icon(icon, color: cs.onSurfaceVariant),
-      title: Text(label),
-      trailing: trailing,
-      onTap: () {},
+        ],
+      ),
     );
   }
 }
