@@ -29,6 +29,7 @@ import '../../features/mood/data/models/mood_entry_model.dart';
 import '../../features/flashcards/data/models/flashcard_model.dart';
 import '../../features/flashcards/data/models/quiz_model.dart';
 import '../../features/goals/data/models/goal_model.dart';
+import '../../features/analytics/data/models/gpa_entry_model.dart';
 
 // Generated schema imports are automatically included via their parent models.
 
@@ -67,6 +68,9 @@ const List<CollectionSchema<dynamic>> isarSchemas = [
 
   // Goals
   GoalModelSchema,
+
+  // Analytics
+  GpaEntryModelSchema,
 ];
 
 // ─── Provider ─────────────────────────────────────────────────────────────────

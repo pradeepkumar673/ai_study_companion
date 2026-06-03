@@ -22,6 +22,13 @@ import '../../../../core/enums/app_enums.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../shared/providers/isar_provider.dart';
 import '../../../focus/data/models/pomodoro_session_model.dart';
+import '../providers/analytics_providers.dart';
+import '../widgets/cgpa_tracker.dart';
+import '../widgets/gpa_calculator_widget.dart';
+import '../widgets/mood_stress_tracker.dart';
+import '../widgets/productivity_dashboard.dart';
+import '../widgets/reports_section.dart';
+import '../widgets/subject_performance_chart.dart';
 
 // ─── Data helpers ─────────────────────────────────────────────────────────────
 
@@ -145,59 +152,171 @@ class _TotalStats {
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-class AnalyticsScreen extends ConsumerWidget {
+class AnalyticsScreen extends ConsumerStatefulWidget {
   const AnalyticsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AnalyticsScreen> createState() => _AnalyticsScreenState();
+}
+
+class _AnalyticsScreenState extends ConsumerState<AnalyticsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Use the saved tab index from provider if we wanted to persist it across navigation,
+    // but a local controller is easier for standard TabBar sync.
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        ref.read(analyticsTabProvider.notifier).state = _tabController.index;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    // Sync controller with provider if changed externally
+    final currentTab = ref.watch(analyticsTabProvider);
+    if (_tabController.index != currentTab) {
+      _tabController.index = currentTab;
+    }
+
     return Scaffold(
       backgroundColor: cs.surface,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, _) => [
-          SliverAppBar(
-            pinned: true,
-            backgroundColor: cs.surface,
-            surfaceTintColor: Colors.transparent,
-            title: Text(
-              'Analytics',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(fontWeight: FontWeight.w800),
+      appBar: AppBar(
+        title: Text(
+          'Analytics',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontWeight: FontWeight.w800),
+        ),
+        backgroundColor: cs.surface,
+        surfaceTintColor: Colors.transparent,
+        bottom: TabBar(
+          controller: _tabController,
+          labelColor: cs.primary,
+          unselectedLabelColor: cs.onSurfaceVariant,
+          indicatorColor: cs.primary,
+          indicatorWeight: 3,
+          labelStyle: const TextStyle(fontWeight: FontWeight.w700),
+          tabs: const [
+            Tab(text: 'Focus'),
+            Tab(text: 'Academic'),
+            Tab(text: 'Wellness'),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          // ── Tab 1: Focus (Legacy) ───────────────────────────────────
+          RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(totalStatsProvider);
+              ref.invalidate(weeklyMinutesProvider);
+              ref.invalidate(recentSessionsProvider);
+            },
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              children: [
+                _SummaryBanner(cs: cs, isDark: isDark),
+                const Gap(24),
+                _WeeklyChart(cs: cs, isDark: isDark),
+                const Gap(24),
+                _MonthlyHeatmap(cs: cs, isDark: isDark),
+                const Gap(24),
+                _SessionHistory(cs: cs, isDark: isDark),
+                const Gap(24),
+              ],
+            ),
+          ),
+
+          // ── Tab 2: Academic ─────────────────────────────────────────
+          RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(subjectPerformancesProvider);
+              ref.invalidate(semesterBreakdownProvider);
+              ref.invalidate(cgpaProvider);
+            },
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              children: [
+                Text(
+                  'Academic Progress',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                const Gap(16),
+                const CgpaTracker(),
+                const Gap(32),
+                Text(
+                  'Subject Performance',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                const Gap(16),
+                const SubjectPerformanceChart(),
+                const Gap(32),
+                Text(
+                  'GPA Calculator',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                const Gap(16),
+                const GpaCalculatorWidget(),
+                const Gap(24),
+              ],
+            ),
+          ),
+
+          // ── Tab 3: Wellness ─────────────────────────────────────────
+          RefreshIndicator(
+            onRefresh: () async {
+              ref.invalidate(dailyReportProvider);
+              ref.invalidate(weeklyReportProvider);
+              ref.invalidate(recentMoodEntriesProvider);
+              ref.invalidate(moodCorrelationsProvider);
+            },
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              children: [
+                const ProductivityDashboard(),
+                const Gap(32),
+                const ReportsSection(),
+                const Gap(32),
+                Text(
+                  'Mood & Stress',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                ),
+                const Gap(16),
+                const MoodStressTracker(),
+                const Gap(24),
+              ],
             ),
           ),
         ],
-        body: RefreshIndicator(
-          onRefresh: () async {
-            ref.invalidate(totalStatsProvider);
-            ref.invalidate(weeklyMinutesProvider);
-            ref.invalidate(recentSessionsProvider);
-          },
-          child: ListView(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            children: [
-              // ── Summary banner ────────────────────────────────────
-              _SummaryBanner(cs: cs, isDark: isDark),
-              const Gap(24),
-
-              // ── Weekly chart ──────────────────────────────────────
-              _WeeklyChart(cs: cs, isDark: isDark),
-              const Gap(24),
-
-              // ── Monthly heatmap ───────────────────────────────────
-              _MonthlyHeatmap(cs: cs, isDark: isDark),
-              const Gap(24),
-
-              // ── Session history ───────────────────────────────────
-              _SessionHistory(cs: cs, isDark: isDark),
-              const Gap(24),
-            ],
-          ),
-        ),
       ),
     );
   }
