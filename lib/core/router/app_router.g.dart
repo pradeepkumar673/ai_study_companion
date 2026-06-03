@@ -6,7 +6,7 @@ part of 'app_router.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appRouterHash() => r'd113c087cdc85c1613fd3b2caf5f85f95b37f017';
+String _$appRouterHash() => r'8723b805eecace639e6fdb75b38ee28a5dc70499';
 
 /// Riverpod provider that creates and exposes the GoRouter singleton.
 /// `keepAlive: true` ensures the router lives for the entire app lifetime.

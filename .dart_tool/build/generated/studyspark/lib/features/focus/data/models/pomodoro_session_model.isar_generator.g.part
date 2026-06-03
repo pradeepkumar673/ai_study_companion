@@ -14,92 +14,51 @@ const PomodoroSessionModelSchema = CollectionSchema(
   name: r'PomodoroSessionModel',
   id: -4261804283330556400,
   properties: {
-    r'actualDurationMinutes': PropertySchema(
-      id: 0,
-      name: r'actualDurationMinutes',
-      type: IsarType.long,
-    ),
     r'actualDurationSeconds': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'actualDurationSeconds',
       type: IsarType.long,
     ),
-    r'completionRatio': PropertySchema(
-      id: 2,
-      name: r'completionRatio',
-      type: IsarType.double,
-    ),
-    r'distractionCount': PropertySchema(
-      id: 3,
-      name: r'distractionCount',
-      type: IsarType.long,
-    ),
-    r'endedAt': PropertySchema(
-      id: 4,
-      name: r'endedAt',
+    r'completedAt': PropertySchema(
+      id: 1,
+      name: r'completedAt',
       type: IsarType.dateTime,
     ),
-    r'isCompleted': PropertySchema(
-      id: 5,
-      name: r'isCompleted',
-      type: IsarType.bool,
+    r'label': PropertySchema(
+      id: 2,
+      name: r'label',
+      type: IsarType.string,
+    ),
+    r'linkedTaskId': PropertySchema(
+      id: 3,
+      name: r'linkedTaskId',
+      type: IsarType.string,
     ),
     r'localDateKey': PropertySchema(
-      id: 6,
+      id: 4,
       name: r'localDateKey',
       type: IsarType.string,
     ),
     r'mode': PropertySchema(
-      id: 7,
+      id: 5,
       name: r'mode',
       type: IsarType.byte,
       enumMap: _PomodoroSessionModelmodeEnumValueMap,
     ),
-    r'notes': PropertySchema(
-      id: 8,
-      name: r'notes',
-      type: IsarType.string,
-    ),
-    r'pauseCount': PropertySchema(
-      id: 9,
-      name: r'pauseCount',
-      type: IsarType.long,
-    ),
     r'plannedDurationSeconds': PropertySchema(
-      id: 10,
+      id: 6,
       name: r'plannedDurationSeconds',
       type: IsarType.long,
     ),
-    r'startedAt': PropertySchema(
-      id: 11,
-      name: r'startedAt',
-      type: IsarType.dateTime,
-    ),
-    r'status': PropertySchema(
-      id: 12,
-      name: r'status',
-      type: IsarType.byte,
-      enumMap: _PomodoroSessionModelstatusEnumValueMap,
-    ),
-    r'subjectId': PropertySchema(
-      id: 13,
-      name: r'subjectId',
-      type: IsarType.string,
-    ),
-    r'taskId': PropertySchema(
-      id: 14,
-      name: r'taskId',
-      type: IsarType.string,
-    ),
-    r'totalPausedSeconds': PropertySchema(
-      id: 15,
-      name: r'totalPausedSeconds',
-      type: IsarType.long,
-    ),
     r'uuid': PropertySchema(
-      id: 16,
+      id: 7,
       name: r'uuid',
       type: IsarType.string,
+    ),
+    r'wasCompleted': PropertySchema(
+      id: 8,
+      name: r'wasCompleted',
+      type: IsarType.bool,
     )
   },
   estimateSize: _pomodoroSessionModelEstimateSize,
@@ -112,7 +71,7 @@ const PomodoroSessionModelSchema = CollectionSchema(
       id: 2134397340427724972,
       name: r'uuid',
       unique: true,
-      replace: true,
+      replace: false,
       properties: [
         IndexPropertySchema(
           name: r'uuid',
@@ -121,40 +80,14 @@ const PomodoroSessionModelSchema = CollectionSchema(
         )
       ],
     ),
-    r'subjectId': IndexSchema(
-      id: 440306668014799972,
-      name: r'subjectId',
+    r'completedAt': IndexSchema(
+      id: -3156591011457686752,
+      name: r'completedAt',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'subjectId',
-          type: IndexType.hash,
-          caseSensitive: true,
-        )
-      ],
-    ),
-    r'taskId': IndexSchema(
-      id: -6391211041487498726,
-      name: r'taskId',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'taskId',
-          type: IndexType.hash,
-          caseSensitive: true,
-        )
-      ],
-    ),
-    r'startedAt': IndexSchema(
-      id: 8114395319341636597,
-      name: r'startedAt',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'startedAt',
+          name: r'completedAt',
           type: IndexType.value,
           caseSensitive: false,
         )
@@ -168,6 +101,32 @@ const PomodoroSessionModelSchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'localDateKey',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'wasCompleted': IndexSchema(
+      id: -1011157879898245096,
+      name: r'wasCompleted',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'wasCompleted',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'linkedTaskId': IndexSchema(
+      id: -2020935108569735236,
+      name: r'linkedTaskId',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'linkedTaskId',
           type: IndexType.hash,
           caseSensitive: true,
         )
@@ -188,10 +147,9 @@ int _pomodoroSessionModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.label.length * 3;
+  bytesCount += 3 + object.linkedTaskId.length * 3;
   bytesCount += 3 + object.localDateKey.length * 3;
-  bytesCount += 3 + object.notes.length * 3;
-  bytesCount += 3 + object.subjectId.length * 3;
-  bytesCount += 3 + object.taskId.length * 3;
   bytesCount += 3 + object.uuid.length * 3;
   return bytesCount;
 }
@@ -202,23 +160,15 @@ void _pomodoroSessionModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.actualDurationMinutes);
-  writer.writeLong(offsets[1], object.actualDurationSeconds);
-  writer.writeDouble(offsets[2], object.completionRatio);
-  writer.writeLong(offsets[3], object.distractionCount);
-  writer.writeDateTime(offsets[4], object.endedAt);
-  writer.writeBool(offsets[5], object.isCompleted);
-  writer.writeString(offsets[6], object.localDateKey);
-  writer.writeByte(offsets[7], object.mode.index);
-  writer.writeString(offsets[8], object.notes);
-  writer.writeLong(offsets[9], object.pauseCount);
-  writer.writeLong(offsets[10], object.plannedDurationSeconds);
-  writer.writeDateTime(offsets[11], object.startedAt);
-  writer.writeByte(offsets[12], object.status.index);
-  writer.writeString(offsets[13], object.subjectId);
-  writer.writeString(offsets[14], object.taskId);
-  writer.writeLong(offsets[15], object.totalPausedSeconds);
-  writer.writeString(offsets[16], object.uuid);
+  writer.writeLong(offsets[0], object.actualDurationSeconds);
+  writer.writeDateTime(offsets[1], object.completedAt);
+  writer.writeString(offsets[2], object.label);
+  writer.writeString(offsets[3], object.linkedTaskId);
+  writer.writeString(offsets[4], object.localDateKey);
+  writer.writeByte(offsets[5], object.mode.index);
+  writer.writeLong(offsets[6], object.plannedDurationSeconds);
+  writer.writeString(offsets[7], object.uuid);
+  writer.writeBool(offsets[8], object.wasCompleted);
 }
 
 PomodoroSessionModel _pomodoroSessionModelDeserialize(
@@ -228,25 +178,18 @@ PomodoroSessionModel _pomodoroSessionModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = PomodoroSessionModel(
-    actualDurationSeconds: reader.readLongOrNull(offsets[1]) ?? 0,
-    distractionCount: reader.readLongOrNull(offsets[3]) ?? 0,
-    endedAt: reader.readDateTimeOrNull(offsets[4]),
+    actualDurationSeconds: reader.readLongOrNull(offsets[0]) ?? 0,
+    completedAt: reader.readDateTimeOrNull(offsets[1]),
     id: id,
-    localDateKey: reader.readStringOrNull(offsets[6]) ?? '',
+    label: reader.readStringOrNull(offsets[2]) ?? '',
+    linkedTaskId: reader.readStringOrNull(offsets[3]) ?? '',
+    localDateKey: reader.readStringOrNull(offsets[4]) ?? '',
     mode: _PomodoroSessionModelmodeValueEnumMap[
-            reader.readByteOrNull(offsets[7])] ??
-        PomodoroMode.pomodoro,
-    notes: reader.readStringOrNull(offsets[8]) ?? '',
-    pauseCount: reader.readLongOrNull(offsets[9]) ?? 0,
-    plannedDurationSeconds: reader.readLongOrNull(offsets[10]) ?? 1500,
-    startedAt: reader.readDateTimeOrNull(offsets[11]),
-    status: _PomodoroSessionModelstatusValueEnumMap[
-            reader.readByteOrNull(offsets[12])] ??
-        SessionStatus.completed,
-    subjectId: reader.readStringOrNull(offsets[13]) ?? '',
-    taskId: reader.readStringOrNull(offsets[14]) ?? '',
-    totalPausedSeconds: reader.readLongOrNull(offsets[15]) ?? 0,
-    uuid: reader.readStringOrNull(offsets[16]) ?? '',
+            reader.readByteOrNull(offsets[5])] ??
+        PomodoroMode.work,
+    plannedDurationSeconds: reader.readLongOrNull(offsets[6]) ?? 1500,
+    uuid: reader.readStringOrNull(offsets[7]) ?? '',
+    wasCompleted: reader.readBoolOrNull(offsets[8]) ?? false,
   );
   return object;
 }
@@ -259,43 +202,25 @@ P _pomodoroSessionModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 0) as P;
     case 1:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
-    case 2:
-      return (reader.readDouble(offset)) as P;
-    case 3:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
-    case 4:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 5:
-      return (reader.readBool(offset)) as P;
-    case 6:
+    case 2:
       return (reader.readStringOrNull(offset) ?? '') as P;
-    case 7:
+    case 3:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 4:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 5:
       return (_PomodoroSessionModelmodeValueEnumMap[
               reader.readByteOrNull(offset)] ??
-          PomodoroMode.pomodoro) as P;
-    case 8:
-      return (reader.readStringOrNull(offset) ?? '') as P;
-    case 9:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
-    case 10:
+          PomodoroMode.work) as P;
+    case 6:
       return (reader.readLongOrNull(offset) ?? 1500) as P;
-    case 11:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    case 12:
-      return (_PomodoroSessionModelstatusValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          SessionStatus.completed) as P;
-    case 13:
+    case 7:
       return (reader.readStringOrNull(offset) ?? '') as P;
-    case 14:
-      return (reader.readStringOrNull(offset) ?? '') as P;
-    case 15:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
-    case 16:
-      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 8:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -312,16 +237,6 @@ const _PomodoroSessionModelmodeValueEnumMap = {
   1: PomodoroMode.shortBreak,
   2: PomodoroMode.longBreak,
   3: PomodoroMode.deepWork,
-};
-const _PomodoroSessionModelstatusEnumValueMap = {
-  'completed': 0,
-  'abandoned': 1,
-  'paused': 2,
-};
-const _PomodoroSessionModelstatusValueEnumMap = {
-  0: SessionStatus.completed,
-  1: SessionStatus.abandoned,
-  2: SessionStatus.paused,
 };
 
 Id _pomodoroSessionModelGetId(PomodoroSessionModel object) {
@@ -403,10 +318,19 @@ extension PomodoroSessionModelQueryWhereSort
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhere>
-      anyStartedAt() {
+      anyCompletedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'startedAt'),
+        const IndexWhereClause.any(indexName: r'completedAt'),
+      );
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhere>
+      anyWasCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'wasCompleted'),
       );
     });
   }
@@ -528,110 +452,20 @@ extension PomodoroSessionModelQueryWhere
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      subjectIdEqualTo(String subjectId) {
+      completedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'subjectId',
-        value: [subjectId],
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      subjectIdNotEqualTo(String subjectId) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [],
-              upper: [subjectId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [subjectId],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [subjectId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [],
-              upper: [subjectId],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      taskIdEqualTo(String taskId) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'taskId',
-        value: [taskId],
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      taskIdNotEqualTo(String taskId) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'taskId',
-              lower: [],
-              upper: [taskId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'taskId',
-              lower: [taskId],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'taskId',
-              lower: [taskId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'taskId',
-              lower: [],
-              upper: [taskId],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      startedAtIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'startedAt',
+        indexName: r'completedAt',
         value: [null],
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      startedAtIsNotNull() {
+      completedAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'startedAt',
+        indexName: r'completedAt',
         lower: [null],
         includeLower: false,
         upper: [],
@@ -640,44 +474,44 @@ extension PomodoroSessionModelQueryWhere
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      startedAtEqualTo(DateTime? startedAt) {
+      completedAtEqualTo(DateTime? completedAt) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'startedAt',
-        value: [startedAt],
+        indexName: r'completedAt',
+        value: [completedAt],
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      startedAtNotEqualTo(DateTime? startedAt) {
+      completedAtNotEqualTo(DateTime? completedAt) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'startedAt',
+              indexName: r'completedAt',
               lower: [],
-              upper: [startedAt],
+              upper: [completedAt],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'startedAt',
-              lower: [startedAt],
+              indexName: r'completedAt',
+              lower: [completedAt],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'startedAt',
-              lower: [startedAt],
+              indexName: r'completedAt',
+              lower: [completedAt],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'startedAt',
+              indexName: r'completedAt',
               lower: [],
-              upper: [startedAt],
+              upper: [completedAt],
               includeUpper: false,
             ));
       }
@@ -685,14 +519,14 @@ extension PomodoroSessionModelQueryWhere
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      startedAtGreaterThan(
-    DateTime? startedAt, {
+      completedAtGreaterThan(
+    DateTime? completedAt, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'startedAt',
-        lower: [startedAt],
+        indexName: r'completedAt',
+        lower: [completedAt],
         includeLower: include,
         upper: [],
       ));
@@ -700,33 +534,33 @@ extension PomodoroSessionModelQueryWhere
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      startedAtLessThan(
-    DateTime? startedAt, {
+      completedAtLessThan(
+    DateTime? completedAt, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'startedAt',
+        indexName: r'completedAt',
         lower: [],
-        upper: [startedAt],
+        upper: [completedAt],
         includeUpper: include,
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
-      startedAtBetween(
-    DateTime? lowerStartedAt,
-    DateTime? upperStartedAt, {
+      completedAtBetween(
+    DateTime? lowerCompletedAt,
+    DateTime? upperCompletedAt, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'startedAt',
-        lower: [lowerStartedAt],
+        indexName: r'completedAt',
+        lower: [lowerCompletedAt],
         includeLower: includeLower,
-        upper: [upperStartedAt],
+        upper: [upperCompletedAt],
         includeUpper: includeUpper,
       ));
     });
@@ -776,66 +610,100 @@ extension PomodoroSessionModelQueryWhere
       }
     });
   }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
+      wasCompletedEqualTo(bool wasCompleted) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'wasCompleted',
+        value: [wasCompleted],
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
+      wasCompletedNotEqualTo(bool wasCompleted) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'wasCompleted',
+              lower: [],
+              upper: [wasCompleted],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'wasCompleted',
+              lower: [wasCompleted],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'wasCompleted',
+              lower: [wasCompleted],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'wasCompleted',
+              lower: [],
+              upper: [wasCompleted],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
+      linkedTaskIdEqualTo(String linkedTaskId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'linkedTaskId',
+        value: [linkedTaskId],
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterWhereClause>
+      linkedTaskIdNotEqualTo(String linkedTaskId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'linkedTaskId',
+              lower: [],
+              upper: [linkedTaskId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'linkedTaskId',
+              lower: [linkedTaskId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'linkedTaskId',
+              lower: [linkedTaskId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'linkedTaskId',
+              lower: [],
+              upper: [linkedTaskId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
 }
 
 extension PomodoroSessionModelQueryFilter on QueryBuilder<PomodoroSessionModel,
     PomodoroSessionModel, QFilterCondition> {
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> actualDurationMinutesEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'actualDurationMinutes',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> actualDurationMinutesGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'actualDurationMinutes',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> actualDurationMinutesLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'actualDurationMinutes',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> actualDurationMinutesBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'actualDurationMinutes',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
       QAfterFilterCondition> actualDurationSecondsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
@@ -893,185 +761,63 @@ extension PomodoroSessionModelQueryFilter on QueryBuilder<PomodoroSessionModel,
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> completionRatioEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'completionRatio',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> completionRatioGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'completionRatio',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> completionRatioLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'completionRatio',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> completionRatioBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'completionRatio',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> distractionCountEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'distractionCount',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> distractionCountGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'distractionCount',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> distractionCountLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'distractionCount',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> distractionCountBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'distractionCount',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> endedAtIsNull() {
+      QAfterFilterCondition> completedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'endedAt',
+        property: r'completedAt',
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> endedAtIsNotNull() {
+      QAfterFilterCondition> completedAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'endedAt',
+        property: r'completedAt',
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> endedAtEqualTo(DateTime? value) {
+      QAfterFilterCondition> completedAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'endedAt',
+        property: r'completedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> endedAtGreaterThan(
+      QAfterFilterCondition> completedAtGreaterThan(
     DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'endedAt',
+        property: r'completedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> endedAtLessThan(
+      QAfterFilterCondition> completedAtLessThan(
     DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'endedAt',
+        property: r'completedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> endedAtBetween(
+      QAfterFilterCondition> completedAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
@@ -1079,7 +825,7 @@ extension PomodoroSessionModelQueryFilter on QueryBuilder<PomodoroSessionModel,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'endedAt',
+        property: r'completedAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1145,11 +891,277 @@ extension PomodoroSessionModelQueryFilter on QueryBuilder<PomodoroSessionModel,
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> isCompletedEqualTo(bool value) {
+      QAfterFilterCondition> labelEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isCompleted',
+        property: r'label',
         value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> labelGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> labelLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> labelBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'label',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> labelStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> labelEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+          QAfterFilterCondition>
+      labelContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'label',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+          QAfterFilterCondition>
+      labelMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'label',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> labelIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'label',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> labelIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'label',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'linkedTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'linkedTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'linkedTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'linkedTaskId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'linkedTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'linkedTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+          QAfterFilterCondition>
+      linkedTaskIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'linkedTaskId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+          QAfterFilterCondition>
+      linkedTaskIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'linkedTaskId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'linkedTaskId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> linkedTaskIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'linkedTaskId',
+        value: '',
       ));
     });
   }
@@ -1349,200 +1361,6 @@ extension PomodoroSessionModelQueryFilter on QueryBuilder<PomodoroSessionModel,
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'notes',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'notes',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'notes',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'notes',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'notes',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'notes',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-          QAfterFilterCondition>
-      notesContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'notes',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-          QAfterFilterCondition>
-      notesMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'notes',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'notes',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> notesIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'notes',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> pauseCountEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'pauseCount',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> pauseCountGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'pauseCount',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> pauseCountLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'pauseCount',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> pauseCountBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'pauseCount',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
       QAfterFilterCondition> plannedDurationSecondsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1590,468 +1408,6 @@ extension PomodoroSessionModelQueryFilter on QueryBuilder<PomodoroSessionModel,
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'plannedDurationSeconds',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> startedAtIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'startedAt',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> startedAtIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'startedAt',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> startedAtEqualTo(DateTime? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'startedAt',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> startedAtGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'startedAt',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> startedAtLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'startedAt',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> startedAtBetween(
-    DateTime? lower,
-    DateTime? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'startedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> statusEqualTo(SessionStatus value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'status',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> statusGreaterThan(
-    SessionStatus value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'status',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> statusLessThan(
-    SessionStatus value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'status',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> statusBetween(
-    SessionStatus lower,
-    SessionStatus upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'status',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'subjectId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'subjectId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'subjectId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'subjectId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'subjectId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'subjectId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-          QAfterFilterCondition>
-      subjectIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'subjectId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-          QAfterFilterCondition>
-      subjectIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'subjectId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'subjectId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> subjectIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'subjectId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'taskId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'taskId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'taskId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'taskId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'taskId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'taskId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-          QAfterFilterCondition>
-      taskIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'taskId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-          QAfterFilterCondition>
-      taskIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'taskId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'taskId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> taskIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'taskId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> totalPausedSecondsEqualTo(int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'totalPausedSeconds',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> totalPausedSecondsGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'totalPausedSeconds',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> totalPausedSecondsLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'totalPausedSeconds',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
-      QAfterFilterCondition> totalPausedSecondsBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'totalPausedSeconds',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2197,6 +1553,16 @@ extension PomodoroSessionModelQueryFilter on QueryBuilder<PomodoroSessionModel,
       ));
     });
   }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel,
+      QAfterFilterCondition> wasCompletedEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'wasCompleted',
+        value: value,
+      ));
+    });
+  }
 }
 
 extension PomodoroSessionModelQueryObject on QueryBuilder<PomodoroSessionModel,
@@ -2207,20 +1573,6 @@ extension PomodoroSessionModelQueryLinks on QueryBuilder<PomodoroSessionModel,
 
 extension PomodoroSessionModelQuerySortBy
     on QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QSortBy> {
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByActualDurationMinutes() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'actualDurationMinutes', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByActualDurationMinutesDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'actualDurationMinutes', Sort.desc);
-    });
-  }
-
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
       sortByActualDurationSeconds() {
     return QueryBuilder.apply(this, (query) {
@@ -2236,58 +1588,44 @@ extension PomodoroSessionModelQuerySortBy
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByCompletionRatio() {
+      sortByCompletedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completionRatio', Sort.asc);
+      return query.addSortBy(r'completedAt', Sort.asc);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByCompletionRatioDesc() {
+      sortByCompletedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completionRatio', Sort.desc);
+      return query.addSortBy(r'completedAt', Sort.desc);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByDistractionCount() {
+      sortByLabel() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'distractionCount', Sort.asc);
+      return query.addSortBy(r'label', Sort.asc);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByDistractionCountDesc() {
+      sortByLabelDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'distractionCount', Sort.desc);
+      return query.addSortBy(r'label', Sort.desc);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByEndedAt() {
+      sortByLinkedTaskId() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'endedAt', Sort.asc);
+      return query.addSortBy(r'linkedTaskId', Sort.asc);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByEndedAtDesc() {
+      sortByLinkedTaskIdDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'endedAt', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByIsCompleted() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isCompleted', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByIsCompletedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isCompleted', Sort.desc);
+      return query.addSortBy(r'linkedTaskId', Sort.desc);
     });
   }
 
@@ -2320,34 +1658,6 @@ extension PomodoroSessionModelQuerySortBy
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByNotes() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'notes', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByNotesDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'notes', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByPauseCount() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pauseCount', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByPauseCountDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pauseCount', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
       sortByPlannedDurationSeconds() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'plannedDurationSeconds', Sort.asc);
@@ -2358,76 +1668,6 @@ extension PomodoroSessionModelQuerySortBy
       sortByPlannedDurationSecondsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'plannedDurationSeconds', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByStartedAt() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startedAt', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByStartedAtDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startedAt', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByStatusDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortBySubjectId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'subjectId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortBySubjectIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'subjectId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByTaskId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'taskId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByTaskIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'taskId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByTotalPausedSeconds() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalPausedSeconds', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      sortByTotalPausedSecondsDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalPausedSeconds', Sort.desc);
     });
   }
 
@@ -2444,24 +1684,24 @@ extension PomodoroSessionModelQuerySortBy
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
+      sortByWasCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wasCompleted', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
+      sortByWasCompletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wasCompleted', Sort.desc);
+    });
+  }
 }
 
 extension PomodoroSessionModelQuerySortThenBy
     on QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QSortThenBy> {
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByActualDurationMinutes() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'actualDurationMinutes', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByActualDurationMinutesDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'actualDurationMinutes', Sort.desc);
-    });
-  }
-
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
       thenByActualDurationSeconds() {
     return QueryBuilder.apply(this, (query) {
@@ -2477,44 +1717,16 @@ extension PomodoroSessionModelQuerySortThenBy
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByCompletionRatio() {
+      thenByCompletedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completionRatio', Sort.asc);
+      return query.addSortBy(r'completedAt', Sort.asc);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByCompletionRatioDesc() {
+      thenByCompletedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'completionRatio', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByDistractionCount() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'distractionCount', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByDistractionCountDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'distractionCount', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByEndedAt() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'endedAt', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByEndedAtDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'endedAt', Sort.desc);
+      return query.addSortBy(r'completedAt', Sort.desc);
     });
   }
 
@@ -2533,16 +1745,30 @@ extension PomodoroSessionModelQuerySortThenBy
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByIsCompleted() {
+      thenByLabel() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isCompleted', Sort.asc);
+      return query.addSortBy(r'label', Sort.asc);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByIsCompletedDesc() {
+      thenByLabelDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isCompleted', Sort.desc);
+      return query.addSortBy(r'label', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
+      thenByLinkedTaskId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'linkedTaskId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
+      thenByLinkedTaskIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'linkedTaskId', Sort.desc);
     });
   }
 
@@ -2575,34 +1801,6 @@ extension PomodoroSessionModelQuerySortThenBy
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByNotes() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'notes', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByNotesDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'notes', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByPauseCount() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pauseCount', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByPauseCountDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'pauseCount', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
       thenByPlannedDurationSeconds() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'plannedDurationSeconds', Sort.asc);
@@ -2613,76 +1811,6 @@ extension PomodoroSessionModelQuerySortThenBy
       thenByPlannedDurationSecondsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'plannedDurationSeconds', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByStartedAt() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startedAt', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByStartedAtDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'startedAt', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByStatusDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'status', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenBySubjectId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'subjectId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenBySubjectIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'subjectId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByTaskId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'taskId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByTaskIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'taskId', Sort.desc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByTotalPausedSeconds() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalPausedSeconds', Sort.asc);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
-      thenByTotalPausedSecondsDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'totalPausedSeconds', Sort.desc);
     });
   }
 
@@ -2699,17 +1827,24 @@ extension PomodoroSessionModelQuerySortThenBy
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
+      thenByWasCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wasCompleted', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QAfterSortBy>
+      thenByWasCompletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wasCompleted', Sort.desc);
+    });
+  }
 }
 
 extension PomodoroSessionModelQueryWhereDistinct
     on QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct> {
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByActualDurationMinutes() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'actualDurationMinutes');
-    });
-  }
-
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
       distinctByActualDurationSeconds() {
     return QueryBuilder.apply(this, (query) {
@@ -2718,30 +1853,23 @@ extension PomodoroSessionModelQueryWhereDistinct
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByCompletionRatio() {
+      distinctByCompletedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'completionRatio');
+      return query.addDistinctBy(r'completedAt');
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByDistractionCount() {
+      distinctByLabel({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'distractionCount');
+      return query.addDistinctBy(r'label', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByEndedAt() {
+      distinctByLinkedTaskId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'endedAt');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByIsCompleted() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'isCompleted');
+      return query.addDistinctBy(r'linkedTaskId', caseSensitive: caseSensitive);
     });
   }
 
@@ -2760,20 +1888,6 @@ extension PomodoroSessionModelQueryWhereDistinct
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByNotes({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'notes', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByPauseCount() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'pauseCount');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
       distinctByPlannedDurationSeconds() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'plannedDurationSeconds');
@@ -2781,44 +1895,16 @@ extension PomodoroSessionModelQueryWhereDistinct
   }
 
   QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByStartedAt() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'startedAt');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByStatus() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'status');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctBySubjectId({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'subjectId', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByTaskId({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'taskId', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
-      distinctByTotalPausedSeconds() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'totalPausedSeconds');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
       distinctByUuid({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, PomodoroSessionModel, QDistinct>
+      distinctByWasCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'wasCompleted');
     });
   }
 }
@@ -2832,44 +1918,29 @@ extension PomodoroSessionModelQueryProperty on QueryBuilder<
   }
 
   QueryBuilder<PomodoroSessionModel, int, QQueryOperations>
-      actualDurationMinutesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'actualDurationMinutes');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, int, QQueryOperations>
       actualDurationSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'actualDurationSeconds');
     });
   }
 
-  QueryBuilder<PomodoroSessionModel, double, QQueryOperations>
-      completionRatioProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'completionRatio');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, int, QQueryOperations>
-      distractionCountProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'distractionCount');
-    });
-  }
-
   QueryBuilder<PomodoroSessionModel, DateTime?, QQueryOperations>
-      endedAtProperty() {
+      completedAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'endedAt');
+      return query.addPropertyName(r'completedAt');
     });
   }
 
-  QueryBuilder<PomodoroSessionModel, bool, QQueryOperations>
-      isCompletedProperty() {
+  QueryBuilder<PomodoroSessionModel, String, QQueryOperations> labelProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'isCompleted');
+      return query.addPropertyName(r'label');
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, String, QQueryOperations>
+      linkedTaskIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'linkedTaskId');
     });
   }
 
@@ -2887,19 +1958,6 @@ extension PomodoroSessionModelQueryProperty on QueryBuilder<
     });
   }
 
-  QueryBuilder<PomodoroSessionModel, String, QQueryOperations> notesProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'notes');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, int, QQueryOperations>
-      pauseCountProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'pauseCount');
-    });
-  }
-
   QueryBuilder<PomodoroSessionModel, int, QQueryOperations>
       plannedDurationSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
@@ -2907,44 +1965,16 @@ extension PomodoroSessionModelQueryProperty on QueryBuilder<
     });
   }
 
-  QueryBuilder<PomodoroSessionModel, DateTime?, QQueryOperations>
-      startedAtProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'startedAt');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, SessionStatus, QQueryOperations>
-      statusProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'status');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, String, QQueryOperations>
-      subjectIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'subjectId');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, String, QQueryOperations>
-      taskIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'taskId');
-    });
-  }
-
-  QueryBuilder<PomodoroSessionModel, int, QQueryOperations>
-      totalPausedSecondsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'totalPausedSeconds');
-    });
-  }
-
   QueryBuilder<PomodoroSessionModel, String, QQueryOperations> uuidProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'uuid');
+    });
+  }
+
+  QueryBuilder<PomodoroSessionModel, bool, QQueryOperations>
+      wasCompletedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'wasCompleted');
     });
   }
 }

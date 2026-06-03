@@ -39,6 +39,10 @@ import '../../features/tasks/presentation/screens/task_detail_screen.dart';
 import '../../features/notes/presentation/screens/notes_screen.dart';
 import '../../features/notes/presentation/screens/note_editor_screen.dart';
 
+// ── Focus sub-screens (Step 5) ──────────────────────────────────────────────
+import '../../features/focus/presentation/screens/pomodoro_timer_screen.dart';
+import '../../features/focus/presentation/screens/focus_mode_screen.dart';
+
 // ── Analytics tab ───────────────────────────────────────────────────────────
 import '../../features/analytics/presentation/screens/analytics_screen.dart';
 
@@ -151,6 +155,23 @@ GoRouter appRouter(AppRouterRef ref) {
                   key: state.pageKey,
                   child: const DashboardScreen(),
                 ),
+                routes: [
+                  // ── Step 5: Pomodoro Timer (/dashboard → /focus/timer) ──
+                  GoRoute(
+                    path: 'focus/timer',
+                    name: 'pomodoroTimer',
+                    builder: (context, state) => const PomodoroTimerScreen(),
+                  ),
+                  // ── Step 5: Focus Mode (/dashboard → /focus/mode) ───────
+                  GoRoute(
+                    path: 'focus/mode',
+                    name: 'focusMode',
+                    pageBuilder: (context, state) => NoTransitionPage(
+                      key: state.pageKey,
+                      child: const FocusModeScreen(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
