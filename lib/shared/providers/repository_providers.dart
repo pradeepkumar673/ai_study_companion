@@ -374,7 +374,7 @@ final dashboardStatsProvider = FutureProvider<DashboardStats>((ref) async {
   final todayTasks = await ref.watch(todayTasksProvider.future);
 
   final completed = todayTasks
-      .where((t) => t.status == TaskStatus.completed)
+      .where((t) => t.status == TaskStatus.done)
       .length;
 
   return DashboardStats(

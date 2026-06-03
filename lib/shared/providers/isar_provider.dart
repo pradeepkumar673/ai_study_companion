@@ -14,6 +14,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // ── Model imports ─────────────────────────────────────────────────────────────
 import '../../features/profile/data/models/user_model.dart';
@@ -29,21 +30,7 @@ import '../../features/flashcards/data/models/flashcard_model.dart';
 import '../../features/flashcards/data/models/quiz_model.dart';
 import '../../features/goals/data/models/goal_model.dart';
 
-// ── Generated schema imports (produced by isar_generator) ────────────────────
-// These are the *.g.dart files — run `flutter pub run build_runner build`
-// to regenerate after any model change.
-import '../../features/profile/data/models/user_model.g.dart';
-import '../../features/profile/data/models/badge_model.g.dart';
-import '../../features/tasks/data/models/task_model.g.dart';
-import '../../features/tasks/data/models/subtask_model.g.dart';
-import '../../features/schedule/data/models/subject_model.g.dart';
-import '../../features/schedule/data/models/attendance_model.g.dart';
-import '../../features/notes/data/models/note_model.g.dart';
-import '../../features/focus/data/models/pomodoro_session_model.g.dart';
-import '../../features/mood/data/models/mood_entry_model.g.dart';
-import '../../features/flashcards/data/models/flashcard_model.g.dart';
-import '../../features/flashcards/data/models/quiz_model.g.dart';
-import '../../features/goals/data/models/goal_model.g.dart';
+// Generated schema imports are automatically included via their parent models.
 
 // ─── Schema Registry ─────────────────────────────────────────────────────────
 
@@ -92,6 +79,15 @@ final isarProvider = Provider<Isar>((ref) {
   throw UnimplementedError(
     'isarProvider must be overridden in ProviderScope with an open Isar instance. '
     'See main.dart bootstrapIsar().',
+  );
+});
+
+/// Holds the open [SharedPreferences] instance.  Overridden in [ProviderScope]
+/// by [main.dart] during application startup.
+final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
+  throw UnimplementedError(
+    'sharedPreferencesProvider must be overridden in ProviderScope. '
+    'See main.dart.',
   );
 });
 

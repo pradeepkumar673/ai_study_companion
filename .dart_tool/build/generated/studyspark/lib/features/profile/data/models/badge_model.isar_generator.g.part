@@ -1,0 +1,2818 @@
+// **************************************************************************
+// IsarCollectionGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+extension GetBadgeModelCollection on Isar {
+  IsarCollection<BadgeModel> get badgeModels => this.collection();
+}
+
+const BadgeModelSchema = CollectionSchema(
+  name: r'BadgeModel',
+  id: 1888418714642042426,
+  properties: {
+    r'badgeKey': PropertySchema(
+      id: 0,
+      name: r'badgeKey',
+      type: IsarType.string,
+    ),
+    r'category': PropertySchema(
+      id: 1,
+      name: r'category',
+      type: IsarType.byte,
+      enumMap: _BadgeModelcategoryEnumValueMap,
+    ),
+    r'colorHex': PropertySchema(
+      id: 2,
+      name: r'colorHex',
+      type: IsarType.string,
+    ),
+    r'createdAt': PropertySchema(
+      id: 3,
+      name: r'createdAt',
+      type: IsarType.dateTime,
+    ),
+    r'currentProgress': PropertySchema(
+      id: 4,
+      name: r'currentProgress',
+      type: IsarType.long,
+    ),
+    r'description': PropertySchema(
+      id: 5,
+      name: r'description',
+      type: IsarType.string,
+    ),
+    r'iconName': PropertySchema(
+      id: 6,
+      name: r'iconName',
+      type: IsarType.string,
+    ),
+    r'isNew': PropertySchema(
+      id: 7,
+      name: r'isNew',
+      type: IsarType.bool,
+    ),
+    r'isUnlocked': PropertySchema(
+      id: 8,
+      name: r'isUnlocked',
+      type: IsarType.bool,
+    ),
+    r'progressRatio': PropertySchema(
+      id: 9,
+      name: r'progressRatio',
+      type: IsarType.double,
+    ),
+    r'requiredThreshold': PropertySchema(
+      id: 10,
+      name: r'requiredThreshold',
+      type: IsarType.long,
+    ),
+    r'tier': PropertySchema(
+      id: 11,
+      name: r'tier',
+      type: IsarType.long,
+    ),
+    r'tierLabel': PropertySchema(
+      id: 12,
+      name: r'tierLabel',
+      type: IsarType.string,
+    ),
+    r'title': PropertySchema(
+      id: 13,
+      name: r'title',
+      type: IsarType.string,
+    ),
+    r'unlockedAt': PropertySchema(
+      id: 14,
+      name: r'unlockedAt',
+      type: IsarType.dateTime,
+    ),
+    r'uuid': PropertySchema(
+      id: 15,
+      name: r'uuid',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _badgeModelEstimateSize,
+  serialize: _badgeModelSerialize,
+  deserialize: _badgeModelDeserialize,
+  deserializeProp: _badgeModelDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'uuid': IndexSchema(
+      id: 2134397340427724972,
+      name: r'uuid',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'uuid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'badgeKey': IndexSchema(
+      id: 1194488592520037477,
+      name: r'badgeKey',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'badgeKey',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'isUnlocked': IndexSchema(
+      id: -8372103182975803858,
+      name: r'isUnlocked',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'isUnlocked',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'unlockedAt': IndexSchema(
+      id: -2486051207984852976,
+      name: r'unlockedAt',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'unlockedAt',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
+  getId: _badgeModelGetId,
+  getLinks: _badgeModelGetLinks,
+  attach: _badgeModelAttach,
+  version: '3.1.0+1',
+);
+
+int _badgeModelEstimateSize(
+  BadgeModel object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.badgeKey.length * 3;
+  bytesCount += 3 + object.colorHex.length * 3;
+  bytesCount += 3 + object.description.length * 3;
+  bytesCount += 3 + object.iconName.length * 3;
+  bytesCount += 3 + object.tierLabel.length * 3;
+  bytesCount += 3 + object.title.length * 3;
+  bytesCount += 3 + object.uuid.length * 3;
+  return bytesCount;
+}
+
+void _badgeModelSerialize(
+  BadgeModel object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.badgeKey);
+  writer.writeByte(offsets[1], object.category.index);
+  writer.writeString(offsets[2], object.colorHex);
+  writer.writeDateTime(offsets[3], object.createdAt);
+  writer.writeLong(offsets[4], object.currentProgress);
+  writer.writeString(offsets[5], object.description);
+  writer.writeString(offsets[6], object.iconName);
+  writer.writeBool(offsets[7], object.isNew);
+  writer.writeBool(offsets[8], object.isUnlocked);
+  writer.writeDouble(offsets[9], object.progressRatio);
+  writer.writeLong(offsets[10], object.requiredThreshold);
+  writer.writeLong(offsets[11], object.tier);
+  writer.writeString(offsets[12], object.tierLabel);
+  writer.writeString(offsets[13], object.title);
+  writer.writeDateTime(offsets[14], object.unlockedAt);
+  writer.writeString(offsets[15], object.uuid);
+}
+
+BadgeModel _badgeModelDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = BadgeModel(
+    badgeKey: reader.readStringOrNull(offsets[0]) ?? '',
+    category:
+        _BadgeModelcategoryValueEnumMap[reader.readByteOrNull(offsets[1])] ??
+            BadgeCategory.tasks,
+    colorHex: reader.readStringOrNull(offsets[2]) ?? '#FFD700',
+    createdAt: reader.readDateTimeOrNull(offsets[3]),
+    currentProgress: reader.readLongOrNull(offsets[4]) ?? 0,
+    description: reader.readStringOrNull(offsets[5]) ?? '',
+    iconName: reader.readStringOrNull(offsets[6]) ?? 'star',
+    id: id,
+    isNew: reader.readBoolOrNull(offsets[7]) ?? false,
+    isUnlocked: reader.readBoolOrNull(offsets[8]) ?? false,
+    requiredThreshold: reader.readLongOrNull(offsets[10]) ?? 1,
+    tier: reader.readLongOrNull(offsets[11]) ?? 1,
+    title: reader.readStringOrNull(offsets[13]) ?? '',
+    unlockedAt: reader.readDateTimeOrNull(offsets[14]),
+    uuid: reader.readStringOrNull(offsets[15]) ?? '',
+  );
+  return object;
+}
+
+P _badgeModelDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 1:
+      return (_BadgeModelcategoryValueEnumMap[reader.readByteOrNull(offset)] ??
+          BadgeCategory.tasks) as P;
+    case 2:
+      return (reader.readStringOrNull(offset) ?? '#FFD700') as P;
+    case 3:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 4:
+      return (reader.readLongOrNull(offset) ?? 0) as P;
+    case 5:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 6:
+      return (reader.readStringOrNull(offset) ?? 'star') as P;
+    case 7:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 8:
+      return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 9:
+      return (reader.readDouble(offset)) as P;
+    case 10:
+      return (reader.readLongOrNull(offset) ?? 1) as P;
+    case 11:
+      return (reader.readLongOrNull(offset) ?? 1) as P;
+    case 12:
+      return (reader.readString(offset)) as P;
+    case 13:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 14:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 15:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+const _BadgeModelcategoryEnumValueMap = {
+  'streak': 0,
+  'tasks': 1,
+  'focus': 2,
+  'notes': 3,
+  'attendance': 4,
+  'flashcards': 5,
+  'goals': 6,
+  'social': 7,
+};
+const _BadgeModelcategoryValueEnumMap = {
+  0: BadgeCategory.streak,
+  1: BadgeCategory.tasks,
+  2: BadgeCategory.focus,
+  3: BadgeCategory.notes,
+  4: BadgeCategory.attendance,
+  5: BadgeCategory.flashcards,
+  6: BadgeCategory.goals,
+  7: BadgeCategory.social,
+};
+
+Id _badgeModelGetId(BadgeModel object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _badgeModelGetLinks(BadgeModel object) {
+  return [];
+}
+
+void _badgeModelAttach(IsarCollection<dynamic> col, Id id, BadgeModel object) {
+  object.id = id;
+}
+
+extension BadgeModelByIndex on IsarCollection<BadgeModel> {
+  Future<BadgeModel?> getByUuid(String uuid) {
+    return getByIndex(r'uuid', [uuid]);
+  }
+
+  BadgeModel? getByUuidSync(String uuid) {
+    return getByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<bool> deleteByUuid(String uuid) {
+    return deleteByIndex(r'uuid', [uuid]);
+  }
+
+  bool deleteByUuidSync(String uuid) {
+    return deleteByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<List<BadgeModel?>> getAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uuid', values);
+  }
+
+  List<BadgeModel?> getAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uuid', values);
+  }
+
+  Future<int> deleteAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uuid', values);
+  }
+
+  int deleteAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uuid', values);
+  }
+
+  Future<Id> putByUuid(BadgeModel object) {
+    return putByIndex(r'uuid', object);
+  }
+
+  Id putByUuidSync(BadgeModel object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uuid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUuid(List<BadgeModel> objects) {
+    return putAllByIndex(r'uuid', objects);
+  }
+
+  List<Id> putAllByUuidSync(List<BadgeModel> objects, {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uuid', objects, saveLinks: saveLinks);
+  }
+
+  Future<BadgeModel?> getByBadgeKey(String badgeKey) {
+    return getByIndex(r'badgeKey', [badgeKey]);
+  }
+
+  BadgeModel? getByBadgeKeySync(String badgeKey) {
+    return getByIndexSync(r'badgeKey', [badgeKey]);
+  }
+
+  Future<bool> deleteByBadgeKey(String badgeKey) {
+    return deleteByIndex(r'badgeKey', [badgeKey]);
+  }
+
+  bool deleteByBadgeKeySync(String badgeKey) {
+    return deleteByIndexSync(r'badgeKey', [badgeKey]);
+  }
+
+  Future<List<BadgeModel?>> getAllByBadgeKey(List<String> badgeKeyValues) {
+    final values = badgeKeyValues.map((e) => [e]).toList();
+    return getAllByIndex(r'badgeKey', values);
+  }
+
+  List<BadgeModel?> getAllByBadgeKeySync(List<String> badgeKeyValues) {
+    final values = badgeKeyValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'badgeKey', values);
+  }
+
+  Future<int> deleteAllByBadgeKey(List<String> badgeKeyValues) {
+    final values = badgeKeyValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'badgeKey', values);
+  }
+
+  int deleteAllByBadgeKeySync(List<String> badgeKeyValues) {
+    final values = badgeKeyValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'badgeKey', values);
+  }
+
+  Future<Id> putByBadgeKey(BadgeModel object) {
+    return putByIndex(r'badgeKey', object);
+  }
+
+  Id putByBadgeKeySync(BadgeModel object, {bool saveLinks = true}) {
+    return putByIndexSync(r'badgeKey', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByBadgeKey(List<BadgeModel> objects) {
+    return putAllByIndex(r'badgeKey', objects);
+  }
+
+  List<Id> putAllByBadgeKeySync(List<BadgeModel> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'badgeKey', objects, saveLinks: saveLinks);
+  }
+}
+
+extension BadgeModelQueryWhereSort
+    on QueryBuilder<BadgeModel, BadgeModel, QWhere> {
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhere> anyIsUnlocked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'isUnlocked'),
+      );
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhere> anyUnlockedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'unlockedAt'),
+      );
+    });
+  }
+}
+
+extension BadgeModelQueryWhere
+    on QueryBuilder<BadgeModel, BadgeModel, QWhereClause> {
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> idGreaterThan(Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> uuidEqualTo(
+      String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uuid',
+        value: [uuid],
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> uuidNotEqualTo(
+      String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> badgeKeyEqualTo(
+      String badgeKey) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'badgeKey',
+        value: [badgeKey],
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> badgeKeyNotEqualTo(
+      String badgeKey) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'badgeKey',
+              lower: [],
+              upper: [badgeKey],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'badgeKey',
+              lower: [badgeKey],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'badgeKey',
+              lower: [badgeKey],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'badgeKey',
+              lower: [],
+              upper: [badgeKey],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> isUnlockedEqualTo(
+      bool isUnlocked) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'isUnlocked',
+        value: [isUnlocked],
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> isUnlockedNotEqualTo(
+      bool isUnlocked) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'isUnlocked',
+              lower: [],
+              upper: [isUnlocked],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'isUnlocked',
+              lower: [isUnlocked],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'isUnlocked',
+              lower: [isUnlocked],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'isUnlocked',
+              lower: [],
+              upper: [isUnlocked],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> unlockedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'unlockedAt',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause>
+      unlockedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'unlockedAt',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> unlockedAtEqualTo(
+      DateTime? unlockedAt) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'unlockedAt',
+        value: [unlockedAt],
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> unlockedAtNotEqualTo(
+      DateTime? unlockedAt) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'unlockedAt',
+              lower: [],
+              upper: [unlockedAt],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'unlockedAt',
+              lower: [unlockedAt],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'unlockedAt',
+              lower: [unlockedAt],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'unlockedAt',
+              lower: [],
+              upper: [unlockedAt],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> unlockedAtGreaterThan(
+    DateTime? unlockedAt, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'unlockedAt',
+        lower: [unlockedAt],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> unlockedAtLessThan(
+    DateTime? unlockedAt, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'unlockedAt',
+        lower: [],
+        upper: [unlockedAt],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterWhereClause> unlockedAtBetween(
+    DateTime? lowerUnlockedAt,
+    DateTime? upperUnlockedAt, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'unlockedAt',
+        lower: [lowerUnlockedAt],
+        includeLower: includeLower,
+        upper: [upperUnlockedAt],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension BadgeModelQueryFilter
+    on QueryBuilder<BadgeModel, BadgeModel, QFilterCondition> {
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> badgeKeyEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'badgeKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      badgeKeyGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'badgeKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> badgeKeyLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'badgeKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> badgeKeyBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'badgeKey',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      badgeKeyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'badgeKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> badgeKeyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'badgeKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> badgeKeyContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'badgeKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> badgeKeyMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'badgeKey',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      badgeKeyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'badgeKey',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      badgeKeyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'badgeKey',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> categoryEqualTo(
+      BadgeCategory value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'category',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      categoryGreaterThan(
+    BadgeCategory value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'category',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> categoryLessThan(
+    BadgeCategory value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'category',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> categoryBetween(
+    BadgeCategory lower,
+    BadgeCategory upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'category',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> colorHexEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'colorHex',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      colorHexGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'colorHex',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> colorHexLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'colorHex',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> colorHexBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'colorHex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      colorHexStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'colorHex',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> colorHexEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'colorHex',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> colorHexContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'colorHex',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> colorHexMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'colorHex',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      colorHexIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'colorHex',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      colorHexIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'colorHex',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      createdAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      createdAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> createdAtEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      createdAtGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> createdAtLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> createdAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      currentProgressEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'currentProgress',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      currentProgressGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'currentProgress',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      currentProgressLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'currentProgress',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      currentProgressBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'currentProgress',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'description',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'description',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'description',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      descriptionIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'description',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> iconNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'iconName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      iconNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'iconName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> iconNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'iconName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> iconNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'iconName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      iconNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'iconName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> iconNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'iconName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> iconNameContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'iconName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> iconNameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'iconName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      iconNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'iconName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      iconNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'iconName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> idEqualTo(
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> isNewEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isNew',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> isUnlockedEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isUnlocked',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      progressRatioEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'progressRatio',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      progressRatioGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'progressRatio',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      progressRatioLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'progressRatio',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      progressRatioBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'progressRatio',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      requiredThresholdEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'requiredThreshold',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      requiredThresholdGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'requiredThreshold',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      requiredThresholdLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'requiredThreshold',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      requiredThresholdBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'requiredThreshold',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tier',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'tier',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'tier',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'tier',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierLabelEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tierLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      tierLabelGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'tierLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierLabelLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'tierLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierLabelBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'tierLabel',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      tierLabelStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'tierLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierLabelEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'tierLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierLabelContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'tierLabel',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> tierLabelMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'tierLabel',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      tierLabelIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'tierLabel',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      tierLabelIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'tierLabel',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'title',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'title',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      unlockedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'unlockedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      unlockedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'unlockedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> unlockedAtEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'unlockedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      unlockedAtGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'unlockedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition>
+      unlockedAtLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'unlockedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> unlockedAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'unlockedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uuid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uuid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterFilterCondition> uuidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+}
+
+extension BadgeModelQueryObject
+    on QueryBuilder<BadgeModel, BadgeModel, QFilterCondition> {}
+
+extension BadgeModelQueryLinks
+    on QueryBuilder<BadgeModel, BadgeModel, QFilterCondition> {}
+
+extension BadgeModelQuerySortBy
+    on QueryBuilder<BadgeModel, BadgeModel, QSortBy> {
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByBadgeKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'badgeKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByBadgeKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'badgeKey', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByCategory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByCategoryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByColorHex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorHex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByColorHexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorHex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByCurrentProgress() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'currentProgress', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy>
+      sortByCurrentProgressDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'currentProgress', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByDescription() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByDescriptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByIconName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByIconNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByIsNew() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isNew', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByIsNewDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isNew', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByIsUnlocked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUnlocked', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByIsUnlockedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUnlocked', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByProgressRatio() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'progressRatio', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByProgressRatioDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'progressRatio', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByRequiredThreshold() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'requiredThreshold', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy>
+      sortByRequiredThresholdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'requiredThreshold', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByTier() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tier', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByTierDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tier', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByTierLabel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tierLabel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByTierLabelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tierLabel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByUnlockedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'unlockedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByUnlockedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'unlockedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> sortByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+}
+
+extension BadgeModelQuerySortThenBy
+    on QueryBuilder<BadgeModel, BadgeModel, QSortThenBy> {
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByBadgeKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'badgeKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByBadgeKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'badgeKey', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByCategory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByCategoryDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'category', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByColorHex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorHex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByColorHexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'colorHex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByCurrentProgress() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'currentProgress', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy>
+      thenByCurrentProgressDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'currentProgress', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByDescription() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByDescriptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByIconName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByIconNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'iconName', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByIsNew() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isNew', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByIsNewDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isNew', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByIsUnlocked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUnlocked', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByIsUnlockedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isUnlocked', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByProgressRatio() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'progressRatio', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByProgressRatioDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'progressRatio', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByRequiredThreshold() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'requiredThreshold', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy>
+      thenByRequiredThresholdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'requiredThreshold', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByTier() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tier', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByTierDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tier', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByTierLabel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tierLabel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByTierLabelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'tierLabel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByUnlockedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'unlockedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByUnlockedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'unlockedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QAfterSortBy> thenByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+}
+
+extension BadgeModelQueryWhereDistinct
+    on QueryBuilder<BadgeModel, BadgeModel, QDistinct> {
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByBadgeKey(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'badgeKey', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByCategory() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'category');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByColorHex(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'colorHex', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdAt');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByCurrentProgress() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'currentProgress');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByDescription(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByIconName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'iconName', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByIsNew() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isNew');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByIsUnlocked() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isUnlocked');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByProgressRatio() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'progressRatio');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct>
+      distinctByRequiredThreshold() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'requiredThreshold');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByTier() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'tier');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByTierLabel(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'tierLabel', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByTitle(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByUnlockedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'unlockedAt');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeModel, QDistinct> distinctByUuid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension BadgeModelQueryProperty
+    on QueryBuilder<BadgeModel, BadgeModel, QQueryProperty> {
+  QueryBuilder<BadgeModel, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<BadgeModel, String, QQueryOperations> badgeKeyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'badgeKey');
+    });
+  }
+
+  QueryBuilder<BadgeModel, BadgeCategory, QQueryOperations> categoryProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'category');
+    });
+  }
+
+  QueryBuilder<BadgeModel, String, QQueryOperations> colorHexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'colorHex');
+    });
+  }
+
+  QueryBuilder<BadgeModel, DateTime?, QQueryOperations> createdAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdAt');
+    });
+  }
+
+  QueryBuilder<BadgeModel, int, QQueryOperations> currentProgressProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'currentProgress');
+    });
+  }
+
+  QueryBuilder<BadgeModel, String, QQueryOperations> descriptionProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'description');
+    });
+  }
+
+  QueryBuilder<BadgeModel, String, QQueryOperations> iconNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'iconName');
+    });
+  }
+
+  QueryBuilder<BadgeModel, bool, QQueryOperations> isNewProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isNew');
+    });
+  }
+
+  QueryBuilder<BadgeModel, bool, QQueryOperations> isUnlockedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isUnlocked');
+    });
+  }
+
+  QueryBuilder<BadgeModel, double, QQueryOperations> progressRatioProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'progressRatio');
+    });
+  }
+
+  QueryBuilder<BadgeModel, int, QQueryOperations> requiredThresholdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'requiredThreshold');
+    });
+  }
+
+  QueryBuilder<BadgeModel, int, QQueryOperations> tierProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'tier');
+    });
+  }
+
+  QueryBuilder<BadgeModel, String, QQueryOperations> tierLabelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'tierLabel');
+    });
+  }
+
+  QueryBuilder<BadgeModel, String, QQueryOperations> titleProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'title');
+    });
+  }
+
+  QueryBuilder<BadgeModel, DateTime?, QQueryOperations> unlockedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'unlockedAt');
+    });
+  }
+
+  QueryBuilder<BadgeModel, String, QQueryOperations> uuidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uuid');
+    });
+  }
+}

@@ -1,0 +1,2595 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'schedule_event_model.dart';
+
+// **************************************************************************
+// IsarCollectionGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+extension GetScheduleEventModelCollection on Isar {
+  IsarCollection<ScheduleEventModel> get scheduleEventModels =>
+      this.collection();
+}
+
+const ScheduleEventModelSchema = CollectionSchema(
+  name: r'ScheduleEventModel',
+  id: 2451816907041130302,
+  properties: {
+    r'attendees': PropertySchema(
+      id: 0,
+      name: r'attendees',
+      type: IsarType.stringList,
+    ),
+    r'createdAt': PropertySchema(
+      id: 1,
+      name: r'createdAt',
+      type: IsarType.dateTime,
+    ),
+    r'description': PropertySchema(
+      id: 2,
+      name: r'description',
+      type: IsarType.string,
+    ),
+    r'endTime': PropertySchema(
+      id: 3,
+      name: r'endTime',
+      type: IsarType.dateTime,
+    ),
+    r'hasReminder': PropertySchema(
+      id: 4,
+      name: r'hasReminder',
+      type: IsarType.bool,
+    ),
+    r'location': PropertySchema(
+      id: 5,
+      name: r'location',
+      type: IsarType.string,
+    ),
+    r'recurrence': PropertySchema(
+      id: 6,
+      name: r'recurrence',
+      type: IsarType.byte,
+      enumMap: _ScheduleEventModelrecurrenceEnumValueMap,
+    ),
+    r'reminderMinutesBefore': PropertySchema(
+      id: 7,
+      name: r'reminderMinutesBefore',
+      type: IsarType.long,
+    ),
+    r'startTime': PropertySchema(
+      id: 8,
+      name: r'startTime',
+      type: IsarType.dateTime,
+    ),
+    r'subject': PropertySchema(
+      id: 9,
+      name: r'subject',
+      type: IsarType.string,
+    ),
+    r'subjectColor': PropertySchema(
+      id: 10,
+      name: r'subjectColor',
+      type: IsarType.string,
+    ),
+    r'title': PropertySchema(
+      id: 11,
+      name: r'title',
+      type: IsarType.string,
+    ),
+    r'type': PropertySchema(
+      id: 12,
+      name: r'type',
+      type: IsarType.byte,
+      enumMap: _ScheduleEventModeltypeEnumValueMap,
+    ),
+    r'uuid': PropertySchema(
+      id: 13,
+      name: r'uuid',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _scheduleEventModelEstimateSize,
+  serialize: _scheduleEventModelSerialize,
+  deserialize: _scheduleEventModelDeserialize,
+  deserializeProp: _scheduleEventModelDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'uuid': IndexSchema(
+      id: 2134397340427724972,
+      name: r'uuid',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'uuid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
+  getId: _scheduleEventModelGetId,
+  getLinks: _scheduleEventModelGetLinks,
+  attach: _scheduleEventModelAttach,
+  version: '3.1.0+1',
+);
+
+int _scheduleEventModelEstimateSize(
+  ScheduleEventModel object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.attendees.length * 3;
+  {
+    for (var i = 0; i < object.attendees.length; i++) {
+      final value = object.attendees[i];
+      bytesCount += value.length * 3;
+    }
+  }
+  {
+    final value = object.description;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.location;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.subject;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.subjectColor;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  bytesCount += 3 + object.title.length * 3;
+  bytesCount += 3 + object.uuid.length * 3;
+  return bytesCount;
+}
+
+void _scheduleEventModelSerialize(
+  ScheduleEventModel object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeStringList(offsets[0], object.attendees);
+  writer.writeDateTime(offsets[1], object.createdAt);
+  writer.writeString(offsets[2], object.description);
+  writer.writeDateTime(offsets[3], object.endTime);
+  writer.writeBool(offsets[4], object.hasReminder);
+  writer.writeString(offsets[5], object.location);
+  writer.writeByte(offsets[6], object.recurrence.index);
+  writer.writeLong(offsets[7], object.reminderMinutesBefore);
+  writer.writeDateTime(offsets[8], object.startTime);
+  writer.writeString(offsets[9], object.subject);
+  writer.writeString(offsets[10], object.subjectColor);
+  writer.writeString(offsets[11], object.title);
+  writer.writeByte(offsets[12], object.type.index);
+  writer.writeString(offsets[13], object.uuid);
+}
+
+ScheduleEventModel _scheduleEventModelDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = ScheduleEventModel();
+  object.attendees = reader.readStringList(offsets[0]) ?? [];
+  object.createdAt = reader.readDateTime(offsets[1]);
+  object.description = reader.readStringOrNull(offsets[2]);
+  object.endTime = reader.readDateTime(offsets[3]);
+  object.hasReminder = reader.readBool(offsets[4]);
+  object.id = id;
+  object.location = reader.readStringOrNull(offsets[5]);
+  object.recurrence = _ScheduleEventModelrecurrenceValueEnumMap[
+          reader.readByteOrNull(offsets[6])] ??
+      RecurrenceType.none;
+  object.reminderMinutesBefore = reader.readLong(offsets[7]);
+  object.startTime = reader.readDateTime(offsets[8]);
+  object.subject = reader.readStringOrNull(offsets[9]);
+  object.subjectColor = reader.readStringOrNull(offsets[10]);
+  object.title = reader.readString(offsets[11]);
+  object.type =
+      _ScheduleEventModeltypeValueEnumMap[reader.readByteOrNull(offsets[12])] ??
+          EventType.lecture;
+  object.uuid = reader.readString(offsets[13]);
+  return object;
+}
+
+P _scheduleEventModelDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readStringList(offset) ?? []) as P;
+    case 1:
+      return (reader.readDateTime(offset)) as P;
+    case 2:
+      return (reader.readStringOrNull(offset)) as P;
+    case 3:
+      return (reader.readDateTime(offset)) as P;
+    case 4:
+      return (reader.readBool(offset)) as P;
+    case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
+      return (_ScheduleEventModelrecurrenceValueEnumMap[
+              reader.readByteOrNull(offset)] ??
+          RecurrenceType.none) as P;
+    case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
+      return (reader.readDateTime(offset)) as P;
+    case 9:
+      return (reader.readStringOrNull(offset)) as P;
+    case 10:
+      return (reader.readStringOrNull(offset)) as P;
+    case 11:
+      return (reader.readString(offset)) as P;
+    case 12:
+      return (_ScheduleEventModeltypeValueEnumMap[
+              reader.readByteOrNull(offset)] ??
+          EventType.lecture) as P;
+    case 13:
+      return (reader.readString(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+const _ScheduleEventModelrecurrenceEnumValueMap = {
+  'none': 0,
+  'daily': 1,
+  'weekly': 2,
+  'biweekly': 3,
+  'monthly': 4,
+};
+const _ScheduleEventModelrecurrenceValueEnumMap = {
+  0: RecurrenceType.none,
+  1: RecurrenceType.daily,
+  2: RecurrenceType.weekly,
+  3: RecurrenceType.biweekly,
+  4: RecurrenceType.monthly,
+};
+const _ScheduleEventModeltypeEnumValueMap = {
+  'lecture': 0,
+  'study': 1,
+  'exam': 2,
+  'assignment': 3,
+  'personal': 4,
+  'other': 5,
+};
+const _ScheduleEventModeltypeValueEnumMap = {
+  0: EventType.lecture,
+  1: EventType.study,
+  2: EventType.exam,
+  3: EventType.assignment,
+  4: EventType.personal,
+  5: EventType.other,
+};
+
+Id _scheduleEventModelGetId(ScheduleEventModel object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _scheduleEventModelGetLinks(
+    ScheduleEventModel object) {
+  return [];
+}
+
+void _scheduleEventModelAttach(
+    IsarCollection<dynamic> col, Id id, ScheduleEventModel object) {
+  object.id = id;
+}
+
+extension ScheduleEventModelByIndex on IsarCollection<ScheduleEventModel> {
+  Future<ScheduleEventModel?> getByUuid(String uuid) {
+    return getByIndex(r'uuid', [uuid]);
+  }
+
+  ScheduleEventModel? getByUuidSync(String uuid) {
+    return getByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<bool> deleteByUuid(String uuid) {
+    return deleteByIndex(r'uuid', [uuid]);
+  }
+
+  bool deleteByUuidSync(String uuid) {
+    return deleteByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<List<ScheduleEventModel?>> getAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uuid', values);
+  }
+
+  List<ScheduleEventModel?> getAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uuid', values);
+  }
+
+  Future<int> deleteAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uuid', values);
+  }
+
+  int deleteAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uuid', values);
+  }
+
+  Future<Id> putByUuid(ScheduleEventModel object) {
+    return putByIndex(r'uuid', object);
+  }
+
+  Id putByUuidSync(ScheduleEventModel object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uuid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUuid(List<ScheduleEventModel> objects) {
+    return putAllByIndex(r'uuid', objects);
+  }
+
+  List<Id> putAllByUuidSync(List<ScheduleEventModel> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uuid', objects, saveLinks: saveLinks);
+  }
+}
+
+extension ScheduleEventModelQueryWhereSort
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QWhere> {
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+}
+
+extension ScheduleEventModelQueryWhere
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QWhereClause> {
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhereClause>
+      idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhereClause>
+      idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhereClause>
+      idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhereClause>
+      uuidEqualTo(String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uuid',
+        value: [uuid],
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterWhereClause>
+      uuidNotEqualTo(String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+}
+
+extension ScheduleEventModelQueryFilter
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QFilterCondition> {
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'attendees',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'attendees',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'attendees',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'attendees',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'attendees',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'attendees',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'attendees',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'attendees',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'attendees',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'attendees',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'attendees',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'attendees',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'attendees',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'attendees',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'attendees',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      attendeesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'attendees',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      createdAtEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      createdAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      createdAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      createdAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'description',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'description',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'description',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'description',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'description',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'description',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      descriptionIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'description',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      endTimeEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'endTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      endTimeGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'endTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      endTimeLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'endTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      endTimeBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'endTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      hasReminderEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hasReminder',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'location',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'location',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'location',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'location',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'location',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'location',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'location',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'location',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'location',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'location',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'location',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      locationIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'location',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      recurrenceEqualTo(RecurrenceType value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recurrence',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      recurrenceGreaterThan(
+    RecurrenceType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'recurrence',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      recurrenceLessThan(
+    RecurrenceType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'recurrence',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      recurrenceBetween(
+    RecurrenceType lower,
+    RecurrenceType upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'recurrence',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      reminderMinutesBeforeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'reminderMinutesBefore',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      reminderMinutesBeforeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'reminderMinutesBefore',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      reminderMinutesBeforeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'reminderMinutesBefore',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      reminderMinutesBeforeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'reminderMinutesBefore',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      startTimeEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'startTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      startTimeGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'startTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      startTimeLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'startTime',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      startTimeBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'startTime',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'subject',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'subject',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subject',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'subject',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'subject',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'subject',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'subject',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'subject',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'subject',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'subject',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subject',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'subject',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'subjectColor',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'subjectColor',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subjectColor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'subjectColor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'subjectColor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'subjectColor',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'subjectColor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'subjectColor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'subjectColor',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'subjectColor',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subjectColor',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      subjectColorIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'subjectColor',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'title',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'title',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      typeEqualTo(EventType value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'type',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      typeGreaterThan(
+    EventType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'type',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      typeLessThan(
+    EventType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'type',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      typeBetween(
+    EventType lower,
+    EventType upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'type',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uuid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uuid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterFilterCondition>
+      uuidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+}
+
+extension ScheduleEventModelQueryObject
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QFilterCondition> {}
+
+extension ScheduleEventModelQueryLinks
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QFilterCondition> {}
+
+extension ScheduleEventModelQuerySortBy
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QSortBy> {
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByDescription() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByDescriptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByEndTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'endTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByEndTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'endTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByHasReminder() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasReminder', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByHasReminderDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasReminder', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByLocation() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'location', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByLocationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'location', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByRecurrence() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrence', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByRecurrenceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrence', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByReminderMinutesBefore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reminderMinutesBefore', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByReminderMinutesBeforeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reminderMinutesBefore', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByStartTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortBySubject() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subject', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortBySubjectDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subject', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortBySubjectColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortBySubjectColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectColor', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      sortByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+}
+
+extension ScheduleEventModelQuerySortThenBy
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QSortThenBy> {
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByDescription() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByDescriptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'description', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByEndTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'endTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByEndTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'endTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByHasReminder() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasReminder', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByHasReminderDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasReminder', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByLocation() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'location', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByLocationDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'location', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByRecurrence() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrence', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByRecurrenceDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurrence', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByReminderMinutesBefore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reminderMinutesBefore', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByReminderMinutesBeforeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'reminderMinutesBefore', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByStartTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'startTime', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenBySubject() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subject', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenBySubjectDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subject', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenBySubjectColor() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectColor', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenBySubjectColorDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectColor', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QAfterSortBy>
+      thenByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+}
+
+extension ScheduleEventModelQueryWhereDistinct
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct> {
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByAttendees() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'attendees');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdAt');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByDescription({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByEndTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'endTime');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByHasReminder() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hasReminder');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByLocation({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'location', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByRecurrence() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'recurrence');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByReminderMinutesBefore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'reminderMinutesBefore');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByStartTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'startTime');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctBySubject({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'subject', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctBySubjectColor({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'subjectColor', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByTitle({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'type');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, ScheduleEventModel, QDistinct>
+      distinctByUuid({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension ScheduleEventModelQueryProperty
+    on QueryBuilder<ScheduleEventModel, ScheduleEventModel, QQueryProperty> {
+  QueryBuilder<ScheduleEventModel, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, List<String>, QQueryOperations>
+      attendeesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'attendees');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, DateTime, QQueryOperations>
+      createdAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdAt');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, String?, QQueryOperations>
+      descriptionProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'description');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, DateTime, QQueryOperations>
+      endTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'endTime');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, bool, QQueryOperations>
+      hasReminderProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hasReminder');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, String?, QQueryOperations>
+      locationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'location');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, RecurrenceType, QQueryOperations>
+      recurrenceProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'recurrence');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, int, QQueryOperations>
+      reminderMinutesBeforeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'reminderMinutesBefore');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, DateTime, QQueryOperations>
+      startTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'startTime');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, String?, QQueryOperations>
+      subjectProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'subject');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, String?, QQueryOperations>
+      subjectColorProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'subjectColor');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, String, QQueryOperations> titleProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'title');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, EventType, QQueryOperations> typeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'type');
+    });
+  }
+
+  QueryBuilder<ScheduleEventModel, String, QQueryOperations> uuidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uuid');
+    });
+  }
+}

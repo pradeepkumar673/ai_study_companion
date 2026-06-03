@@ -1,96 +1,130 @@
 // lib/core/router/app_router.dart
 //
-// StudySpark — Declarative routing with GoRouter 14.
-// Shell-route wraps the bottom-nav scaffold; feature routes are nested under it.
-// Deep-link paths documented with each route.
+// StudySpark — Declarative routing (GoRouter 14).
+//
+// Route architecture:
+//   /                 → SplashScreen          (checks onboarding flag)
+//   /onboarding       → OnboardingScreen      (first-launch only)
+//   /dashboard        → DashboardScreen       ┐
+//   /tasks            → TasksScreen           │  StatefulShellRoute
+//   /tasks/:taskId    → TaskDetailScreen      │  (indexed stack,
+//   /notes            → NotesScreen           │   keeps tab state)
+//   /notes/editor     → NoteEditorScreen      │
+//   /analytics        → AnalyticsScreen       │
+//   /profile          → ProfileScreen         ┘
+//
+// All sub-routes (detail screens, editors) live inside their branch so the
+// back button restores the correct tab context.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// Screens — Shell (scaffold with bottom nav)
-import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
-import '../../features/tasks/presentation/screens/tasks_screen.dart';
-import '../../features/tasks/presentation/screens/task_detail_screen.dart';
-import '../../features/schedule/presentation/screens/schedule_screen.dart';
-import '../../features/focus/presentation/screens/focus_screen.dart';
-import '../../features/notes/presentation/screens/notes_screen.dart';
-import '../../features/notes/presentation/screens/note_editor_screen.dart';
-import '../../features/profile/presentation/screens/profile_screen.dart';
+// ── Shell / Navigation ──────────────────────────────────────────────────────
 import '../../shared/widgets/main_shell.dart';
 
-// Onboarding / Auth screens
-import '../../features/dashboard/presentation/screens/onboarding_screen.dart';
+// ── Splash & Onboarding ─────────────────────────────────────────────────────
 import '../../features/dashboard/presentation/screens/splash_screen.dart';
+import '../../features/dashboard/presentation/screens/onboarding_screen.dart';
+
+// ── Dashboard (Home tab) ────────────────────────────────────────────────────
+import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
+
+// ── Tasks tab ───────────────────────────────────────────────────────────────
+import '../../features/tasks/presentation/screens/tasks_screen.dart';
+import '../../features/tasks/presentation/screens/task_detail_screen.dart';
+
+// ── Notes tab ───────────────────────────────────────────────────────────────
+import '../../features/notes/presentation/screens/notes_screen.dart';
+import '../../features/notes/presentation/screens/note_editor_screen.dart';
+
+// ── Analytics tab ───────────────────────────────────────────────────────────
+import '../../features/analytics/presentation/screens/analytics_screen.dart';
+
+// ── Profile tab ─────────────────────────────────────────────────────────────
+import '../../features/profile/presentation/screens/profile_screen.dart';
 
 part 'app_router.g.dart';
 
 // ─── Route Name Constants ─────────────────────────────────────────────────────
+
 abstract final class AppRoutes {
-  // Top-level
-  static const splash      = 'splash';
-  static const onboarding  = 'onboarding';
+  // Top-level (outside shell)
+  static const splash     = 'splash';
+  static const onboarding = 'onboarding';
 
-  // Shell tabs
-  static const dashboard   = 'dashboard';
-  static const tasks       = 'tasks';
-  static const schedule    = 'schedule';
-  static const focus       = 'focus';
-  static const notes       = 'notes';
-  static const profile     = 'profile';
+  // Shell tabs (branch roots)
+  static const dashboard  = 'dashboard';
+  static const tasks      = 'tasks';
+  static const notes      = 'notes';
+  static const analytics  = 'analytics';
+  static const profile    = 'profile';
 
-  // Sub-routes
-  static const taskDetail  = 'task-detail';
-  static const noteEditor  = 'note-editor';
+  // Sub-routes (nested within their branch)
+  static const taskDetail = 'task-detail';
+  static const noteEditor = 'note-editor';
 }
 
 // ─── Route Path Constants ─────────────────────────────────────────────────────
+
 abstract final class AppPaths {
-  static const splash      = '/';
-  static const onboarding  = '/onboarding';
-  static const dashboard   = '/dashboard';
-  static const tasks       = '/tasks';
-  static const taskDetail  = '/tasks/:taskId';      // deep-link: /tasks/abc-123
-  static const schedule    = '/schedule';
-  static const focus       = '/focus';
-  static const notes       = '/notes';
-  static const noteEditor  = '/notes/editor';       // query: ?noteId=xyz (edit) or none (create)
-  static const profile     = '/profile';
+  // Top-level
+  static const splash     = '/';
+  static const onboarding = '/onboarding';
+
+  // Shell tab roots
+  static const dashboard  = '/dashboard';
+  static const tasks      = '/tasks';
+  static const notes      = '/notes';
+  static const analytics  = '/analytics';
+  static const profile    = '/profile';
+
+  // Sub-routes (deep-linkable)
+  static const taskDetail = '/tasks/:taskId';   // → /tasks/abc-123
+  static const noteEditor = '/notes/editor';    // query: ?noteId=xyz (edit) | none (create)
+
+  // Helper for programmatic navigation
+  static String taskDetailPath(String taskId) => '/tasks/$taskId';
+  static String noteEditorPath({String? noteId}) =>
+      noteId != null ? '/notes/editor?noteId=$noteId' : '/notes/editor';
 }
 
-/// Riverpod provider that exposes the router instance.
-/// Using [@riverpod] keeps the router alive for the app lifetime.
+// ─── Router Provider ──────────────────────────────────────────────────────────
+
+/// Riverpod provider that creates and exposes the GoRouter singleton.
+/// `keepAlive: true` ensures the router lives for the entire app lifetime.
 @Riverpod(keepAlive: true)
 GoRouter appRouter(AppRouterRef ref) {
-  // TODO: inject auth state provider here for redirect guards
-  // final authState = ref.watch(authStateProvider);
-
   return GoRouter(
     initialLocation: AppPaths.splash,
-    debugLogDiagnostics: true,   // set false in production
+    debugLogDiagnostics: true, // set false before production build
 
-    // ── Global redirect guard ──────────────────────────────────────────────
+    // ── Global redirect guard ────────────────────────────────────────────
     redirect: (BuildContext context, GoRouterState state) {
-      // TODO: redirect unauthenticated users to onboarding
-      // if (!authState.isLoggedIn && state.uri.path != AppPaths.onboarding) {
+      // TODO: uncomment when auth layer is implemented
+      // final isAuthed = ref.read(authStateProvider).isAuthenticated;
+      // final isOnboarding = state.uri.path == AppPaths.onboarding;
+      // final isSplash = state.uri.path == AppPaths.splash;
+      //
+      // if (!isAuthed && !isOnboarding && !isSplash) {
       //   return AppPaths.onboarding;
       // }
-      return null; // no redirect — allow all for now
+      return null; // allow all — guarded by SplashScreen routing logic
     },
 
-    // ── Error screen ──────────────────────────────────────────────────────
-    errorBuilder: (context, state) => _ErrorScreen(error: state.error),
+    // ── 404 Error screen ─────────────────────────────────────────────────
+    errorBuilder: (context, state) => _RouteErrorScreen(error: state.error),
 
     routes: [
-      // ── 1. Splash ────────────────────────────────────────────────────────
+      // ── 1. Splash (initial route) ──────────────────────────────────────
       GoRoute(
         name: AppRoutes.splash,
         path: AppPaths.splash,
         builder: (context, state) => const SplashScreen(),
       ),
 
-      // ── 2. Onboarding ────────────────────────────────────────────────────
+      // ── 2. Onboarding ──────────────────────────────────────────────────
       GoRoute(
         name: AppRoutes.onboarding,
         path: AppPaths.onboarding,
@@ -101,13 +135,13 @@ GoRouter appRouter(AppRouterRef ref) {
         ),
       ),
 
-      // ── 3. Shell (bottom navigation scaffold) ────────────────────────────
+      // ── 3. Shell — indexed tab stack ───────────────────────────────────
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) => MainShell(
-          navigationShell: navigationShell,
-        ),
+        builder: (context, state, navigationShell) =>
+            MainShell(navigationShell: navigationShell),
+
         branches: [
-          // Branch 0 — Dashboard
+          // ── Branch 0: Dashboard (Home) ─────────────────────────────────
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -121,7 +155,7 @@ GoRouter appRouter(AppRouterRef ref) {
             ],
           ),
 
-          // Branch 1 — Tasks
+          // ── Branch 1: Tasks ────────────────────────────────────────────
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -132,7 +166,7 @@ GoRouter appRouter(AppRouterRef ref) {
                   child: const TasksScreen(),
                 ),
                 routes: [
-                  // Sub-route: task detail /tasks/:taskId
+                  // Detail: /tasks/:taskId
                   GoRoute(
                     name: AppRoutes.taskDetail,
                     path: ':taskId',
@@ -141,7 +175,7 @@ GoRouter appRouter(AppRouterRef ref) {
                       return CustomTransitionPage(
                         key: state.pageKey,
                         child: TaskDetailScreen(taskId: taskId),
-                        transitionsBuilder: _fadeSlideTransition,
+                        transitionsBuilder: _slideUpTransition,
                       );
                     },
                   ),
@@ -150,35 +184,7 @@ GoRouter appRouter(AppRouterRef ref) {
             ],
           ),
 
-          // Branch 2 — Schedule
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: AppRoutes.schedule,
-                path: AppPaths.schedule,
-                pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const ScheduleScreen(),
-                ),
-              ),
-            ],
-          ),
-
-          // Branch 3 — Focus Timer
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                name: AppRoutes.focus,
-                path: AppPaths.focus,
-                pageBuilder: (context, state) => NoTransitionPage(
-                  key: state.pageKey,
-                  child: const FocusScreen(),
-                ),
-              ),
-            ],
-          ),
-
-          // Branch 4 — Notes
+          // ── Branch 2: Notes ────────────────────────────────────────────
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -189,7 +195,7 @@ GoRouter appRouter(AppRouterRef ref) {
                   child: const NotesScreen(),
                 ),
                 routes: [
-                  // Sub-route: note editor /notes/editor?noteId=...
+                  // Editor: /notes/editor?noteId=xyz (optional)
                   GoRoute(
                     name: AppRoutes.noteEditor,
                     path: 'editor',
@@ -198,7 +204,7 @@ GoRouter appRouter(AppRouterRef ref) {
                       return CustomTransitionPage(
                         key: state.pageKey,
                         child: NoteEditorScreen(noteId: noteId),
-                        transitionsBuilder: _fadeSlideTransition,
+                        transitionsBuilder: _slideUpTransition,
                       );
                     },
                   ),
@@ -207,7 +213,21 @@ GoRouter appRouter(AppRouterRef ref) {
             ],
           ),
 
-          // Branch 5 — Profile
+          // ── Branch 3: Analytics ────────────────────────────────────────
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                name: AppRoutes.analytics,
+                path: AppPaths.analytics,
+                pageBuilder: (context, state) => NoTransitionPage(
+                  key: state.pageKey,
+                  child: const AnalyticsScreen(),
+                ),
+              ),
+            ],
+          ),
+
+          // ── Branch 4: Profile ──────────────────────────────────────────
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -226,65 +246,97 @@ GoRouter appRouter(AppRouterRef ref) {
   );
 }
 
-// ─── Transition Builders ──────────────────────────────────────────────────────
+// ─── Custom Page Transitions ──────────────────────────────────────────────────
 
-/// Fade + upward slide — used for detail/editor screens.
+/// Fade + slight upward slide — used for onboarding and full-screen modals.
 Widget _fadeSlideTransition(
   BuildContext context,
   Animation<double> animation,
   Animation<double> secondaryAnimation,
   Widget child,
 ) {
-  const begin = Offset(0, 0.04);
-  const end   = Offset.zero;
-  const curve = Curves.easeOutCubic;
-
   return FadeTransition(
-    opacity: CurvedAnimation(parent: animation, curve: curve),
+    opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
     child: SlideTransition(
-      position: Tween(begin: begin, end: end).animate(
-        CurvedAnimation(parent: animation, curve: curve),
+      position: Tween<Offset>(
+        begin: const Offset(0, 0.05),
+        end: Offset.zero,
+      ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+      child: child,
+    ),
+  );
+}
+
+/// Slide up — used for detail screens and editors.
+Widget _slideUpTransition(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) {
+  return SlideTransition(
+    position: Tween<Offset>(
+      begin: const Offset(0, 1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+    child: FadeTransition(
+      opacity: CurvedAnimation(
+        parent: animation,
+        curve: const Interval(0, 0.5, curve: Curves.easeOut),
       ),
       child: child,
     ),
   );
 }
 
-// ─── Fallback Error Screen ────────────────────────────────────────────────────
-class _ErrorScreen extends StatelessWidget {
+// ─── 404 Error Screen ─────────────────────────────────────────────────────────
+
+class _RouteErrorScreen extends StatelessWidget {
+  const _RouteErrorScreen({required this.error});
   final Exception? error;
-  const _ErrorScreen({this.error});
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: cs.errorContainer,
+      backgroundColor: cs.surface,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.error_outline_rounded, size: 64, color: cs.error),
-              const SizedBox(height: 16),
-              Text(
-                'Page Not Found',
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                  color: cs.onErrorContainer,
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: cs.errorContainer,
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Icon(
+                  Icons.link_off_rounded,
+                  color: cs.error,
+                  size: 40,
                 ),
               ),
-              if (error != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  error.toString(),
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: cs.onErrorContainer.withOpacity(0.7),
-                  ),
-                ),
-              ],
               const SizedBox(height: 24),
+              Text(
+                'Page Not Found',
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  color: cs.onSurface,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "The route you're looking for doesn't exist.",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: cs.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 32),
               FilledButton.icon(
                 onPressed: () => context.go(AppPaths.dashboard),
                 icon: const Icon(Icons.home_rounded),

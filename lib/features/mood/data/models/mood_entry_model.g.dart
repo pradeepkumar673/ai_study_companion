@@ -1,0 +1,2108 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'mood_entry_model.dart';
+
+// **************************************************************************
+// IsarCollectionGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+extension GetMoodEntryModelCollection on Isar {
+  IsarCollection<MoodEntryModel> get moodEntryModels => this.collection();
+}
+
+const MoodEntryModelSchema = CollectionSchema(
+  name: r'MoodEntryModel',
+  id: -3638075499002910303,
+  properties: {
+    r'energyLevel': PropertySchema(
+      id: 0,
+      name: r'energyLevel',
+      type: IsarType.long,
+    ),
+    r'factors': PropertySchema(
+      id: 1,
+      name: r'factors',
+      type: IsarType.stringList,
+    ),
+    r'hasSleepData': PropertySchema(
+      id: 2,
+      name: r'hasSleepData',
+      type: IsarType.bool,
+    ),
+    r'localDateKey': PropertySchema(
+      id: 3,
+      name: r'localDateKey',
+      type: IsarType.string,
+    ),
+    r'loggedAt': PropertySchema(
+      id: 4,
+      name: r'loggedAt',
+      type: IsarType.dateTime,
+    ),
+    r'mood': PropertySchema(
+      id: 5,
+      name: r'mood',
+      type: IsarType.byte,
+      enumMap: _MoodEntryModelmoodEnumValueMap,
+    ),
+    r'moodScore': PropertySchema(
+      id: 6,
+      name: r'moodScore',
+      type: IsarType.long,
+    ),
+    r'note': PropertySchema(
+      id: 7,
+      name: r'note',
+      type: IsarType.string,
+    ),
+    r'sleepHours': PropertySchema(
+      id: 8,
+      name: r'sleepHours',
+      type: IsarType.double,
+    ),
+    r'stressLevel': PropertySchema(
+      id: 9,
+      name: r'stressLevel',
+      type: IsarType.long,
+    ),
+    r'uuid': PropertySchema(
+      id: 10,
+      name: r'uuid',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _moodEntryModelEstimateSize,
+  serialize: _moodEntryModelSerialize,
+  deserialize: _moodEntryModelDeserialize,
+  deserializeProp: _moodEntryModelDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'uuid': IndexSchema(
+      id: 2134397340427724972,
+      name: r'uuid',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'uuid',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'localDateKey': IndexSchema(
+      id: -4285120956082274571,
+      name: r'localDateKey',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'localDateKey',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'loggedAt': IndexSchema(
+      id: 1838198766103160564,
+      name: r'loggedAt',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'loggedAt',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    )
+  },
+  links: {},
+  embeddedSchemas: {},
+  getId: _moodEntryModelGetId,
+  getLinks: _moodEntryModelGetLinks,
+  attach: _moodEntryModelAttach,
+  version: '3.1.0+1',
+);
+
+int _moodEntryModelEstimateSize(
+  MoodEntryModel object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.factors.length * 3;
+  {
+    for (var i = 0; i < object.factors.length; i++) {
+      final value = object.factors[i];
+      bytesCount += value.length * 3;
+    }
+  }
+  bytesCount += 3 + object.localDateKey.length * 3;
+  bytesCount += 3 + object.note.length * 3;
+  bytesCount += 3 + object.uuid.length * 3;
+  return bytesCount;
+}
+
+void _moodEntryModelSerialize(
+  MoodEntryModel object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeLong(offsets[0], object.energyLevel);
+  writer.writeStringList(offsets[1], object.factors);
+  writer.writeBool(offsets[2], object.hasSleepData);
+  writer.writeString(offsets[3], object.localDateKey);
+  writer.writeDateTime(offsets[4], object.loggedAt);
+  writer.writeByte(offsets[5], object.mood.index);
+  writer.writeLong(offsets[6], object.moodScore);
+  writer.writeString(offsets[7], object.note);
+  writer.writeDouble(offsets[8], object.sleepHours);
+  writer.writeLong(offsets[9], object.stressLevel);
+  writer.writeString(offsets[10], object.uuid);
+}
+
+MoodEntryModel _moodEntryModelDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = MoodEntryModel(
+    energyLevel: reader.readLongOrNull(offsets[0]) ?? 3,
+    factors: reader.readStringList(offsets[1]) ?? const [],
+    id: id,
+    localDateKey: reader.readStringOrNull(offsets[3]) ?? '',
+    loggedAt: reader.readDateTimeOrNull(offsets[4]),
+    mood: _MoodEntryModelmoodValueEnumMap[reader.readByteOrNull(offsets[5])] ??
+        MoodType.neutral,
+    note: reader.readStringOrNull(offsets[7]) ?? '',
+    sleepHours: reader.readDoubleOrNull(offsets[8]) ?? 0.0,
+    stressLevel: reader.readLongOrNull(offsets[9]) ?? 3,
+    uuid: reader.readStringOrNull(offsets[10]) ?? '',
+  );
+  return object;
+}
+
+P _moodEntryModelDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readLongOrNull(offset) ?? 3) as P;
+    case 1:
+      return (reader.readStringList(offset) ?? const []) as P;
+    case 2:
+      return (reader.readBool(offset)) as P;
+    case 3:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 4:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 5:
+      return (_MoodEntryModelmoodValueEnumMap[reader.readByteOrNull(offset)] ??
+          MoodType.neutral) as P;
+    case 6:
+      return (reader.readLong(offset)) as P;
+    case 7:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    case 8:
+      return (reader.readDoubleOrNull(offset) ?? 0.0) as P;
+    case 9:
+      return (reader.readLongOrNull(offset) ?? 3) as P;
+    case 10:
+      return (reader.readStringOrNull(offset) ?? '') as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+const _MoodEntryModelmoodEnumValueMap = {
+  'terrible': 0,
+  'bad': 1,
+  'neutral': 2,
+  'good': 3,
+  'excellent': 4,
+};
+const _MoodEntryModelmoodValueEnumMap = {
+  0: MoodType.terrible,
+  1: MoodType.bad,
+  2: MoodType.neutral,
+  3: MoodType.good,
+  4: MoodType.excellent,
+};
+
+Id _moodEntryModelGetId(MoodEntryModel object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _moodEntryModelGetLinks(MoodEntryModel object) {
+  return [];
+}
+
+void _moodEntryModelAttach(
+    IsarCollection<dynamic> col, Id id, MoodEntryModel object) {
+  object.id = id;
+}
+
+extension MoodEntryModelByIndex on IsarCollection<MoodEntryModel> {
+  Future<MoodEntryModel?> getByUuid(String uuid) {
+    return getByIndex(r'uuid', [uuid]);
+  }
+
+  MoodEntryModel? getByUuidSync(String uuid) {
+    return getByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<bool> deleteByUuid(String uuid) {
+    return deleteByIndex(r'uuid', [uuid]);
+  }
+
+  bool deleteByUuidSync(String uuid) {
+    return deleteByIndexSync(r'uuid', [uuid]);
+  }
+
+  Future<List<MoodEntryModel?>> getAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndex(r'uuid', values);
+  }
+
+  List<MoodEntryModel?> getAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'uuid', values);
+  }
+
+  Future<int> deleteAllByUuid(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'uuid', values);
+  }
+
+  int deleteAllByUuidSync(List<String> uuidValues) {
+    final values = uuidValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'uuid', values);
+  }
+
+  Future<Id> putByUuid(MoodEntryModel object) {
+    return putByIndex(r'uuid', object);
+  }
+
+  Id putByUuidSync(MoodEntryModel object, {bool saveLinks = true}) {
+    return putByIndexSync(r'uuid', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByUuid(List<MoodEntryModel> objects) {
+    return putAllByIndex(r'uuid', objects);
+  }
+
+  List<Id> putAllByUuidSync(List<MoodEntryModel> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'uuid', objects, saveLinks: saveLinks);
+  }
+}
+
+extension MoodEntryModelQueryWhereSort
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QWhere> {
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhere> anyLoggedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'loggedAt'),
+      );
+    });
+  }
+}
+
+extension MoodEntryModelQueryWhere
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QWhereClause> {
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause> idEqualTo(
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause> idNotEqualTo(
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause> idGreaterThan(
+      Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause> idLessThan(
+      Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause> uuidEqualTo(
+      String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'uuid',
+        value: [uuid],
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      uuidNotEqualTo(String uuid) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [uuid],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'uuid',
+              lower: [],
+              upper: [uuid],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      localDateKeyEqualTo(String localDateKey) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'localDateKey',
+        value: [localDateKey],
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      localDateKeyNotEqualTo(String localDateKey) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'localDateKey',
+              lower: [],
+              upper: [localDateKey],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'localDateKey',
+              lower: [localDateKey],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'localDateKey',
+              lower: [localDateKey],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'localDateKey',
+              lower: [],
+              upper: [localDateKey],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      loggedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'loggedAt',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      loggedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'loggedAt',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      loggedAtEqualTo(DateTime? loggedAt) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'loggedAt',
+        value: [loggedAt],
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      loggedAtNotEqualTo(DateTime? loggedAt) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'loggedAt',
+              lower: [],
+              upper: [loggedAt],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'loggedAt',
+              lower: [loggedAt],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'loggedAt',
+              lower: [loggedAt],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'loggedAt',
+              lower: [],
+              upper: [loggedAt],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      loggedAtGreaterThan(
+    DateTime? loggedAt, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'loggedAt',
+        lower: [loggedAt],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      loggedAtLessThan(
+    DateTime? loggedAt, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'loggedAt',
+        lower: [],
+        upper: [loggedAt],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterWhereClause>
+      loggedAtBetween(
+    DateTime? lowerLoggedAt,
+    DateTime? upperLoggedAt, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'loggedAt',
+        lower: [lowerLoggedAt],
+        includeLower: includeLower,
+        upper: [upperLoggedAt],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension MoodEntryModelQueryFilter
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QFilterCondition> {
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      energyLevelEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'energyLevel',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      energyLevelGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'energyLevel',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      energyLevelLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'energyLevel',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      energyLevelBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'energyLevel',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'factors',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'factors',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'factors',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'factors',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'factors',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'factors',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'factors',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'factors',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'factors',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'factors',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'factors',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'factors',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'factors',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'factors',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'factors',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      factorsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'factors',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      hasSleepDataEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hasSleepData',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition> idEqualTo(
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'localDateKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'localDateKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'localDateKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'localDateKey',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'localDateKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'localDateKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'localDateKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'localDateKey',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'localDateKey',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      localDateKeyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'localDateKey',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      loggedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'loggedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      loggedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'loggedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      loggedAtEqualTo(DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'loggedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      loggedAtGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'loggedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      loggedAtLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'loggedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      loggedAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'loggedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodEqualTo(MoodType value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'mood',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodGreaterThan(
+    MoodType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'mood',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodLessThan(
+    MoodType value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'mood',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodBetween(
+    MoodType lower,
+    MoodType upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'mood',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodScoreEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'moodScore',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodScoreGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'moodScore',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodScoreLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'moodScore',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      moodScoreBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'moodScore',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'note',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'note',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'note',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'note',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      noteIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'note',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      sleepHoursEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sleepHours',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      sleepHoursGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'sleepHours',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      sleepHoursLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'sleepHours',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      sleepHoursBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'sleepHours',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      stressLevelEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'stressLevel',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      stressLevelGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'stressLevel',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      stressLevelLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'stressLevel',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      stressLevelBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'stressLevel',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'uuid',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'uuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'uuid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterFilterCondition>
+      uuidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'uuid',
+        value: '',
+      ));
+    });
+  }
+}
+
+extension MoodEntryModelQueryObject
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QFilterCondition> {}
+
+extension MoodEntryModelQueryLinks
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QFilterCondition> {}
+
+extension MoodEntryModelQuerySortBy
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QSortBy> {
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByEnergyLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'energyLevel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByEnergyLevelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'energyLevel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByHasSleepData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasSleepData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByHasSleepDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasSleepData', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByLocalDateKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDateKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByLocalDateKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDateKey', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByLoggedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'loggedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByLoggedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'loggedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByMood() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'mood', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByMoodDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'mood', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByMoodScore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'moodScore', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByMoodScoreDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'moodScore', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByNote() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByNoteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortBySleepHours() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepHours', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortBySleepHoursDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepHours', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByStressLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'stressLevel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      sortByStressLevelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'stressLevel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> sortByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+}
+
+extension MoodEntryModelQuerySortThenBy
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QSortThenBy> {
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByEnergyLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'energyLevel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByEnergyLevelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'energyLevel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByHasSleepData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasSleepData', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByHasSleepDataDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasSleepData', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByLocalDateKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDateKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByLocalDateKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDateKey', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByLoggedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'loggedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByLoggedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'loggedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByMood() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'mood', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByMoodDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'mood', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByMoodScore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'moodScore', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByMoodScoreDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'moodScore', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByNote() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByNoteDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'note', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenBySleepHours() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepHours', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenBySleepHoursDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sleepHours', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByStressLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'stressLevel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy>
+      thenByStressLevelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'stressLevel', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByUuid() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QAfterSortBy> thenByUuidDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'uuid', Sort.desc);
+    });
+  }
+}
+
+extension MoodEntryModelQueryWhereDistinct
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct> {
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct>
+      distinctByEnergyLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'energyLevel');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct> distinctByFactors() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'factors');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct>
+      distinctByHasSleepData() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hasSleepData');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct>
+      distinctByLocalDateKey({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'localDateKey', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct> distinctByLoggedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'loggedAt');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct> distinctByMood() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'mood');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct>
+      distinctByMoodScore() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'moodScore');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct> distinctByNote(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'note', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct>
+      distinctBySleepHours() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'sleepHours');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct>
+      distinctByStressLevel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'stressLevel');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodEntryModel, QDistinct> distinctByUuid(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
+    });
+  }
+}
+
+extension MoodEntryModelQueryProperty
+    on QueryBuilder<MoodEntryModel, MoodEntryModel, QQueryProperty> {
+  QueryBuilder<MoodEntryModel, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, int, QQueryOperations> energyLevelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'energyLevel');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, List<String>, QQueryOperations>
+      factorsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'factors');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, bool, QQueryOperations> hasSleepDataProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hasSleepData');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, String, QQueryOperations>
+      localDateKeyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'localDateKey');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, DateTime?, QQueryOperations> loggedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'loggedAt');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, MoodType, QQueryOperations> moodProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'mood');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, int, QQueryOperations> moodScoreProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'moodScore');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, String, QQueryOperations> noteProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'note');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, double, QQueryOperations> sleepHoursProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'sleepHours');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, int, QQueryOperations> stressLevelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'stressLevel');
+    });
+  }
+
+  QueryBuilder<MoodEntryModel, String, QQueryOperations> uuidProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'uuid');
+    });
+  }
+}

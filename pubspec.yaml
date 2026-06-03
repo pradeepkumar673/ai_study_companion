@@ -44,7 +44,7 @@ dependencies:
   timezone: ^0.9.4                # Timezone-aware scheduling
 
   # ─── Utilities ───────────────────────────────────────────────────
-  intl: ^0.19.0                   # Internationalization & date formatting
+  intl: ^0.20.2                   # Internationalization & date formatting
   uuid: ^4.4.0                    # RFC 4122 UUID generation
   freezed_annotation: ^2.4.1      # Immutable data classes
   json_annotation: ^4.9.0         # JSON serialization annotations
@@ -53,9 +53,9 @@ dependencies:
   logger: ^2.4.0                  # Pretty-printing structured logger
   shared_preferences: ^2.3.1      # Key-value persistence for settings
 
-  # ─── AI / HTTP (Hugging Face integration placeholder) ────────────
-  dio: ^5.5.0+1                   # Powerful HTTP client with interceptors
-  retrofit: ^4.1.0                # Type-safe REST client (annotation-based)
+
+  # ─── AI / HTTP ───────────────────────────────────────────────────
+  dio: ^5.5.0+1                   # HTTP client for API calls
 
   # ─── Icons & Assets ──────────────────────────────────────────────
   hugeicons: ^0.0.7               # 3800+ Huge icon pack
@@ -68,11 +68,10 @@ dev_dependencies:
 
   # ─── Code Generation ─────────────────────────────────────────────
   build_runner: ^2.4.11           # Source-code generation runner
-  riverpod_generator: ^2.4.3      # Generates @riverpod providers
+  riverpod_generator: 2.4.0      # Generates @riverpod providers
   freezed: ^2.5.2                 # Generates immutable unions & data classes
   json_serializable: ^6.8.0       # Generates fromJson/toJson
   isar_generator: ^3.1.0+1        # Generates Isar schema code
-  retrofit_generator: ^8.1.0      # Generates Retrofit HTTP clients
 
 flutter:
   uses-material-design: true

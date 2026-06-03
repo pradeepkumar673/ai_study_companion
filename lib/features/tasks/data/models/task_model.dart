@@ -39,6 +39,7 @@ class TaskModel {
     this.attachmentPaths = const [],
     this.notificationId,
     this.isStarred = false,
+    this.isArchived = false,
     this.createdAt,
     this.updatedAt,
     this.completedAt,
@@ -125,6 +126,9 @@ class TaskModel {
   /// Starred / pinned to the top of the list.
   @Index()
   bool isStarred;
+
+  @Index()
+  bool isArchived;
 
   // ── Timestamps ────────────────────────────────────────────────────────────
 

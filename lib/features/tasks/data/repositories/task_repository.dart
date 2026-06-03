@@ -170,16 +170,16 @@ class TaskRepository {
     await _isar.writeTxn(() => _isar.taskModels.put(updated));
   }
 
-  /// Convenience: toggle [TaskStatus.completed] ↔ [TaskStatus.todo].
+  /// Convenience: toggle [TaskStatus.done] ↔ [TaskStatus.todo].
   Future<TaskModel?> toggleComplete(String uuid) async {
     final task = await getTaskByUuid(uuid);
     if (task == null) return null;
 
-    task.status = task.status == TaskStatus.completed
+    task.status = task.status == TaskStatus.done
         ? TaskStatus.todo
-        : TaskStatus.completed;
+        : TaskStatus.done;
     task.completedAt =
-        task.status == TaskStatus.completed ? DateTime.now().toUtc() : null;
+        task.status == TaskStatus.done ? DateTime.now().toUtc() : null;
     task.updatedAt = DateTime.now().toUtc();
 
     await _isar.writeTxn(() => _isar.taskModels.put(task));
@@ -231,7 +231,7 @@ class TaskRepository {
   Future<int> deleteAllCompleted() async {
     final completed = await _isar.taskModels
         .filter()
-        .statusEqualTo(TaskStatus.completed)
+        .statusEqualTo(TaskStatus.done)
         .findAll();
     int count = 0;
     await _isar.writeTxn(() async {

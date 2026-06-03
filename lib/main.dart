@@ -92,8 +92,8 @@ class _StudySparkAppState extends ConsumerState<StudySparkApp> {
     return MaterialApp.router(
       title: 'StudySpark',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: themeMode,
       routerConfig: router,
     );
