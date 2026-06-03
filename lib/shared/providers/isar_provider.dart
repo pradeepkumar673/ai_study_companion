@@ -1,22 +1,124 @@
 // lib/shared/providers/isar_provider.dart
 //
-// Provides the bootstrapped Isar instance and SharedPreferences.
-// Both are overridden at the ProviderScope level in main.dart.
+// StudySpark — Isar singleton provider.
+//
+// Opens (or re-uses) the single Isar database instance for the app.
+// Every Isar @Collection schema MUST be listed in the [schemas] list below;
+// omitting one causes Isar to silently ignore that collection.
+//
+// Usage in repositories:
+//   final isar = ref.watch(isarProvider);
+//   isar.taskModels.where()…
+// ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 
-/// Provides the single [Isar] database instance for the entire app.
-/// Overridden in main.dart after [Isar.open] completes.
+// ── Model imports ─────────────────────────────────────────────────────────────
+import '../../features/profile/data/models/user_model.dart';
+import '../../features/profile/data/models/badge_model.dart';
+import '../../features/tasks/data/models/task_model.dart';
+import '../../features/tasks/data/models/subtask_model.dart';
+import '../../features/schedule/data/models/subject_model.dart';
+import '../../features/schedule/data/models/attendance_model.dart';
+import '../../features/notes/data/models/note_model.dart';
+import '../../features/focus/data/models/pomodoro_session_model.dart';
+import '../../features/mood/data/models/mood_entry_model.dart';
+import '../../features/flashcards/data/models/flashcard_model.dart';
+import '../../features/flashcards/data/models/quiz_model.dart';
+import '../../features/goals/data/models/goal_model.dart';
+
+// ── Generated schema imports (produced by isar_generator) ────────────────────
+// These are the *.g.dart files — run `flutter pub run build_runner build`
+// to regenerate after any model change.
+import '../../features/profile/data/models/user_model.g.dart';
+import '../../features/profile/data/models/badge_model.g.dart';
+import '../../features/tasks/data/models/task_model.g.dart';
+import '../../features/tasks/data/models/subtask_model.g.dart';
+import '../../features/schedule/data/models/subject_model.g.dart';
+import '../../features/schedule/data/models/attendance_model.g.dart';
+import '../../features/notes/data/models/note_model.g.dart';
+import '../../features/focus/data/models/pomodoro_session_model.g.dart';
+import '../../features/mood/data/models/mood_entry_model.g.dart';
+import '../../features/flashcards/data/models/flashcard_model.g.dart';
+import '../../features/flashcards/data/models/quiz_model.g.dart';
+import '../../features/goals/data/models/goal_model.g.dart';
+
+// ─── Schema Registry ─────────────────────────────────────────────────────────
+
+/// Complete list of Isar collection schemas.
+/// ⚠️  Add every new @Collection class here or it will NOT be persisted.
+const List<CollectionSchema<dynamic>> isarSchemas = [
+  // Profile
+  UserModelSchema,
+  BadgeModelSchema,
+
+  // Tasks
+  TaskModelSchema,
+  // SubtaskModel is @embedded — no top-level schema needed.
+
+  // Schedule / Subjects
+  SubjectModelSchema,
+  AttendanceModelSchema,
+
+  // Notes
+  NoteModelSchema,
+
+  // Focus
+  PomodoroSessionModelSchema,
+
+  // Mood
+  MoodEntryModelSchema,
+
+  // Flashcards & Quizzes
+  FlashcardModelSchema,
+  FlashcardDeckModelSchema,
+  QuizModelSchema,
+  QuizQuestionModelSchema,
+  QuizAttemptModelSchema,
+
+  // Goals
+  GoalModelSchema,
+];
+
+// ─── Provider ─────────────────────────────────────────────────────────────────
+
+/// Holds the open [Isar] instance.  Overridden in [ProviderScope] by
+/// [main.dart] after the async [openIsar] call completes.
+///
+/// Do NOT watch this in widget code — it is set once and never changes.
 final isarProvider = Provider<Isar>((ref) {
-  throw UnimplementedError('isarProvider must be overridden in ProviderScope');
-});
-
-/// Provides [SharedPreferences] for lightweight key-value storage.
-/// Overridden in main.dart after [SharedPreferences.getInstance] completes.
-final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError(
-    'sharedPreferencesProvider must be overridden in ProviderScope',
+    'isarProvider must be overridden in ProviderScope with an open Isar instance. '
+    'See main.dart bootstrapIsar().',
   );
 });
+
+// ─── Bootstrap helper (called from main.dart) ─────────────────────────────────
+
+/// Opens the Isar database, registering all known collection schemas.
+/// Call this once during app startup before mounting [ProviderScope].
+///
+/// ```dart
+/// final isar = await bootstrapIsar();
+/// runApp(ProviderScope(
+///   overrides: [isarProvider.overrideWithValue(isar)],
+///   child: const StudySparkApp(),
+/// ));
+/// ```
+Future<Isar> bootstrapIsar() async {
+  final dir = await getApplicationDocumentsDirectory();
+
+  // Return existing instance if already open (e.g. hot-restart in debug).
+  if (Isar.instanceNames.contains('studyspark')) {
+    return Isar.getInstance('studyspark')!;
+  }
+
+  return Isar.open(
+    isarSchemas,
+    directory: dir.path,
+    name: 'studyspark',
+    inspector: true, // Set to false for production builds.
+  );
+}
