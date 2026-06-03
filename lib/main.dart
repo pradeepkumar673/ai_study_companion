@@ -1,194 +1,101 @@
 // lib/main.dart
 //
-// StudySpark — Application entry point.
+// StudySpark — App entry point (Step 3 updated)
 //
-// Responsibilities:
-//  1. Bootstrap Isar database
-//  2. Initialize shared preferences & timezone data
-//  3. Configure Flutter local notifications
-//  4. Wrap the widget tree with ProviderScope (Riverpod)
-//  5. Mount StudySparkApp which wires GoRouter + Material 3 themes
-
-import 'dart:async';
+// Bootstrap order:
+//   1. Flutter bindings
+//   2. Isar database           → bootstrapIsar()
+//   3. NotificationService     → NotificationService.init()
+//   4. SharedPreferences       → SharedPreferences.getInstance()
+//   5. Mount ProviderScope with provider overrides
+//   6. Kick off one-time startup tasks (streak refresh, badge seed)
+// ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'core/services/notification_service.dart';
 import 'shared/providers/isar_provider.dart';
+import 'shared/providers/repository_providers.dart';
 import 'shared/providers/theme_provider.dart';
-import 'shared/providers/notifications_provider.dart';
 
-// ── Isar schema imports (add each model here after isar_generator runs) ─────
-import 'features/tasks/data/models/task_model.dart';
-import 'features/notes/data/models/note_model.dart';
-import 'features/schedule/data/models/schedule_event_model.dart';
-import 'features/focus/data/models/focus_session_model.dart';
-import 'features/profile/data/models/user_profile_model.dart';
+// ─── Entry point ──────────────────────────────────────────────────────────────
 
-// ─── Notification plugin singleton ───────────────────────────────────────────
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-
-// ─── App Entry Point ──────────────────────────────────────────────────────────
-void main() async {
-  // Ensure bindings are initialized before any platform channel calls.
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ── System UI Chrome ──────────────────────────────────────────────────────
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark, // overridden per-theme later
-  ));
+  // 1. Open Isar database.
+  final isar = await bootstrapIsar();
 
-  // ── Parallel async init ────────────────────────────────────────────────────
-  final (isar, prefs) = await (
-    _initIsar(),
-    SharedPreferences.getInstance(),
-  ).wait;
+  // 2. Initialise local notifications plugin.
+  final notificationService = await NotificationService.init();
 
-  // ── Timezone ──────────────────────────────────────────────────────────────
-  tz.initializeTimeZones();
-  // TODO: detect device local timezone via flutter_timezone package
-  // final localTz = await FlutterTimezone.getLocalTimezone();
-  // tz.setLocalLocation(tz.getLocation(localTz));
+  // 3. Load SharedPreferences (used by ThemeModeNotifier).
+  final prefs = await SharedPreferences.getInstance();
 
-  // ── Local Notifications ───────────────────────────────────────────────────
-  await _initNotifications();
-
-  // ── Launch App ────────────────────────────────────────────────────────────
   runApp(
     ProviderScope(
       overrides: [
-        // Inject bootstrapped singletons into Riverpod
+        // ── Required overrides ────────────────────────────────────────────
         isarProvider.overrideWithValue(isar),
+        notificationServiceProvider.overrideWithValue(notificationService),
         sharedPreferencesProvider.overrideWithValue(prefs),
-        notificationsPluginProvider.overrideWithValue(
-          flutterLocalNotificationsPlugin,
-        ),
       ],
       child: const StudySparkApp(),
     ),
   );
 }
 
-// ─── Isar Initialization ─────────────────────────────────────────────────────
-Future<Isar> _initIsar() async {
-  final dir = await getApplicationDocumentsDirectory();
-  return Isar.open(
-    [
-      // Register all collection schemas here
-      TaskModelSchema,
-      NoteModelSchema,
-      ScheduleEventModelSchema,
-      FocusSessionModelSchema,
-      UserProfileModelSchema,
-    ],
-    directory: dir.path,
-    name: 'studyspark_db',
-    inspector: true, // set false for production builds
-  );
-}
+// ─── Root Widget ──────────────────────────────────────────────────────────────
 
-// ─── Notification Initialization ─────────────────────────────────────────────
-Future<void> _initNotifications() async {
-  const androidSettings = AndroidInitializationSettings(
-    '@mipmap/ic_launcher', // use a custom monochrome icon in production
-  );
-  const darwinSettings = DarwinInitializationSettings(
-    requestAlertPermission: true,
-    requestBadgePermission: true,
-    requestSoundPermission: true,
-  );
-  const initSettings = InitializationSettings(
-    android: androidSettings,
-    iOS: darwinSettings,
-    macOS: darwinSettings,
-  );
-
-  await flutterLocalNotificationsPlugin.initialize(
-    initSettings,
-    onDidReceiveNotificationResponse: _onNotificationTap,
-    onDidReceiveBackgroundNotificationResponse: _onNotificationTap,
-  );
-}
-
-/// Called when user taps a local notification.
-/// Uses the payload to deep-link into the app.
-@pragma('vm:entry-point')
-void _onNotificationTap(NotificationResponse response) {
-  // TODO: parse response.payload and navigate via GoRouter
-  // e.g. payload = 'task:abc-123' → navigate to task detail
-  debugPrint('[Notification] tapped: ${response.payload}');
-}
-
-// ─── Root Widget ─────────────────────────────────────────────────────────────
-class StudySparkApp extends ConsumerWidget {
+class StudySparkApp extends ConsumerStatefulWidget {
   const StudySparkApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Listen to theme mode preference stored in SharedPreferences
+  ConsumerState<StudySparkApp> createState() => _StudySparkAppState();
+}
+
+class _StudySparkAppState extends ConsumerState<StudySparkApp> {
+  @override
+  void initState() {
+    super.initState();
+    // Run one-time startup tasks after the first frame renders so the
+    // ProviderScope is fully mounted before reading providers.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _onAppStart());
+  }
+
+  Future<void> _onAppStart() async {
+    // Ensure the user profile record exists (creates with defaults if new).
+    final profile = ref.read(profileRepositoryProvider);
+    await profile.getOrCreateProfile();
+
+    // Refresh the study streak counter.
+    final gamification = ref.read(gamificationServiceProvider);
+    await gamification.onStreakUpdated();
+
+    // Seed default badge records if the collection is empty.
+    // TODO: call BadgeSeedService.seed(ref) once implemented.
+
+    // Schedule the daily streak reminder notification.
+    final notif = ref.read(notificationServiceProvider);
+    await notif.scheduleDailyStreakReminder(hour: 20, minute: 0);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final router = ref.watch(appRouterProvider);
     final themeMode = ref.watch(themeModeProvider);
 
-    // GoRouter instance from Riverpod
-    final router = ref.watch(appRouterProvider);
-
     return MaterialApp.router(
-      // ── Identity ──────────────────────────────────────────────────────────
       title: 'StudySpark',
       debugShowCheckedModeBanner: false,
-
-      // ── Routing ───────────────────────────────────────────────────────────
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
+      themeMode: themeMode,
       routerConfig: router,
-
-      // ── Theming ───────────────────────────────────────────────────────────
-      theme:      AppTheme.light,
-      darkTheme:  AppTheme.dark,
-      themeMode:  themeMode,
-
-      // ── Localizations (add arb files for i18n later) ───────────────────
-      // localizationsDelegates: AppLocalizations.localizationsDelegates,
-      // supportedLocales: AppLocalizations.supportedLocales,
-
-      // ── Builder: set system overlay style based on resolved theme ─────
-      builder: (context, child) {
-        final isDark = Theme.of(context).brightness == Brightness.dark;
-        SystemChrome.setSystemUIOverlayStyle(
-          isDark
-              ? SystemUiOverlayStyle.light.copyWith(
-                  statusBarColor: Colors.transparent,
-                  systemNavigationBarColor: AppColors.surfaceDark,
-                )
-              : SystemUiOverlayStyle.dark.copyWith(
-                  statusBarColor: Colors.transparent,
-                  systemNavigationBarColor: AppColors.surfaceLight,
-                ),
-        );
-
-        // MediaQuery text-scale clamping: prevents layout breakage on large fonts
-        final mediaQuery = MediaQuery.of(context);
-        return MediaQuery(
-          data: mediaQuery.copyWith(
-            textScaler: TextScaler.linear(
-              mediaQuery.textScaleFactor.clamp(0.8, 1.3),
-            ),
-          ),
-          child: child!,
-        );
-      },
     );
   }
 }
