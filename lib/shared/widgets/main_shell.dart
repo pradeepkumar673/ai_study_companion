@@ -11,7 +11,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_theme.dart';
+import '../../core/utils/haptic_utils.dart';
+import '../../core/router/app_router.dart';
 import '../providers/ui_state_providers.dart';
+import 'connectivity_banner.dart';
 
 // ─── Nav Item Model ───────────────────────────────────────────────────────────
 
@@ -85,7 +88,12 @@ class MainShell extends ConsumerWidget {
 
     return Scaffold(
       extendBody: true, // content flows under the nav bar
-      body: navigationShell,
+      body: Column(
+        children: [
+          const ConnectivityBanner(),
+          Expanded(child: navigationShell),
+        ],
+      ),
 
       // ── Context-aware FAB ─────────────────────────────────────────────────
       floatingActionButton: _SparkFab(
@@ -304,8 +312,12 @@ class _SparkFab extends StatelessWidget {
     return FloatingActionButton.extended(
       heroTag: 'spark_fab_$currentIndex',
       onPressed: () {
-        // TODO: navigate to respective creation sheet
-        // currentIndex == 1 ? context.push(AppPaths.taskCreate) : context.push(AppPaths.noteEditor)
+        HapticUtils.light();
+        if (currentIndex == 1) {
+          context.push(AppPaths.taskCreate);
+        } else if (currentIndex == 2) {
+          context.push(AppPaths.noteEditor);
+        }
       },
       icon: Icon(config.icon),
       label: Text(

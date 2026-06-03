@@ -11,6 +11,9 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/widgets/shimmer_widgets.dart';
+import '../../../../core/widgets/async_error_widget.dart';
+import '../../../../core/widgets/empty_state_widget.dart';
 import '../../data/models/note_model.dart';
 import '../providers/notes_provider.dart';
 import '../widgets/note_card.dart';
@@ -84,9 +87,11 @@ class _NotesScreenState extends ConsumerState<NotesScreen>
           // ── Note grid / list ──────────────────────────────────────────────
           Expanded(
             child: notesAsync.when(
-              loading: () =>
-                  const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text('Error: $e')),
+              loading: () => const ShimmerList(itemCount: 6),
+              error: (e, st) => AsyncErrorWidget(
+                error: e,
+                onRetry: () => ref.invalidate(notesStreamProvider),
+              ),
               data: (allNotes) {
                 final query =
                     ref.watch(noteSearchQueryProvider).toLowerCase();
@@ -111,15 +116,13 @@ class _NotesScreenState extends ConsumerState<NotesScreen>
                 }
 
                 if (notes.isEmpty) {
-                  return _EmptyNotesState(
-                    isFiltered: query.isNotEmpty || selectedTag != null,
-                    onClear: () {
-                      _closeSearch();
-                      ref
-                          .read(noteTagFilterProvider.notifier)
-                          .select(null);
-                    },
-                  );
+                  if (query.isNotEmpty || selectedTag != null) {
+                    return EmptyStateWidget.search();
+                  } else {
+                    return EmptyStateWidget.notes(
+                      onAdd: () => context.push('/notes/new'),
+                    );
+                  }
                 }
 
                 return isGrid
@@ -322,56 +325,6 @@ class _NotesList extends StatelessWidget {
           onTap: () => context.push('/notes/${note.uuid}'),
         );
       },
-    );
-  }
-}
-
-// ─── Empty state ──────────────────────────────────────────────────────────────
-
-class _EmptyNotesState extends StatelessWidget {
-  const _EmptyNotesState({
-    required this.isFiltered,
-    required this.onClear,
-  });
-
-  final bool isFiltered;
-  final VoidCallback onClear;
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final tt = Theme.of(context).textTheme;
-
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(isFiltered ? '🔍' : '📝',
-              style: const TextStyle(fontSize: 64))
-              .animate()
-              .scale(duration: 600.ms, curve: Curves.easeOutBack),
-          const SizedBox(height: 16),
-          Text(
-            isFiltered ? 'No notes found' : 'No notes yet',
-            style: tt.headlineSmall!.copyWith(fontWeight: FontWeight.w700),
-          ).animate(delay: 100.ms).fadeIn(),
-          const SizedBox(height: 8),
-          Text(
-            isFiltered
-                ? 'Try a different search or tag filter'
-                : 'Tap the + button to create your first note',
-            style: tt.bodyMedium!.copyWith(color: cs.onSurfaceVariant),
-          ).animate(delay: 150.ms).fadeIn(),
-          if (isFiltered) ...[
-            const SizedBox(height: 20),
-            OutlinedButton(
-              onPressed: onClear,
-              child: const Text('Clear filters'),
-            ).animate(delay: 200.ms).fadeIn(),
-          ],
-          const SizedBox(height: 120),
-        ],
-      ),
     );
   }
 }

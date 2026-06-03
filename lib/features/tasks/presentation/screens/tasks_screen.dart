@@ -19,6 +19,10 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/enums/app_enums.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/widgets/shimmer_widgets.dart';
+import '../../../../core/widgets/async_error_widget.dart';
+import '../../../../core/widgets/empty_state_widget.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../shared/providers/repository_providers.dart';
 import '../../../../shared/providers/ui_state_providers.dart';
 import '../../data/models/task_model.dart';
@@ -210,8 +214,11 @@ class _TodayTab extends ConsumerWidget {
     final overdueAsync = ref.watch(overdueTasksProvider);
 
     return todayAsync.when(
-      loading: () => const _TasksShimmer(),
-      error: (e, _) => _ErrorState(message: e.toString()),
+      loading: () => const ShimmerList(itemCount: 5),
+      error: (e, _) => AsyncErrorWidget(
+        error: e,
+        onRetry: () => ref.invalidate(todayTasksProvider),
+      ),
       data: (today) {
         final filtered = _applySearch(today, searchQuery);
         return overdueAsync.when(
@@ -251,7 +258,11 @@ class _TodayTab extends ConsumerWidget {
                 ),
                 // Task list
                 if (filtered.isEmpty)
-                  const SliverFillRemaining(child: _EmptyState(tab: _TaskTab.today))
+                  SliverFillRemaining(
+                    child: EmptyStateWidget.tasks(
+                      onAdd: () => context.push(AppPaths.taskCreate),
+                    ),
+                  )
                 else
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
@@ -282,12 +293,17 @@ class _UpcomingTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(upcomingTasksProvider);
     return async.when(
-      loading: () => const _TasksShimmer(),
-      error: (e, _) => _ErrorState(message: e.toString()),
+      loading: () => const ShimmerList(itemCount: 5),
+      error: (e, _) => AsyncErrorWidget(
+        error: e,
+        onRetry: () => ref.invalidate(upcomingTasksProvider),
+      ),
       data: (tasks) {
         final filtered = _applySearch(tasks, searchQuery);
         if (filtered.isEmpty) {
-          return const _EmptyState(tab: _TaskTab.upcoming);
+          return EmptyStateWidget.tasks(
+            onAdd: () => context.push(AppPaths.taskCreate),
+          );
         }
         // Group by date
         final groups = <String, List<TaskModel>>{};
@@ -325,12 +341,17 @@ class _PriorityTab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final async = ref.watch(highPriorityTasksProvider);
     return async.when(
-      loading: () => const _TasksShimmer(),
-      error: (e, _) => _ErrorState(message: e.toString()),
+      loading: () => const ShimmerList(itemCount: 5),
+      error: (e, _) => AsyncErrorWidget(
+        error: e,
+        onRetry: () => ref.invalidate(highPriorityTasksProvider),
+      ),
       data: (tasks) {
         final filtered = _applySearch(tasks, searchQuery);
         if (filtered.isEmpty) {
-          return const _EmptyState(tab: _TaskTab.priority);
+          return EmptyStateWidget.tasks(
+            onAdd: () => context.push(AppPaths.taskCreate),
+          );
         }
         // Group by priority
         final groups = <Priority, List<TaskModel>>{};
@@ -368,8 +389,11 @@ class _AllTasksTab extends ConsumerWidget {
     final filter = ref.watch(taskFilterProvider);
 
     return async.when(
-      loading: () => const _TasksShimmer(),
-      error: (e, _) => _ErrorState(message: e.toString()),
+      loading: () => const ShimmerList(itemCount: 5),
+      error: (e, _) => AsyncErrorWidget(
+        error: e,
+        onRetry: () => ref.invalidate(tasksProvider),
+      ),
       data: (all) {
         var tasks = all;
         if (filter.status != null) {
@@ -388,7 +412,9 @@ class _AllTasksTab extends ConsumerWidget {
             _FilterBar(),
             Expanded(
               child: filtered.isEmpty
-                  ? const _EmptyState(tab: _TaskTab.all)
+                  ? EmptyStateWidget.tasks(
+                      onAdd: () => context.push(AppPaths.taskCreate),
+                    )
                   : ListView.builder(
                       padding: const EdgeInsets.only(bottom: 100),
                       itemCount: filtered.length,

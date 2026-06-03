@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/services/ai_service.dart';
+import '../../../../../core/utils/haptic_utils.dart';
 
 // ============================================================
 //  AI Study Assistant Screen
@@ -73,6 +74,7 @@ class _AiAssistantScreenState extends State<AiAssistantScreen>
     final trimmed = text.trim();
     if (trimmed.isEmpty || _isTyping) return;
 
+    HapticUtils.light();
     _controller.clear();
     setState(() {
       _messages.add(AiMessage(
@@ -85,19 +87,33 @@ class _AiAssistantScreenState extends State<AiAssistantScreen>
     });
     _scrollToBottom();
 
-    final reply = await AiService.instance.chat(trimmed, List.unmodifiable(_messages));
-
-    if (mounted) {
-      setState(() {
-        _isTyping = false;
-        _messages.add(AiMessage(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          text: reply,
-          isUser: false,
-          timestamp: DateTime.now(),
-        ));
-      });
-      _scrollToBottom(delay: 80);
+    try {
+      final reply = await AiService.instance.chat(trimmed, List.unmodifiable(_messages));
+      if (mounted) {
+        setState(() {
+          _isTyping = false;
+          _messages.add(AiMessage(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            text: reply,
+            isUser: false,
+            timestamp: DateTime.now(),
+          ));
+        });
+        _scrollToBottom(delay: 80);
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isTyping = false;
+          _messages.add(AiMessage(
+            id: 'err_${DateTime.now().millisecondsSinceEpoch}',
+            text: '⚠️ Sorry, I couldn\'t reach the AI right now. Please check your connection and try again.',
+            isUser: false,
+            timestamp: DateTime.now(),
+          ));
+        });
+        _scrollToBottom(delay: 80);
+      }
     }
   }
 

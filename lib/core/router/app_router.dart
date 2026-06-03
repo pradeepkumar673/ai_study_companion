@@ -34,6 +34,7 @@ import '../../features/dashboard/presentation/screens/dashboard_screen.dart';
 // ── Tasks tab ───────────────────────────────────────────────────────────────
 import '../../features/tasks/presentation/screens/tasks_screen.dart';
 import '../../features/tasks/presentation/screens/task_detail_screen.dart';
+import '../../features/tasks/presentation/widgets/add_edit_task_sheet.dart';
 
 // ── Notes tab ───────────────────────────────────────────────────────────────
 import '../../features/notes/presentation/screens/notes_screen.dart';
@@ -75,6 +76,7 @@ abstract final class AppRoutes {
 
   // Sub-routes (nested within their branch)
   static const taskDetail = 'task-detail';
+  static const taskCreate = 'task-create';
   static const noteEditor = 'note-editor';
 }
 
@@ -94,6 +96,7 @@ abstract final class AppPaths {
 
   // Sub-routes (deep-linkable)
   static const taskDetail = '/tasks/:taskId';   // → /tasks/abc-123
+  static const taskCreate = '/tasks/create';
   static const noteEditor = '/notes/editor';    // query: ?noteId=xyz (edit) | none (create)
 
   // Helper for programmatic navigation
@@ -229,6 +232,15 @@ GoRouter appRouter(AppRouterRef ref) {
                   child: const TasksScreen(),
                 ),
                 routes: [
+                  GoRoute(
+                    name: AppRoutes.taskCreate,
+                    path: 'create',
+                    pageBuilder: (context, state) => CustomTransitionPage(
+                      key: state.pageKey,
+                      child: const AddEditTaskSheet(),
+                      transitionsBuilder: _slideUpTransition,
+                    ),
+                  ),
                   // Detail: /tasks/:taskId
                   GoRoute(
                     name: AppRoutes.taskDetail,

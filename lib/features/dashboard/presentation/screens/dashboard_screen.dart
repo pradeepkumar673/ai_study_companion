@@ -15,10 +15,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/enums/app_enums.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../shared/providers/isar_provider.dart';
 
 // ─── Mock data (replace with real providers once wired) ──────────────────────
 
-const _mockUserName = 'Pradeep';
 const _mockStreak = 14;
 const _mockXp = 2340;
 const _mockLevel = 8;
@@ -214,7 +214,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen>
 
 // ─── Sliver App Bar ───────────────────────────────────────────────────────────
 
-class _DashboardSliverAppBar extends StatelessWidget {
+class _DashboardSliverAppBar extends ConsumerWidget {
   const _DashboardSliverAppBar({
     required this.cs,
     required this.isDark,
@@ -228,8 +228,10 @@ class _DashboardSliverAppBar extends StatelessWidget {
   final AnimationController pulseController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final today = DateFormat('EEEE, MMMM d').format(DateTime.now());
+    final prefs = ref.watch(sharedPreferencesProvider);
+    final userName = prefs.getString('user_name') ?? 'Student';
 
     return SliverAppBar(
       expandedHeight: 200,
@@ -246,6 +248,7 @@ class _DashboardSliverAppBar extends StatelessWidget {
           greeting: greeting,
           today: today,
           pulseController: pulseController,
+          userName: userName,
         ),
         titlePadding: EdgeInsets.zero,
       ),
@@ -274,7 +277,7 @@ class _DashboardSliverAppBar extends StatelessWidget {
               radius: 18,
               backgroundColor: cs.primaryContainer,
               child: Text(
-                _mockUserName[0],
+                userName.isNotEmpty ? userName[0].toUpperCase() : 'S',
                 style: TextStyle(
                   color: cs.onPrimaryContainer,
                   fontWeight: FontWeight.w700,
@@ -298,6 +301,7 @@ class _HeroHeader extends StatelessWidget {
     required this.greeting,
     required this.today,
     required this.pulseController,
+    required this.userName,
   });
 
   final ColorScheme cs;
@@ -305,6 +309,7 @@ class _HeroHeader extends StatelessWidget {
   final String greeting;
   final String today;
   final AnimationController pulseController;
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -390,7 +395,7 @@ class _HeroHeader extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              _mockUserName,
+                              userName,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,

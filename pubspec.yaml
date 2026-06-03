@@ -65,6 +65,8 @@ dependencies:
   # ─── Icons & Assets ──────────────────────────────────────────────
   hugeicons: ^0.0.7               # 3800+ Huge icon pack
   flutter_svg: ^2.0.10+1          # SVG rendering
+  connectivity_plus: ^6.0.3
+  internet_connection_checker_plus: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +79,8 @@ dev_dependencies:
   freezed: ^2.5.2                 # Generates immutable unions & data classes
   json_serializable: ^6.8.0       # Generates fromJson/toJson
   isar_generator: ^3.1.0+1        # Generates Isar schema code
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.1
 
 flutter:
   uses-material-design: true
@@ -86,6 +90,43 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/animations/         # Lottie JSON files
+    - assets/splash/
+
+# ─────────────────────────────────────────────────────────────────
+# App Icon Configuration
+# ─────────────────────────────────────────────────────────────────
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21
+  web:
+    generate: false
+  windows:
+    generate: false
+  macos:
+    generate: false
+  android_adaptive_icon:
+    background_color: "#6C4FF8"
+    foreground_image: "assets/images/icon_foreground.png"
+
+# ─────────────────────────────────────────────────────────────────
+# Native Splash Screen Configuration
+# ─────────────────────────────────────────────────────────────────
+flutter_native_splash:
+  color: "#6C4FF8"
+  color_dark: "#1A1040"
+  image: assets/splash/splash_logo.png
+  image_dark: assets/splash/splash_logo.png
+  android_12:
+    color: "#6C4FF8"
+    image: assets/splash/splash_logo.png
+    icon_background_color: "#6C4FF8"
+    color_dark: "#1A1040"
+    image_dark: assets/splash/splash_logo.png
+  fullscreen: true
+  android: true
+  ios: true
 
   # ─── Fonts (supplemented by google_fonts at runtime) ─────────────
   # Google Fonts used: Clash Display (display), DM Sans (body)
