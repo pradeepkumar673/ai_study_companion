@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark | Discover</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+        }
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+        .ai-glow-purple {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        .ai-glow-teal {
+            box-shadow: 0 0 20px rgba(20, 184, 166, 0.15);
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#31394d",
+                      "secondary-fixed": "#71f8e4",
+                      "on-tertiary-fixed": "#23005c",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "secondary-container": "#04b4a2",
+                      "on-secondary": "#003731",
+                      "surface-variant": "#2d3449",
+                      "surface-container-low": "#131b2e",
+                      "on-error": "#690005",
+                      "surface-container-lowest": "#060e20",
+                      "on-primary-container": "#90a8ff",
+                      "on-background": "#dae2fd",
+                      "outline": "#8f909d",
+                      "inverse-primary": "#4059aa",
+                      "error-container": "#93000a",
+                      "on-tertiary-container": "#b89cff",
+                      "primary-container": "#1e3a8a",
+                      "tertiary-container": "#4e03b8",
+                      "surface-container": "#171f33",
+                      "on-surface-variant": "#c5c5d3",
+                      "inverse-surface": "#dae2fd",
+                      "secondary": "#4fdbc8",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "surface-tint": "#b6c4ff",
+                      "primary": "#b6c4ff",
+                      "surface-dim": "#0b1326",
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "surface-container-high": "#222a3d",
+                      "on-secondary-container": "#003f38",
+                      "surface-container-highest": "#2d3449",
+                      "on-secondary-fixed": "#00201c",
+                      "error": "#ffb4ab",
+                      "on-error-container": "#ffdad6",
+                      "surface": "#0b1326",
+                      "tertiary-fixed": "#e9ddff",
+                      "outline-variant": "#444651",
+                      "tertiary": "#d0bcff",
+                      "inverse-on-surface": "#283044",
+                      "background": "#0b1326",
+                      "on-secondary-fixed-variant": "#005048",
+                      "on-primary-fixed": "#00164e",
+                      "on-primary-fixed-variant": "#264191",
+                      "on-tertiary": "#3c0091",
+                      "on-surface": "#dae2fd",
+                      "on-primary": "#05297a",
+                      "primary-fixed": "#dce1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "margin-desktop": "64px",
+                      "xl": "32px",
+                      "margin-mobile": "20px",
+                      "lg": "24px",
+                      "base": "8px",
+                      "xs": "4px",
+                      "gutter": "16px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-base">
+<span class="font-headline-md text-headline-md font-bold text-secondary">StudySpark</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center hover:bg-surface-bright/20 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a young student with a friendly expression, set against a blurred academic library background. The lighting is warm and cinematic, emphasizing a focused yet approachable personality. The overall aesthetic is clean and modern, consistent with a high-end educational platform's dark theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZT-5qwmxtE0bdFKn6SsQU0QNUTbwv0aL-dx-pKC7gwL9ZHBwAGRJw7SzcRUDRysYzB-RU7n9xlgsIh0oJyQbIOTZ2cOjX4lFtzLMqLDCiByDI1TL5FZ0Zz_PqVlm0wR-t1C_99NmC5XONjvvAH493k7Awh-64qyaJJzO7EqjuI4MR0RcZILpyPT9Jr6DdvbXvVRFUaNPo7rUQCOosE5Rc43340Hp66iiZUSA_s2hMzdT5n0Q0S0JwFTmCyFdvGt_kiHKeRlUVSfc"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Search & Filter Section -->
+<section class="mb-xl">
+<div class="relative max-w-2xl mx-auto">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-secondary transition-colors">search</span>
+<input class="w-full h-14 pl-12 pr-4 bg-surface-container-high border-none rounded-xl focus:ring-2 focus:ring-secondary/50 text-on-surface placeholder-on-surface-variant transition-all ai-glow-teal" placeholder="Search notes, quizzes, or topics..." type="text"/>
+</div>
+<!-- Filter Pills -->
+<div class="flex gap-sm mt-md overflow-x-auto scrollbar-hide py-1">
+<button class="px-lg py-2 rounded-full bg-secondary text-on-secondary font-label-lg whitespace-nowrap active:scale-95 transition-all">All</button>
+<button class="px-lg py-2 rounded-full bg-surface-container-highest text-on-surface-variant hover:bg-surface-bright font-label-lg whitespace-nowrap active:scale-95 transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">description</span> Notes
+                    </button>
+<button class="px-lg py-2 rounded-full bg-surface-container-highest text-on-surface-variant hover:bg-surface-bright font-label-lg whitespace-nowrap active:scale-95 transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">task_alt</span> Tasks
+                    </button>
+<button class="px-lg py-2 rounded-full bg-surface-container-highest text-on-surface-variant hover:bg-surface-bright font-label-lg whitespace-nowrap active:scale-95 transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">folder_open</span> Documents
+                    </button>
+<button class="px-lg py-2 rounded-full bg-surface-container-highest text-on-surface-variant hover:bg-surface-bright font-label-lg whitespace-nowrap active:scale-95 transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">quiz</span> Quizzes
+                    </button>
+</div>
+</div>
+</section>
+<!-- Bento Layout for Discovery -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Recent Searches -->
+<div class="md:col-span-4 flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-on-surface">Recent Searches</h2>
+<button class="text-secondary font-label-lg hover:underline">Clear</button>
+</div>
+<div class="glass-card rounded-xl p-md flex flex-col gap-sm">
+<div class="flex items-center gap-md p-sm hover:bg-surface-bright/30 rounded-lg cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-outline group-hover:text-secondary">history</span>
+<span class="flex-1 text-on-surface-variant">Quantum Mechanics Basics</span>
+<span class="material-symbols-outlined text-outline text-[18px]">north_west</span>
+</div>
+<div class="flex items-center gap-md p-sm hover:bg-surface-bright/30 rounded-lg cursor-pointer transition-colors group border-t border-outline-variant/10 pt-sm">
+<span class="material-symbols-outlined text-outline group-hover:text-secondary">history</span>
+<span class="flex-1 text-on-surface-variant">Organic Chemistry Exam Prep</span>
+<span class="material-symbols-outlined text-outline text-[18px]">north_west</span>
+</div>
+<div class="flex items-center gap-md p-sm hover:bg-surface-bright/30 rounded-lg cursor-pointer transition-colors group border-t border-outline-variant/10 pt-sm">
+<span class="material-symbols-outlined text-outline group-hover:text-secondary">history</span>
+<span class="flex-1 text-on-surface-variant">Final Presentation Slide Templates</span>
+<span class="material-symbols-outlined text-outline text-[18px]">north_west</span>
+</div>
+</div>
+<!-- Quick AI Spark -->
+<div class="glass-card rounded-xl p-lg bg-gradient-to-br from-tertiary-container/20 to-surface-container border-tertiary/20 ai-glow-purple relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-tertiary/10 blur-3xl rounded-full"></div>
+<div class="flex items-center gap-sm mb-sm">
+<span class="material-symbols-outlined text-tertiary">auto_awesome</span>
+<span class="font-label-lg text-tertiary">AI SUGGESTION</span>
+</div>
+<p class="text-on-surface font-headline-md leading-tight mb-md">"Based on your 2:00 PM exam, you should review 'Cellular Metabolism' notes."</p>
+<button class="w-full py-2 bg-tertiary text-on-tertiary-fixed font-label-lg rounded-lg hover:opacity-90 active:scale-[0.98] transition-all">Review Now</button>
+</div>
+</div>
+<!-- Trending & Suggested -->
+<div class="md:col-span-8 flex flex-col gap-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">Suggested for You</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<!-- Course Card 1 -->
+<div class="glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-transform cursor-pointer group">
+<div class="h-32 bg-surface-variant relative">
+<img alt="Physics" class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity" data-alt="A macro photograph of a laboratory laser beam refracting through a crystal prism, creating a sharp spectrum of light against a deep navy blue background. The lighting is precise and technical, with a cool, intellectual atmosphere. The style is minimalist and high-contrast, fitting the StudySpark dark-mode aesthetic with vibrant teal and purple light accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDbn2g_ZY_4IId9Axe81p-fvupE4vStUWfTB4usaQsOFKvHbcHEwmh3ZqQwhVyxeYZ9i2uBWfB59wBQ96BdVLlbYxMaGLsNXWPS3fJSj9fM_gx8gFrLAASNC2YAA6uOLQ1oG-VQu0z7P7h6xFsWBoQdMF2q5U5FVi6DNadJk5JoTx60BL3kreWigrP-3tt-K1dWBIiNwmBZ_7YhW2emuDDDwwMpJGCyvFKaJ3LIZI8Bht1MNyRgtxRDD6L_Uv6PNoak-K2-8DGMsU"/>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-secondary-container/80 text-on-secondary-container text-label-sm backdrop-blur-sm">PHYSICS 302</div>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md mb-xs text-secondary">Electromagnetism Intensive</h3>
+<p class="text-on-surface-variant text-body-md mb-md">4 Modules • 12 Active Quizzes</p>
+<div class="flex items-center gap-sm">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container bg-surface-bright"></div>
+<div class="w-6 h-6 rounded-full border-2 border-surface-container bg-surface-bright"></div>
+<div class="w-6 h-6 rounded-full border-2 border-surface-container bg-surface-bright"></div>
+</div>
+<span class="text-label-sm text-outline">12 students studying now</span>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="glass-card rounded-xl overflow-hidden hover:scale-[1.02] transition-transform cursor-pointer group">
+<div class="h-32 bg-surface-variant relative">
+<img alt="Chemistry" class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity" data-alt="Close-up of vibrant chemical reagents in Erlenmeyer flasks on a stainless steel lab bench. The scene is illuminated by bioluminescent-style teal and violet glowing fluids, creating a high-energy, modern scientific feel. The background is a dark, clean research environment, perfectly matching the StudySpark premium dark theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxq8YoQeWb-5lNuppchnequwvv-0ks9gpJuUI3Sp341bklorAXo3Mc28eBxDgE1qlwWHgg6QZpe-De1heswTzPKLie-CZFE3X6eRA4T0KJO9g7D-hKFGcPCOwZxLF_XsEt8EEg6-fCWmQKTY66TfAbRO4XdrzqKX0_Y0TkY9g6QMppUlKLQ0X1PZs4W5c08_xwtxgt2fGzjaM86GF4crt9JT614PI7NPMCVEusgcyI8XkGTg4fsfDBRlUsU1Fs_d8QebrZK07BZDc"/>
+<div class="absolute bottom-3 left-3 px-2 py-1 rounded bg-tertiary-container/80 text-on-tertiary-container text-label-sm backdrop-blur-sm">CHEM 105</div>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md mb-xs text-tertiary">Organic Synthesis Lab</h3>
+<p class="text-on-surface-variant text-body-md mb-md">6 Modules • 8 Documents</p>
+<div class="flex items-center gap-sm">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-surface-container bg-surface-bright"></div>
+<div class="w-6 h-6 rounded-full border-2 border-surface-container bg-surface-bright"></div>
+</div>
+<span class="text-label-sm text-outline">8 students studying now</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Trending Topics -->
+<div class="mt-md">
+<h3 class="font-label-lg text-on-surface-variant mb-md tracking-wider uppercase">Trending Topics</h3>
+<div class="flex flex-wrap gap-sm">
+<div class="px-md py-3 rounded-xl bg-surface-container-high border border-outline-variant/10 flex items-center gap-md hover:border-secondary transition-colors cursor-pointer group">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<p class="text-on-surface font-label-lg">Macroeconomics</p>
+<p class="text-label-sm text-outline">2.4k views this week</p>
+</div>
+</div>
+<div class="px-md py-3 rounded-xl bg-surface-container-high border border-outline-variant/10 flex items-center gap-md hover:border-secondary transition-colors cursor-pointer group">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<p class="text-on-surface font-label-lg">Neuroscience 101</p>
+<p class="text-label-sm text-outline">1.8k views this week</p>
+</div>
+</div>
+<div class="px-md py-3 rounded-xl bg-surface-container-high border border-outline-variant/10 flex items-center gap-md hover:border-secondary transition-colors cursor-pointer group">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<div>
+<p class="text-on-surface font-label-lg">Linear Algebra</p>
+<p class="text-label-sm text-outline">1.2k views this week</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-low/80 backdrop-blur-xl border-t border-outline-variant/10 rounded-t-xl shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-label-sm font-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-sm font-label-sm">Notes</span>
+</a>
+<!-- ACTIVE TAB: Search/Explore maps to "Analytics" or conceptual discovery -->
+<a class="flex flex-col items-center justify-center bg-secondary-container/20 text-secondary rounded-full px-4 py-1 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-label-sm font-label-sm">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</a>
+</nav>
+<!-- FAB for AI Help (only on main discovery screen) -->
+<button class="fixed right-6 bottom-24 w-14 h-14 rounded-full bg-gradient-to-tr from-secondary to-tertiary text-on-secondary shadow-xl flex items-center justify-center active:scale-90 transition-transform z-40 ai-glow-purple">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</button>
+<script>
+        // Micro-interaction for search focus
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.parentElement.classList.add('scale-[1.01]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.parentElement.classList.remove('scale-[1.01]');
+        });
+
+        // Simple pill selection logic
+        const pills = document.querySelectorAll('.flex.gap-sm.mt-md button');
+        pills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                pills.forEach(p => {
+                    p.classList.remove('bg-secondary', 'text-on-secondary');
+                    p.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+                });
+                pill.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+                pill.classList.add('bg-secondary', 'text-on-secondary');
+            });
+        });
+    </script>
+</body></html>

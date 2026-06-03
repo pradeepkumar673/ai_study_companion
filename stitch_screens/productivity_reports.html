@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark | Productivity Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "background": "#0b1326",
+                      "surface-container": "#171f33",
+                      "tertiary-container": "#4e03b8",
+                      "surface-variant": "#2d3449",
+                      "secondary": "#4fdbc8",
+                      "on-tertiary": "#3c0091",
+                      "surface-dim": "#0b1326",
+                      "on-secondary-container": "#003f38",
+                      "tertiary": "#d0bcff",
+                      "on-secondary": "#003731",
+                      "secondary-fixed": "#71f8e4",
+                      "inverse-primary": "#4059aa",
+                      "surface": "#0b1326",
+                      "surface-container-lowest": "#060e20",
+                      "on-tertiary-container": "#b89cff",
+                      "primary-fixed": "#dce1ff",
+                      "primary-container": "#1e3a8a",
+                      "surface-container-high": "#222a3d",
+                      "surface-container-highest": "#2d3449",
+                      "on-secondary-fixed": "#00201c",
+                      "error-container": "#93000a",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-secondary-fixed-variant": "#005048",
+                      "outline-variant": "#444651",
+                      "surface-tint": "#b6c4ff",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "on-primary-fixed": "#00164e",
+                      "on-error": "#690005",
+                      "error": "#ffb4ab",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "on-surface-variant": "#c5c5d3",
+                      "inverse-surface": "#dae2fd",
+                      "on-primary-fixed-variant": "#264191",
+                      "on-surface": "#dae2fd",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#8f909d",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "tertiary-fixed": "#e9ddff",
+                      "on-primary-container": "#90a8ff",
+                      "secondary-container": "#04b4a2",
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "inverse-on-surface": "#283044",
+                      "on-primary": "#05297a",
+                      "on-background": "#dae2fd",
+                      "primary": "#b6c4ff",
+                      "surface-container-low": "#131b2e",
+                      "surface-bright": "#31394d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "16px",
+                      "xl": "24px",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "base": "8px",
+                      "lg": "24px",
+                      "xs": "4px",
+                      "xl": "32px",
+                      "sm": "8px",
+                      "gutter": "16px",
+                      "margin-mobile": "20px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(45, 52, 73, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+        .ai-glow-active {
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #2d3449; border-radius: 10px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm md:px-margin-desktop">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional headshot of a young student in a modern workspace environment. The lighting is soft and natural, with a shallow depth of field highlighting a focused and confident expression. The overall aesthetic is clean, high-end, and academic, fitting the intelligent companion brand persona. Cool tones of navy and soft whites dominate the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLlOF2QoOUKtRBbw59UlsFmjQTiQ_pixcxkTG4bxz1NGknjGUHNeGeMbB2w2xuCkT8EuE5hwPRabLIiCdO03Y6-aN2y5droLdkMOt6IQ7YceXRUVVdEiohEHxP7aexz7yrsHnnC0Q5JNWnXyHtNvkBRg-kYYDQXoIw-GpUZo9IY6Ax-8y_R39Spda03x6ICAgaegMKnVihZPe6uX_lFt9OAO6ZMnNvq8kCf9A7LUkDGBt4yTky5lBlcC7XA6GdTe4YucEAEhWLgAs"/>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors duration-200">notifications</button>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto space-y-xl">
+<!-- Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Weekly Analytics</h1>
+<p class="font-body-md text-on-surface-variant">Your productivity trends for Oct 23 — Oct 29</p>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high px-md py-sm rounded-lg font-label-lg text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+                    Week View
+                </button>
+<button class="bg-primary text-on-primary px-md py-sm rounded-lg font-label-lg shadow-lg shadow-primary/20">
+                    Export Report
+                </button>
+</div>
+</section>
+<!-- Bento Grid Analysis -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Main Bar Chart: Focus Distribution -->
+<div class="md:col-span-8 glass-card rounded-xl p-xl flex flex-col gap-lg">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Focus Time Distribution</h3>
+<p class="font-label-sm text-on-surface-variant">Deep work vs. Quick tasks</p>
+</div>
+<div class="flex gap-md font-label-sm">
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-on-surface-variant">Deep Work</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-3 h-3 rounded-full bg-tertiary"></div>
+<span class="text-on-surface-variant">Quick Tasks</span>
+</div>
+</div>
+</div>
+<!-- Bar Chart (Simulated with HTML/Tailwind) -->
+<div class="h-64 flex items-end justify-between gap-sm pt-md border-b border-outline-variant/30">
+<div class="flex flex-col items-center gap-xs w-full group">
+<div class="w-full flex flex-col-reverse gap-[2px]">
+<div class="w-full bg-secondary rounded-t-sm transition-all duration-500" style="height: 120px;"></div>
+<div class="w-full bg-tertiary rounded-t-sm transition-all duration-500" style="height: 40px;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Mon</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full flex flex-col-reverse gap-[2px]">
+<div class="w-full bg-secondary rounded-t-sm" style="height: 140px;"></div>
+<div class="w-full bg-tertiary rounded-t-sm" style="height: 30px;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Tue</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full flex flex-col-reverse gap-[2px]">
+<div class="w-full bg-secondary rounded-t-sm" style="height: 80px;"></div>
+<div class="w-full bg-tertiary rounded-t-sm" style="height: 90px;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Wed</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full flex flex-col-reverse gap-[2px]">
+<div class="w-full bg-secondary rounded-t-sm" style="height: 160px;"></div>
+<div class="w-full bg-tertiary rounded-t-sm" style="height: 20px;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Thu</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full flex flex-col-reverse gap-[2px]">
+<div class="w-full bg-secondary rounded-t-sm" style="height: 110px;"></div>
+<div class="w-full bg-tertiary rounded-t-sm" style="height: 45px;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Fri</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full flex flex-col-reverse gap-[2px]">
+<div class="w-full bg-secondary rounded-t-sm" style="height: 40px;"></div>
+<div class="w-full bg-tertiary rounded-t-sm" style="height: 60px;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Sat</span>
+</div>
+<div class="flex flex-col items-center gap-xs w-full">
+<div class="w-full flex flex-col-reverse gap-[2px]">
+<div class="w-full bg-secondary rounded-t-sm" style="height: 30px;"></div>
+<div class="w-full bg-tertiary rounded-t-sm" style="height: 20px;"></div>
+</div>
+<span class="font-label-sm text-on-surface-variant">Sun</span>
+</div>
+</div>
+</div>
+<!-- Peak Focus Hours -->
+<div class="md:col-span-4 glass-card rounded-xl p-xl flex flex-col justify-between overflow-hidden relative">
+<div class="z-10">
+<h3 class="font-headline-md text-headline-md text-on-surface">Peak Focus</h3>
+<p class="font-label-sm text-on-surface-variant">When you are most effective</p>
+<div class="mt-xl space-y-md">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-secondary">09</span>
+<div>
+<p class="font-label-lg text-on-surface uppercase tracking-wider">AM — 11 AM</p>
+<p class="font-label-sm text-on-surface-variant">88% efficiency score</p>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant">Your focus peaks early. Schedule complex tasks before lunch for maximum results.</p>
+</div>
+</div>
+<!-- Decorative AI Glow element -->
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary/10 blur-[60px] rounded-full"></div>
+</div>
+<!-- Time Allocation by Subject -->
+<div class="md:col-span-5 glass-card rounded-xl p-xl space-y-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Subject Allocation</h3>
+<div class="space-y-md">
+<div class="space-y-xs">
+<div class="flex justify-between font-label-lg">
+<span class="text-on-surface">Quantum Physics</span>
+<span class="text-on-surface-variant">12.5 hrs</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[45%]"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between font-label-lg">
+<span class="text-on-surface">Data Structures</span>
+<span class="text-on-surface-variant">8.2 hrs</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[30%]"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between font-label-lg">
+<span class="text-on-surface">Linear Algebra</span>
+<span class="text-on-surface-variant">5.1 hrs</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[18%]"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between font-label-lg">
+<span class="text-on-surface">Other</span>
+<span class="text-on-surface-variant">2.0 hrs</span>
+</div>
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-outline w-[7%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Heat Map: Activity Consistency -->
+<div class="md:col-span-7 glass-card rounded-xl p-xl space-y-lg">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Heat Map</h3>
+<p class="font-label-sm text-on-surface-variant">Weekly activity frequency</p>
+</div>
+<div class="flex items-center gap-xs font-label-sm text-on-surface-variant">
+<span>Less</span>
+<div class="w-3 h-3 bg-surface-variant rounded-sm"></div>
+<div class="w-3 h-3 bg-tertiary-container rounded-sm"></div>
+<div class="w-3 h-3 bg-tertiary rounded-sm"></div>
+<span>More</span>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-sm">
+<!-- Generation of Heatmap Grid -->
+<script>
+                        const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+                        document.write(days.map(d => `<div class="text-center font-label-sm text-on-surface-variant pb-xs">${d}</div>`).join(''));
+                        
+                        const weights = [
+                            'bg-surface-variant', 'bg-tertiary-container', 'bg-tertiary', 'bg-tertiary-container', 
+                            'bg-tertiary', 'bg-surface-variant', 'bg-surface-variant',
+                            'bg-tertiary', 'bg-tertiary', 'bg-tertiary', 'bg-tertiary-container',
+                            'bg-surface-variant', 'bg-surface-variant', 'bg-surface-variant',
+                            'bg-tertiary-container', 'bg-tertiary', 'bg-tertiary-container', 'bg-tertiary',
+                            'bg-tertiary', 'bg-surface-variant', 'bg-surface-variant'
+                        ];
+                        
+                        document.write(weights.map(w => `<div class="aspect-square ${w} rounded-md opacity-80 hover:opacity-100 transition-opacity"></div>`).join(''));
+                    </script>
+</div>
+</div>
+</div>
+<!-- AI Insights Section -->
+<section class="ai-glow-active rounded-xl bg-gradient-to-br from-tertiary-container/30 to-surface-container p-xl border border-tertiary/20">
+<div class="flex items-start gap-lg">
+<div class="w-12 h-12 bg-tertiary text-on-tertiary rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined font-bold">auto_awesome</span>
+</div>
+<div class="space-y-md">
+<h2 class="font-headline-md text-headline-md text-tertiary">Spark Insights</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+<div class="space-y-sm">
+<p class="font-label-lg text-tertiary uppercase">Success Pattern</p>
+<p class="font-body-md text-on-surface-variant">Your "Deep Work" sessions are 24% longer on Thursdays. This correlates with your morning exercise routine. Keep this habit to maintain momentum.</p>
+</div>
+<div class="space-y-sm">
+<p class="font-label-lg text-tertiary uppercase">Optimization Tip</p>
+<p class="font-body-md text-on-surface-variant">Next Tuesday looks heavy on "Quick Tasks." I recommend batching these between 2:00 PM and 4:00 PM to protect your morning peak focus hours.</p>
+</div>
+</div>
+<div class="pt-md">
+<button class="flex items-center gap-xs font-label-lg text-secondary hover:underline">
+                            View full optimization plan
+                            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container/80 backdrop-blur-xl flex justify-around items-center px-4 pb-4 pt-2 shadow-lg rounded-t-xl md:hidden">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+<!-- Desktop Sidebar/Nav (Hidden on Mobile) -->
+<aside class="hidden md:flex fixed left-0 top-0 h-full w-20 flex-col items-center py-xl bg-surface-container/40 backdrop-blur-md border-r border-outline-variant/10">
+<div class="text-primary font-bold text-xl mb-xl">S.</div>
+<div class="flex flex-col gap-xl">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">home</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">assignment</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">description</span>
+<span class="material-symbols-outlined text-secondary bg-secondary-container p-2 rounded-xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer">person</span>
+</div>
+</aside>
+<script>
+        // Micro-interaction for bar hover
+        document.querySelectorAll('.group').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateY(-4px)';
+                item.style.transition = 'transform 0.2s ease-out';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateY(0px)';
+            });
+        });
+    </script>
+</body></html>

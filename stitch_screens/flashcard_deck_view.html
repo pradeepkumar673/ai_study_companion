@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark - Flashcards</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .flip-card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        .glass-panel {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "surface-container-highest": "#2d3449",
+                      "primary-fixed": "#dce1ff",
+                      "outline-variant": "#444651",
+                      "tertiary-container": "#4e03b8",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-error": "#690005",
+                      "inverse-surface": "#dae2fd",
+                      "secondary-container": "#04b4a2",
+                      "background": "#0b1326",
+                      "on-primary": "#05297a",
+                      "outline": "#8f909d",
+                      "surface-container": "#171f33",
+                      "surface-container-high": "#222a3d",
+                      "surface-variant": "#2d3449",
+                      "on-surface-variant": "#c5c5d3",
+                      "tertiary": "#d0bcff",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-primary-fixed": "#00164e",
+                      "surface-bright": "#31394d",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "secondary": "#4fdbc8",
+                      "on-primary-fixed-variant": "#264191",
+                      "tertiary-fixed": "#e9ddff",
+                      "primary": "#b6c4ff",
+                      "error": "#ffb4ab",
+                      "on-secondary": "#003731",
+                      "surface-dim": "#0b1326",
+                      "on-tertiary": "#3c0091",
+                      "surface": "#0b1326",
+                      "on-background": "#dae2fd",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "on-surface": "#dae2fd",
+                      "inverse-primary": "#4059aa",
+                      "on-secondary-container": "#003f38",
+                      "primary-container": "#1e3a8a",
+                      "surface-container-low": "#131b2e",
+                      "surface-tint": "#b6c4ff",
+                      "surface-container-lowest": "#060e20",
+                      "on-tertiary-container": "#b89cff",
+                      "inverse-on-surface": "#283044",
+                      "on-secondary-fixed": "#00201c",
+                      "on-primary-container": "#90a8ff",
+                      "error-container": "#93000a",
+                      "secondary-fixed": "#71f8e4",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#005048"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "xs": "4px",
+                      "base": "8px",
+                      "margin-mobile": "20px",
+                      "gutter": "16px",
+                      "margin-desktop": "64px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-lg": ["Inter"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body-md flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm md:px-margin-desktop">
+<div class="flex items-center gap-md">
+<button class="text-primary hover:bg-surface-variant/50 p-2 rounded-full transition-colors duration-200">
+<span class="material-symbols-outlined">close</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">Advanced Neurobiology</h1>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex flex-col items-end">
+<span class="font-label-lg text-label-lg text-on-surface">Study Streak</span>
+<span class="font-label-sm text-label-sm text-secondary">15 Days</span>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young student with a friendly expression, set against a blurred academic background. The lighting is soft and natural, emphasizing a modern and studious aesthetic that aligns with the deep navy and teal color palette of the StudySpark interface. The image quality is crisp and high-definition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAciNp-yT_xATIbA3h1iVkmHV_TB51QRq43n7mEVhgA8LnUyl3rhul0Eulpa_L_cOH4jGHuWYtuQYhveK-O1ovofaIO7yYjxqsXzEe_nRrQS5ILe4T8hovO5EXTPyUqU_H0U_1UjE5VSfYi_3ZmbYNqJqaqh40Ya8c-PMP8ARQqmDSCLBflNlGw852loP4kRu09SFO2BXnUabVOF1DN-JG-tzpHJR2un4Le3sAXDvkA4uSdGmstj-L8RgdRcnT_6OgVnx4YKwrmj_4"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-5xl mx-auto w-full flex flex-col items-center justify-center">
+<!-- Progress Indicator -->
+<div class="w-full mb-xl flex flex-col items-center gap-sm">
+<div class="flex justify-between w-full max-w-2xl px-xs">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Card 12 of 50</span>
+<span class="font-label-lg text-label-lg text-secondary">75% Mastered</span>
+</div>
+<div class="w-full max-w-2xl h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary ai-glow transition-all duration-500" id="progress-bar" style="width: 24%;"></div>
+</div>
+</div>
+<!-- Flashcard Component -->
+<div class="w-full max-w-2xl aspect-[4/3] perspective-1000 cursor-pointer group" onclick="this.classList.toggle('flipped')">
+<div class="flip-card-inner relative w-full h-full preserve-3d shadow-xl rounded-[2rem]">
+<!-- Front Side -->
+<div class="absolute inset-0 backface-hidden glass-panel rounded-[2rem] p-xl flex flex-col items-center justify-center text-center">
+<div class="absolute top-md right-md">
+<span class="material-symbols-outlined text-tertiary ai-glow" data-weight="fill">auto_awesome</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary mb-md tracking-widest uppercase">QUESTION</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">What is the primary function of the Myelin Sheath in neural transmission?</h2>
+<p class="mt-xl font-body-md text-on-surface-variant italic">Tap to reveal answer</p>
+</div>
+<!-- Back Side -->
+<div class="absolute inset-0 backface-hidden rotate-y-180 glass-panel rounded-[2rem] p-xl flex flex-col items-center justify-center text-center overflow-y-auto">
+<span class="font-label-sm text-label-sm text-secondary mb-md tracking-widest uppercase">ANSWER</span>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+                        The Myelin Sheath acts as an <span class="text-secondary font-semibold">insulating layer</span> that forms around nerves. Its primary purpose is to allow electrical impulses to transmit quickly and efficiently along the nerve cells. It enables <span class="text-tertiary">saltatory conduction</span>, significantly increasing signal speed.
+                    </p>
+<div class="mt-xl p-md bg-surface-container-high rounded-xl border border-outline-variant/30 text-left w-full">
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-primary text-sm">lightbulb</span>
+<span class="font-label-sm text-label-sm text-primary">AI Insight</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Demyelination is a key characteristic of Multiple Sclerosis (MS).</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Hint / Tooltip -->
+<div class="mt-xl flex items-center gap-xs text-on-surface-variant/60">
+<span class="material-symbols-outlined text-base">keyboard_command_key</span>
+<span class="font-label-sm text-label-sm">Press Space to Flip • Use 1-4 for Confidence</span>
+</div>
+</main>
+<!-- Confidence Buttons Bar -->
+<footer class="fixed bottom-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-2xl px-margin-mobile py-lg md:px-margin-desktop">
+<div class="max-w-3xl mx-auto grid grid-cols-4 gap-md">
+<!-- Again -->
+<button class="flex flex-col items-center gap-xs group transition-transform active:scale-95">
+<div class="w-full py-md rounded-xl bg-surface-container-highest border border-error/20 flex flex-col items-center justify-center hover:bg-error/10 transition-colors duration-200">
+<span class="material-symbols-outlined text-error mb-1">replay</span>
+<span class="font-label-lg text-label-lg text-on-surface">Again</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1m</span>
+</button>
+<!-- Hard -->
+<button class="flex flex-col items-center gap-xs group transition-transform active:scale-95">
+<div class="w-full py-md rounded-xl bg-surface-container-highest border border-outline-variant/20 flex flex-col items-center justify-center hover:bg-on-surface-variant/10 transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant mb-1">sentiment_neutral</span>
+<span class="font-label-lg text-label-lg text-on-surface">Hard</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2d</span>
+</button>
+<!-- Good -->
+<button class="flex flex-col items-center gap-xs group transition-transform active:scale-95">
+<div class="w-full py-md rounded-xl bg-secondary-container/20 border border-secondary/30 flex flex-col items-center justify-center hover:bg-secondary-container/40 transition-colors duration-200">
+<span class="material-symbols-outlined text-secondary mb-1">sentiment_satisfied</span>
+<span class="font-label-lg text-label-lg text-on-surface">Good</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4d</span>
+</button>
+<!-- Easy -->
+<button class="flex flex-col items-center gap-xs group transition-transform active:scale-95">
+<div class="w-full py-md rounded-xl bg-primary-container/20 border border-primary/30 flex flex-col items-center justify-center hover:bg-primary-container/40 transition-colors duration-200">
+<span class="material-symbols-outlined text-primary mb-1">rocket_launch</span>
+<span class="font-label-lg text-label-lg text-on-surface">Easy</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1w</span>
+</button>
+</div>
+</footer>
+<script>
+        // Keyboard Support
+        document.addEventListener('keydown', (e) => {
+            const card = document.querySelector('.perspective-1000');
+            if (e.code === 'Space') {
+                e.preventDefault();
+                card.classList.toggle('flipped');
+            }
+            if (['1', '2', '3', '4'].includes(e.key)) {
+                // Flash interaction feedback
+                console.log(`Rating: ${e.key}`);
+            }
+        });
+
+        // Simple Atmosphere Interaction
+        const buttons = document.querySelectorAll('footer button');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const progressBar = document.getElementById('progress-bar');
+                const currentWidth = parseFloat(progressBar.style.width);
+                if(currentWidth < 100) {
+                    progressBar.style.width = (currentWidth + 2) + '%';
+                }
+                
+                // Card exit animation simulation
+                const card = document.querySelector('.flip-card-inner');
+                card.style.transform = 'translateX(100vw) rotate(20deg)';
+                card.style.opacity = '0';
+                
+                setTimeout(() => {
+                    card.style.transition = 'none';
+                    card.style.transform = 'translateX(-100vw) rotate(-20deg)';
+                    document.querySelector('.perspective-1000').classList.remove('flipped');
+                    
+                    setTimeout(() => {
+                        card.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease';
+                        card.style.transform = 'translateX(0) rotate(0)';
+                        card.style.opacity = '1';
+                    }, 50);
+                }, 400);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark Settings - Account &amp; Privacy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+        .ai-glow-pulse {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+            transition: box-shadow 0.3s ease;
+        }
+        .ai-glow-pulse:hover {
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+        }
+        /* Custom Toggle Style */
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #14B8A6;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#31394d",
+                        "secondary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#23005c",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "secondary-container": "#04b4a2",
+                        "on-secondary": "#003731",
+                        "surface-variant": "#2d3449",
+                        "surface-container-low": "#131b2e",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#060e20",
+                        "on-primary-container": "#90a8ff",
+                        "on-background": "#dae2fd",
+                        "outline": "#8f909d",
+                        "inverse-primary": "#4059aa",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#b89cff",
+                        "primary-container": "#1e3a8a",
+                        "tertiary-container": "#4e03b8",
+                        "surface-container": "#171f33",
+                        "on-surface-variant": "#c5c5d3",
+                        "inverse-surface": "#dae2fd",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "surface-tint": "#b6c4ff",
+                        "primary": "#b6c4ff",
+                        "surface-dim": "#0b1326",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "surface-container-high": "#222a3d",
+                        "on-secondary-container": "#003f38",
+                        "surface-container-highest": "#2d3449",
+                        "on-secondary-fixed": "#00201c",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#0b1326",
+                        "tertiary-fixed": "#e9ddff",
+                        "outline-variant": "#444651",
+                        "tertiary": "#d0bcff",
+                        "inverse-on-surface": "#283044",
+                        "background": "#0b1326",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed": "#00164e",
+                        "on-primary-fixed-variant": "#264191",
+                        "on-tertiary": "#3c0091",
+                        "on-surface": "#dae2fd",
+                        "on-primary": "#05297a",
+                        "primary-fixed": "#dce1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "margin-desktop": "64px",
+                        "xl": "32px",
+                        "margin-mobile": "20px",
+                        "lg": "24px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-margin-mobile h-16">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-bright/20 p-2 rounded-full transition-colors active:scale-95 duration-200">arrow_back</button>
+<h1 class="font-headline-md text-headline-md font-bold text-secondary">StudySpark</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant/20">
+<img alt="User profile photo" data-alt="A high-quality professional headshot of a young student in a modern workspace environment. The lighting is soft and cinematic, with cool blue and teal tones reflecting off a glass surface in the background. The individual has a focused and friendly expression, embodying the persona of a dedicated scholar in a technologically advanced academic setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKMq3vxfx0ewPUJts-jXud2QGh3fOgfzm0EID2_VPegVHJQUWYptbZC9CCjnrWOa_SFB6-E5sTsbcK_GTXiiZeHC8oYJYEjZcSYogZLNBjmzZzLJ3fZuhpDRIZGA1i6stBDWq9poNeKyUudivI4mc3eBAeAF_1N-9WkL_vWxwX2fLkWmDQLIAgIxzmcaf3vNkqW-lv_4Q-cV4BBt64brftPEuEBddfWf4H731CVznVcVICJLNl7raFJ9Qk_dzqHNNHjBcnCS9OqfI"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 px-margin-mobile max-w-2xl mx-auto space-y-xl">
+<!-- Section Header -->
+<div class="space-y-xs">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Account &amp; Privacy</h2>
+<p class="text-on-surface-variant font-body-md">Manage your account security and AI personalization preferences.</p>
+</div>
+<!-- Account Section -->
+<section class="space-y-md">
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-outline">User Profile</h3>
+<div class="glass-card rounded-xl overflow-hidden p-md flex items-center gap-md">
+<div class="relative">
+<img alt="Profile" class="w-16 h-16 rounded-full" data-alt="A detailed close-up of a modern digital user profile interface. The image displays a circular avatar of a professional student, surrounded by a subtle holographic purple ring representing AI activity. The background is a deep navy blue with soft, blurred light bokeh in teal and violet, creating a premium, focused atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByNmlO5EPOKGLOdBHQksPAkQtkIZzAoRDZ3eoFkhBVghtFhlptTJskIGlyLvIIvHC4VDeJIfRtfyhuPh9yS8-8OYiOCbVH_XTUPGGh9xH1q7Q9nv0LAYeHNthK_gqvsPLul4eusvDY4hT1MzQACq1fiDcZ0y3rADdfFsdux-yXPHYO-cYTNsH3uxpJGqFjOIYlQilhetFadTxuTMJ_SG6GtcpcVhEWaJkLuJ2d2Pz89AXChb-cR9LzIA9jepqyAaA6ddE8v97oyzM"/>
+<div class="absolute bottom-0 right-0 bg-secondary w-5 h-5 rounded-full border-2 border-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px] text-on-secondary" style="font-variation-settings: 'FILL' 1;">edit</span>
+</div>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Alex Chen</h4>
+<p class="text-on-surface-variant font-label-sm">alex.chen@university.edu</p>
+</div>
+</div>
+</section>
+<!-- Privacy & AI Personalization Section -->
+<section class="space-y-md">
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-outline">Privacy &amp; Intelligence</h3>
+<div class="glass-card rounded-xl overflow-hidden divide-y divide-outline-variant/10">
+<!-- AI Data Personalization (Special State) -->
+<div class="p-md ai-glow-pulse group transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">psychology</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">AI Data Personalization</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant max-w-[240px]">Improve Spark's study suggestions by allowing analysis of your habits.</span>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-bright border-4 border-transparent appearance-none cursor-pointer z-10" id="toggle-ai" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle-ai">
+<span class="toggle-dot block w-6 h-6 rounded-full bg-white transition-transform duration-200"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Biometric Lock -->
+<div class="p-md hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">fingerprint</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Biometric Lock</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Use FaceID or TouchID to open StudySpark.</span>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-bright border-4 border-transparent appearance-none cursor-pointer z-10" id="toggle-bio" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle-bio">
+<span class="toggle-dot block w-6 h-6 rounded-full bg-white transition-transform duration-200"></span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sync & Notifications Section -->
+<section class="space-y-md">
+<h3 class="font-label-lg text-label-lg uppercase tracking-wider text-outline">Connections</h3>
+<div class="glass-card rounded-xl overflow-hidden divide-y divide-outline-variant/10">
+<!-- Push Notifications -->
+<div class="p-md hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Push Notifications</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Alerts for task deadlines and study goals.</span>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-bright border-4 border-transparent appearance-none cursor-pointer z-10" id="toggle-notif" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle-notif">
+<span class="toggle-dot block w-6 h-6 rounded-full bg-white transition-transform duration-200"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Sync with Calendar -->
+<div class="p-md hover:bg-surface-bright/20 transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">calendar_today</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Sync with Calendar</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Import course schedules from Google or iCloud.</span>
+</div>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-bright border-4 border-transparent appearance-none cursor-pointer z-10" id="toggle-calendar" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer" for="toggle-calendar">
+<span class="toggle-dot block w-6 h-6 rounded-full bg-white transition-transform duration-200"></span>
+</label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Danger Zone -->
+<section class="space-y-md pt-base">
+<button class="w-full flex items-center justify-between p-md border border-error/20 bg-error-container/10 rounded-xl text-error hover:bg-error-container/20 transition-colors active:scale-[0.98]">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined">delete_forever</span>
+<span class="font-label-lg text-label-lg">Delete Account &amp; Data</span>
+</div>
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-low/80 dark:bg-surface-container-low/80 backdrop-blur-xl border-t border-outline-variant/10 shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container/20 text-secondary dark:text-secondary-fixed rounded-full px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for Toggles
+        document.querySelectorAll('.toggle-checkbox').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const isChecked = this.checked;
+                const parent = this.closest('.glass-card div');
+                
+                if (isChecked) {
+                    parent.classList.add('bg-secondary-container/5');
+                } else {
+                    parent.classList.remove('bg-secondary-container/5');
+                }
+            });
+        });
+    </script>
+</body></html>

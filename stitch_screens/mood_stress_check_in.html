@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#2d3449",
+                    "on-primary-fixed": "#00164e",
+                    "background": "#0b1326",
+                    "tertiary-fixed": "#e9ddff",
+                    "outline-variant": "#444651",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "on-surface-variant": "#c5c5d3",
+                    "on-background": "#dae2fd",
+                    "surface": "#0b1326",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "surface-container-lowest": "#060e20",
+                    "tertiary": "#d0bcff",
+                    "surface-variant": "#2d3449",
+                    "on-tertiary-fixed": "#23005c",
+                    "on-primary-container": "#90a8ff",
+                    "on-primary": "#05297a",
+                    "secondary-fixed": "#71f8e4",
+                    "secondary-container": "#04b4a2",
+                    "on-secondary-container": "#003f38",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-primary-fixed-variant": "#264191",
+                    "surface-bright": "#31394d",
+                    "on-tertiary": "#3c0091",
+                    "inverse-surface": "#dae2fd",
+                    "surface-container": "#171f33",
+                    "surface-tint": "#b6c4ff",
+                    "surface-container-low": "#131b2e",
+                    "inverse-primary": "#4059aa",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-container-high": "#222a3d",
+                    "secondary": "#4fdbc8",
+                    "surface-dim": "#0b1326",
+                    "on-error": "#690005",
+                    "error": "#ffb4ab",
+                    "primary-fixed": "#dce1ff",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "tertiary-container": "#4e03b8",
+                    "on-surface": "#dae2fd",
+                    "inverse-on-surface": "#283044",
+                    "error-container": "#93000a",
+                    "on-secondary": "#003731",
+                    "on-secondary-fixed": "#00201c",
+                    "on-error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "margin-desktop": "64px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "margin-mobile": "20px",
+                    "xl": "32px",
+                    "gutter": "16px",
+                    "base": "8px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "label-sm": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        .mood-selector input:checked + label {
+            background-color: var(--tw-secondary-container);
+            color: var(--tw-on-secondary-container);
+            box-shadow: 0 0 15px rgba(20, 184, 166, 0.4);
+            transform: scale(1.1);
+        }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #4fdbc8;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(79, 219, 200, 0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm w-full">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="user profile picture" class="w-full h-full object-cover" data-alt="A professional and friendly 3D avatar of a young student with short dark hair, wearing a stylish navy hoodie. The background is a soft, blurred academic setting with a deep navy and teal color palette. The lighting is soft and cinematic, emphasizing a premium and modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqvFgKqkcJoonJ3bX8xYKOucMtr81GqtXtPsom8Sw6yWGMiXgBD5b3rzOkhGwyb9cKEN242PIrvkp6XmNJuxjJkO0aoFgztCy65nMw-Nfth3a4hQ0un8PeVoeqOA43put02HAIfqNPAI-RXtDlNahMd4ZbC2Y1ZD1Ake9u46UsxUf-A8wDe4vyJeOwSKP67J2asd7OypIg8qjFW2j518XHZITALXjqJoFm2WhbVnBC6UPyk4D5ks9sXNW5MNjeCAtZH063Uu0ujg8"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</h1>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-variant/50 transition-colors">
+            notifications
+        </button>
+</header>
+<main class="pt-24 px-margin-mobile max-w-2xl mx-auto space-y-xl">
+<!-- Header Section -->
+<section class="space-y-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Daily Check-in</h2>
+<p class="font-body-md text-on-surface-variant">How are you feeling today, Felix? Your spark depends on your well-being.</p>
+</section>
+<!-- Mood Selection (Bento Style) -->
+<section class="space-y-md">
+<h3 class="font-label-lg text-label-lg text-secondary uppercase tracking-wider">Current Mood</h3>
+<div class="grid grid-cols-3 gap-md mood-selector">
+<input class="hidden" id="mood-great" name="mood" type="radio"/>
+<label class="glass-card flex flex-col items-center justify-center p-lg rounded-xl transition-all cursor-pointer" for="mood-great">
+<span class="text-4xl mb-sm">🤩</span>
+<span class="font-label-sm text-label-sm">Great</span>
+</label>
+<input checked="" class="hidden" id="mood-good" name="mood" type="radio"/>
+<label class="glass-card flex flex-col items-center justify-center p-lg rounded-xl transition-all cursor-pointer" for="mood-good">
+<span class="text-4xl mb-sm">😊</span>
+<span class="font-label-sm text-label-sm">Good</span>
+</label>
+<input class="hidden" id="mood-neutral" name="mood" type="radio"/>
+<label class="glass-card flex flex-col items-center justify-center p-lg rounded-xl transition-all cursor-pointer" for="mood-neutral">
+<span class="text-4xl mb-sm">😐</span>
+<span class="font-label-sm text-label-sm">Okay</span>
+</label>
+<input class="hidden" id="mood-stressed" name="mood" type="radio"/>
+<label class="glass-card flex flex-col items-center justify-center p-lg rounded-xl transition-all cursor-pointer" for="mood-stressed">
+<span class="text-4xl mb-sm">🤯</span>
+<span class="font-label-sm text-label-sm">Stressed</span>
+</label>
+<input class="hidden" id="mood-tired" name="mood" type="radio"/>
+<label class="glass-card flex flex-col items-center justify-center p-lg rounded-xl transition-all cursor-pointer" for="mood-tired">
+<span class="text-4xl mb-sm">😴</span>
+<span class="font-label-sm text-label-sm">Tired</span>
+</label>
+<input class="hidden" id="mood-anxious" name="mood" type="radio"/>
+<label class="glass-card flex flex-col items-center justify-center p-lg rounded-xl transition-all cursor-pointer" for="mood-anxious">
+<span class="text-4xl mb-sm">😰</span>
+<span class="font-label-sm text-label-sm">Anxious</span>
+</label>
+</div>
+</section>
+<!-- Stress Level Slider -->
+<section class="glass-card p-lg rounded-xl space-y-md">
+<div class="flex justify-between items-center">
+<h3 class="font-label-lg text-label-lg text-secondary">Stress Intensity</h3>
+<span class="text-secondary font-bold" id="stress-value">4/10</span>
+</div>
+<input class="w-full h-2 bg-surface-container-highest rounded-full appearance-none custom-slider" id="stress-slider" max="10" min="1" type="range" value="4"/>
+<div class="flex justify-between font-label-sm text-on-surface-variant">
+<span>Calm</span>
+<span>Burnout</span>
+</div>
+</section>
+<!-- Quick Tags -->
+<section class="space-y-md">
+<h3 class="font-label-lg text-label-lg text-secondary">What's affecting you?</h3>
+<div class="flex flex-wrap gap-sm">
+<button class="px-md py-sm rounded-full glass-card border border-outline-variant text-label-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Exams</button>
+<button class="px-md py-sm rounded-full glass-card border border-outline-variant text-label-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Social Life</button>
+<button class="px-md py-sm rounded-full glass-card border border-outline-variant text-label-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Deadlines</button>
+<button class="px-md py-sm rounded-full glass-card border border-outline-variant text-label-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Health</button>
+<button class="px-md py-sm rounded-full glass-card border border-outline-variant text-label-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Family</button>
+<button class="px-md py-sm rounded-full glass-card border border-outline-variant text-label-sm hover:bg-secondary-container hover:text-on-secondary-container transition-colors">Career</button>
+<button class="px-md py-sm rounded-full border border-secondary text-secondary text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]">add</span> Add custom
+                </button>
+</div>
+</section>
+<!-- Spark AI Tip -->
+<section class="ai-glow bg-tertiary-container/20 border border-tertiary/30 rounded-xl p-lg relative overflow-hidden">
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-tertiary/10 blur-3xl rounded-full"></div>
+<div class="flex gap-md">
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="space-y-xs">
+<h4 class="font-label-lg text-tertiary">Spark AI Insight</h4>
+<p class="font-body-md text-on-tertiary-container">I noticed your stress peaks before Wednesday. Try breaking your "Advanced Algorithms" task into 15-minute sprints tomorrow morning.</p>
+</div>
+</div>
+</section>
+<!-- Action Button -->
+<button class="w-full bg-secondary text-on-secondary font-headline-md py-lg rounded-xl shadow-lg active:scale-[0.98] transition-transform">
+            Complete Check-in
+        </button>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl z-50 rounded-t-xl shadow-lg">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform scale-95 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple slider interaction
+        const slider = document.getElementById('stress-slider');
+        const valueDisplay = document.getElementById('stress-value');
+        
+        slider.addEventListener('input', (e) => {
+            valueDisplay.textContent = `${e.target.value}/10`;
+            
+            // Adjust pulse intensity based on stress
+            const intensity = e.target.value / 10;
+            const glowColor = `rgba(79, 219, 200, ${0.2 + (intensity * 0.4)})`;
+            slider.style.boxShadow = `0 0 15px ${glowColor}`;
+        });
+
+        // Toggle tag selection
+        document.querySelectorAll('button.glass-card').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('bg-secondary-container');
+                button.classList.toggle('text-on-secondary-container');
+                button.classList.toggle('border-transparent');
+                button.classList.toggle('scale-105');
+            });
+        });
+
+        // Atmospheric Sparkles (Micro-interaction)
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'fixed pointer-events-none w-1 h-1 bg-tertiary rounded-full opacity-0 z-0';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            document.body.appendChild(sparkle);
+
+            const animation = sparkle.animate([
+                { opacity: 0, transform: 'scale(0) translateY(0px)' },
+                { opacity: 0.4, transform: 'scale(1.2) translateY(-20px)' },
+                { opacity: 0, transform: 'scale(0) translateY(-40px)' }
+            ], {
+                duration: 2000 + Math.random() * 3000,
+                easing: 'ease-in-out'
+            });
+
+            animation.onfinish = () => sparkle.remove();
+        }
+
+        setInterval(createSparkle, 1000);
+    </script>
+</body></html>

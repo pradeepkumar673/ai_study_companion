@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark - Add New Task</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        .glass-card {
+            background: rgba(23, 31, 51, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #14B8A6 !important;
+            box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.2);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#003f38",
+                      "primary-container": "#1e3a8a",
+                      "inverse-primary": "#4059aa",
+                      "surface": "#0b1326",
+                      "on-background": "#dae2fd",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "on-surface": "#dae2fd",
+                      "on-tertiary": "#3c0091",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#005048",
+                      "error-container": "#93000a",
+                      "secondary-fixed": "#71f8e4",
+                      "surface-container-lowest": "#060e20",
+                      "on-tertiary-container": "#b89cff",
+                      "inverse-on-surface": "#283044",
+                      "on-secondary-fixed": "#00201c",
+                      "on-primary-container": "#90a8ff",
+                      "surface-container-low": "#131b2e",
+                      "surface-tint": "#b6c4ff",
+                      "outline": "#8f909d",
+                      "surface-container": "#171f33",
+                      "tertiary-container": "#4e03b8",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-error": "#690005",
+                      "inverse-surface": "#dae2fd",
+                      "secondary-container": "#04b4a2",
+                      "background": "#0b1326",
+                      "on-primary": "#05297a",
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "surface-container-highest": "#2d3449",
+                      "primary-fixed": "#dce1ff",
+                      "outline-variant": "#444651",
+                      "on-secondary": "#003731",
+                      "surface-dim": "#0b1326",
+                      "secondary": "#4fdbc8",
+                      "on-primary-fixed-variant": "#264191",
+                      "tertiary-fixed": "#e9ddff",
+                      "primary": "#b6c4ff",
+                      "error": "#ffb4ab",
+                      "tertiary": "#d0bcff",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-primary-fixed": "#00164e",
+                      "surface-bright": "#31394d",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "surface-container-high": "#222a3d",
+                      "surface-variant": "#2d3449",
+                      "on-surface-variant": "#c5c5d3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "xs": "4px",
+                      "base": "8px",
+                      "margin-mobile": "20px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "label-lg": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "display-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen font-body-md overflow-x-hidden selection:bg-secondary/30">
+<!-- Top AppBar (from JSON) -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm w-full">
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors duration-200" onclick="history.back()">
+                arrow_back
+            </button>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">Add New Task</h1>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a diverse university student looking confident and friendly. The lighting is soft and natural, suggesting a high-end campus environment. The image uses a cool-toned color palette with deep blues and teals to match the StudySpark brand aesthetic. The background is a slightly blurred modern library setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7KJ2NuNyG9EVpxmXMniok6Pq8Z-xkztD6ajS4jaWYY4vyUR2dYsBeAGquAZDTeBNL9G_cTrCssNDspiycYO0eDLxZV5azAnhc4MaN276y4xWP7m0JXbCc3HDqFCEmPtz5MDmht8szFOIJ-Iu1oPQQ99TI9ba-AsggIDc09M0wUb2VN_4jIWCNTL9djRZipK5qmOysxKH1P4YbnlVEqA7miFfyrhHX-Kdk7Mqvi2XM8O97gkVoXYStlBBpLz_Jvgv92dQ_Jq7chWI"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile max-w-2xl mx-auto">
+<!-- Form Container -->
+<div class="space-y-lg">
+<!-- Hero Illustration/Visual -->
+<div class="relative w-full h-40 rounded-xl overflow-hidden glass-card mb-xl">
+<img class="w-full h-full object-cover opacity-40" data-alt="A minimalist overhead view of a clean desk with a laptop, a notebook, and a single green plant. The scene is bathed in soft, cool moonlight-style lighting, emphasizing a focused and calm study environment. The color scheme is dominated by deep navy blues and glowing teal accents, creating a high-energy yet sophisticated academic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXP-DrliAE__Th-rJsIS393UwvfNHjqgX4pFbM-yiMjoaQLqfSzOSkWdmMDdVLUhkmojf9-QK_Wy00QHM81nQKT74zmlYFn_ZBvlZFusMbubX5YTZ-uajh2w8vFRlkSOnjEhHF5U6uqneIcSUyV_mkGhyUSzK48Zh3WhvT07ALaQk1W958MJXByd8E_XJvJ5WCpUtsVHWzu_HO5sOgM_NowTACrzKGgi5ui8RVW76lj7SFfgLSyus6IN2YTJxprraFP1edw2FctYk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-4 left-4">
+<p class="font-label-lg text-label-lg text-secondary">Organize your thoughts</p>
+<h2 class="font-headline-md text-headline-md-mobile text-on-surface">New Academic Goal</h2>
+</div>
+</div>
+<!-- Task Title -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-1" for="task-title">Task Title</label>
+<input class="w-full bg-surface-container-high border-outline-variant text-on-surface px-md py-md rounded-lg font-body-md transition-all duration-200 placeholder:text-outline" id="task-title" placeholder="e.g., Quantum Physics Research Paper" type="text"/>
+</div>
+<!-- Subject & Due Date Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-1" for="subject">Subject</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high border-outline-variant text-on-surface px-md py-md rounded-lg appearance-none font-body-md" id="subject">
+<option value="">Select a subject</option>
+<option value="math">Mathematics</option>
+<option value="physics">Theoretical Physics</option>
+<option value="bio">Organic Chemistry</option>
+<option value="lit">Modern Literature</option>
+<option value="cs">Computer Science</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-1" for="due-date">Due Date</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-outline-variant text-on-surface px-md py-md rounded-lg font-body-md [color-scheme:dark]" id="due-date" type="date"/>
+</div>
+</div>
+</div>
+<!-- Priority Segmented Control -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-1">Priority Level</label>
+<div class="flex p-1 bg-surface-container-high rounded-xl border border-outline-variant">
+<button class="flex-1 py-2 rounded-lg font-label-lg text-label-lg transition-all duration-200 text-on-surface-variant hover:bg-surface-variant/30" onclick="setPriority(this, 'low')" type="button">Low</button>
+<button class="flex-1 py-2 rounded-lg font-label-lg text-label-lg transition-all duration-200 bg-secondary-container text-on-secondary-container" onclick="setPriority(this, 'medium')" type="button">Medium</button>
+<button class="flex-1 py-2 rounded-lg font-label-lg text-label-lg transition-all duration-200 text-on-surface-variant hover:bg-surface-variant/30" onclick="setPriority(this, 'high')" type="button">High</button>
+</div>
+</div>
+<!-- Notes -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-1" for="notes">Notes &amp; Requirements</label>
+<textarea class="w-full bg-surface-container-high border-outline-variant text-on-surface px-md py-md rounded-lg font-body-md resize-none" id="notes" placeholder="Mention key resources or specific chapters..." rows="4"></textarea>
+</div>
+<!-- AI Assist Toggle -->
+<div class="glass-card p-md rounded-xl flex items-center justify-between group transition-all duration-300 hover:ai-glow">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">AI Smart Estimation</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Automatically calculate duration based on task complexity</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<!-- Estimated Time (AI Controlled) -->
+<div class="bg-tertiary/10 border border-tertiary/20 p-md rounded-xl flex items-center gap-md" id="ai-suggestion">
+<span class="material-symbols-outlined text-tertiary text-[20px]">timer</span>
+<p class="font-body-md text-on-tertiary-container">AI Suggestion: <span class="font-bold">4.5 hours</span> to complete this task.</p>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<footer class="fixed bottom-0 left-0 w-full p-margin-mobile glass-card flex gap-md">
+<button class="flex-1 py-4 bg-secondary text-on-secondary-container font-headline-md text-headline-md rounded-xl transition-all duration-150 active:scale-95 shadow-lg shadow-secondary/20 font-bold">
+            Save Task
+        </button>
+<button class="px-6 py-4 border-2 border-outline-variant text-on-surface-variant font-label-lg text-label-lg rounded-xl hover:bg-surface-variant/30 transition-colors duration-200">
+            Cancel
+        </button>
+</footer>
+<!-- Bottom Navigation (from JSON) - Hidden on Task focused screen as per "Task-Focused" rule -->
+<!-- The prompt implies a focused journey "Add New Task", so BottomNavBar is suppressed to prioritize the task creation canvas -->
+<script>
+        function setPriority(el, level) {
+            const buttons = el.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+                btn.classList.add('text-on-surface-variant', 'hover:bg-surface-variant/30');
+            });
+            el.classList.remove('text-on-surface-variant', 'hover:bg-surface-variant/30');
+            el.classList.add('bg-secondary-container', 'text-on-secondary-container');
+        }
+
+        // Simple Toggle Behavior for AI Suggestion
+        const aiToggle = document.querySelector('input[type="checkbox"]');
+        const aiSuggestion = document.getElementById('ai-suggestion');
+
+        aiToggle.addEventListener('change', () => {
+            if (aiToggle.checked) {
+                aiSuggestion.classList.remove('hidden');
+                aiSuggestion.classList.add('flex');
+            } else {
+                aiSuggestion.classList.add('hidden');
+                aiSuggestion.classList.remove('flex');
+            }
+        });
+    </script>
+</body></html>

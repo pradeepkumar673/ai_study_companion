@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark | Achievements</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#2d3449",
+                      "on-primary-fixed": "#00164e",
+                      "background": "#0b1326",
+                      "tertiary-fixed": "#e9ddff",
+                      "outline-variant": "#444651",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "on-surface-variant": "#c5c5d3",
+                      "on-background": "#dae2fd",
+                      "surface": "#0b1326",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "surface-container-lowest": "#060e20",
+                      "tertiary": "#d0bcff",
+                      "surface-variant": "#2d3449",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-primary-container": "#90a8ff",
+                      "on-primary": "#05297a",
+                      "secondary-fixed": "#71f8e4",
+                      "secondary-container": "#04b4a2",
+                      "on-secondary-container": "#003f38",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-primary-fixed-variant": "#264191",
+                      "surface-bright": "#31394d",
+                      "on-tertiary": "#3c0091",
+                      "inverse-surface": "#dae2fd",
+                      "surface-container": "#171f33",
+                      "surface-tint": "#b6c4ff",
+                      "surface-container-low": "#131b2e",
+                      "inverse-primary": "#4059aa",
+                      "on-secondary-fixed-variant": "#005048",
+                      "surface-container-high": "#222a3d",
+                      "secondary": "#4fdbc8",
+                      "surface-dim": "#0b1326",
+                      "on-error": "#690005",
+                      "error": "#ffb4ab",
+                      "primary-fixed": "#dce1ff",
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "tertiary-container": "#4e03b8",
+                      "on-surface": "#dae2fd",
+                      "inverse-on-surface": "#283044",
+                      "error-container": "#93000a",
+                      "on-secondary": "#003731",
+                      "on-secondary-fixed": "#00201c",
+                      "on-error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "24px",
+                      "margin-desktop": "64px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "margin-mobile": "20px",
+                      "xl": "32px",
+                      "gutter": "16px",
+                      "base": "8px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "label-lg": ["Inter"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(182, 196, 255, 0.1);
+        }
+        .achievement-glow-primary {
+            box-shadow: 0 0 25px rgba(20, 184, 166, 0.25);
+        }
+        .achievement-glow-tertiary {
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.25);
+        }
+        .locked-badge {
+            filter: grayscale(1) contrast(0.8);
+            opacity: 0.4;
+        }
+        .badge-3d {
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+        .badge-3d:active {
+            transform: scale(0.9) rotateX(10deg);
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        .spark-glow {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body-md">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm md:px-margin-desktop">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A close-up portrait of a young student with a focused and intelligent expression, wearing a minimalist modern hoodie. The lighting is moody and cinematic, with soft teal and purple highlights that match the StudySpark app's aesthetic. The background is a blurred, high-tech study environment with deep navy tones and glowing interface elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEd18AJ4-VSzd5ITM-teAhGdoGEa05gAHoxJaw7WDH2a5ALXW6Sv6QuM457K7EwNYUiLgK2LFjilEirtusuyYHXPO_fmybZ3blT4DOOEfR4t9dK14VD9DmCDLvIc0-bVR1BPnkgIjKXFuori_EI0N6idu8-AWti_QHrRLiGg3OuEJLZuM2PH2TmGTBzD2xqUeXy0nykuoy7T7fCbUajNVeeLzd0euU1tvvb9vI6PKCZCFuOCCMBi-PnDk42EVB2ztZgrPteyVWapY"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-xl">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background mb-sm">Your Achievements</h2>
+<p class="font-body-md text-on-surface-variant max-w-2xl">Unlock badges and showcase your academic prowess. Every study session brings you closer to the next Spark.</p>
+</section>
+<!-- Stats Overview -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter mb-xl">
+<div class="glass-card p-md rounded-xl flex flex-col items-center justify-center text-center">
+<span class="text-secondary font-headline-lg-mobile text-headline-lg-mobile">12</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Badges Earned</span>
+</div>
+<div class="glass-card p-md rounded-xl flex flex-col items-center justify-center text-center border-tertiary/20">
+<span class="text-tertiary font-headline-lg-mobile text-headline-lg-mobile">85%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Global Rank</span>
+</div>
+<div class="glass-card p-md rounded-xl flex flex-col items-center justify-center text-center">
+<span class="text-primary font-headline-lg-mobile text-headline-lg-mobile">1.2k</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Spark Points</span>
+</div>
+<div class="glass-card p-md rounded-xl flex flex-col items-center justify-center text-center">
+<span class="text-error font-headline-lg-mobile text-headline-lg-mobile">7</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Day Streak</span>
+</div>
+</div>
+<!-- Achievement Categories -->
+<div class="space-y-xl">
+<!-- Category: Consistency -->
+<div>
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-secondary" data-icon="calendar_today">calendar_today</span>
+<h3 class="font-headline-md text-headline-md-mobile">Consistency</h3>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-xl">
+<!-- Badge 1 (Unlocked) -->
+<button class="badge-3d group flex flex-col items-center gap-sm" onclick="showDetails('Early Bird', 'Complete a study session before 7 AM for 5 consecutive days.', 'unlocked')">
+<div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-secondary/40 to-secondary-container flex items-center justify-center achievement-glow-primary">
+<div class="absolute inset-0 rounded-full border-2 border-white/20"></div>
+<span class="material-symbols-outlined text-white text-4xl md:text-5xl" data-icon="wb_sunny">wb_sunny</span>
+<div class="absolute -bottom-1 -right-1 bg-secondary-fixed text-on-secondary-fixed text-[10px] px-2 py-0.5 rounded-full font-bold">LVL 3</div>
+</div>
+<span class="font-label-lg text-label-lg text-on-background">Early Bird</span>
+</button>
+<!-- Badge 2 (Unlocked) -->
+<button class="badge-3d group flex flex-col items-center gap-sm" onclick="showDetails('Night Owl', 'Study for more than 3 hours after 10 PM.', 'unlocked')">
+<div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-primary/40 to-primary-container flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-white text-4xl md:text-5xl" data-icon="dark_mode">dark_mode</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-background">Night Owl</span>
+</button>
+<!-- Badge 3 (Locked) -->
+<button class="badge-3d group flex flex-col items-center gap-sm" onclick="showDetails('Century Club', 'Maintain a 100-day study streak without interruption.', 'locked')">
+<div class="locked-badge relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl md:text-5xl" data-icon="lock">lock</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface-variant">Century Club</span>
+</button>
+<!-- Badge 4 (Locked) -->
+<button class="badge-3d group flex flex-col items-center gap-sm" onclick="showDetails('Weekend Warrior', 'Complete at least 4 hours of focus time every weekend for a month.', 'locked')">
+<div class="locked-badge relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl md:text-5xl" data-icon="fitness_center">fitness_center</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface-variant">Warrior</span>
+</button>
+</div>
+</div>
+<!-- Category: AI Power User -->
+<div>
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-tertiary" data-icon="auto_awesome">auto_awesome</span>
+<h3 class="font-headline-md text-headline-md-mobile">AI Power User</h3>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-xl">
+<!-- Badge 5 (Unlocked) -->
+<button class="badge-3d group flex flex-col items-center gap-sm" onclick="showDetails('Smart Planner', 'Use AI to generate a full weekly study schedule.', 'unlocked')">
+<div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-tertiary/40 to-tertiary-container flex items-center justify-center achievement-glow-tertiary">
+<div class="absolute inset-0 rounded-full border-2 border-white/10"></div>
+<span class="material-symbols-outlined text-white text-4xl md:text-5xl" data-icon="bolt">bolt</span>
+<div class="spark-glow absolute inset-0 rounded-full bg-tertiary/20 blur-xl"></div>
+</div>
+<span class="font-label-lg text-label-lg text-on-background">Smart Planner</span>
+</button>
+<!-- Badge 6 (Locked) -->
+<button class="badge-3d group flex flex-col items-center gap-sm" onclick="showDetails('Quiz Master', 'Ace 10 AI-generated mock exams in a row.', 'locked')">
+<div class="locked-badge relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl md:text-5xl" data-icon="psychology">psychology</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface-variant">Quiz Master</span>
+</button>
+</div>
+</div>
+<!-- Category: Master Planner -->
+<div>
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-primary" data-icon="format_list_bulleted">format_list_bulleted</span>
+<h3 class="font-headline-md text-headline-md-mobile">Master Planner</h3>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-xl">
+<!-- Badge 7 (Unlocked) -->
+<button class="badge-3d group flex flex-col items-center gap-sm" onclick="showDetails('Goal Setter', 'Set and complete 50 short-term study goals.', 'unlocked')">
+<div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-tr from-primary/40 to-primary-container flex items-center justify-center border border-primary/20 shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined text-white text-4xl md:text-5xl" data-icon="flag">flag</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-background">Goal Setter</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Achievement Detail Modal -->
+<div class="fixed inset-0 z-[100] hidden items-center justify-center p-margin-mobile" id="badge-modal">
+<div class="absolute inset-0 bg-background/80 backdrop-blur-md" onclick="closeModal()"></div>
+<div class="glass-card w-full max-w-md rounded-2xl p-xl relative z-10 animate-in fade-in zoom-in duration-300">
+<button class="absolute top-md right-md text-on-surface-variant hover:text-white" onclick="closeModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="flex flex-col items-center text-center space-y-md">
+<div class="w-32 h-32 rounded-full flex items-center justify-center mb-sm" id="modal-badge-container">
+<!-- Icon Injected Here -->
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary" id="modal-title">Badge Name</h2>
+<p class="font-body-md text-on-surface-variant" id="modal-desc">This is a description of how to earn this magnificent badge.</p>
+<div class="px-4 py-1.5 rounded-full font-label-lg text-label-lg mt-md" id="modal-status-pill">
+                    Unlocked
+                </div>
+<div class="w-full h-[1px] bg-outline-variant/30 my-md"></div>
+<div class="flex flex-col w-full gap-sm">
+<button class="w-full py-3 bg-secondary text-on-secondary-container font-label-lg rounded-xl hover:opacity-90 transition-opacity" onclick="closeModal()">
+                        Great, got it!
+                    </button>
+<button class="w-full py-3 border border-outline-variant text-on-surface font-label-lg rounded-xl hover:bg-surface-variant/20 transition-colors">
+                        Share Achievement
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl z-50 rounded-t-xl shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+<script>
+        function showDetails(title, desc, status) {
+            const modal = document.getElementById('badge-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDesc = document.getElementById('modal-desc');
+            const modalStatus = document.getElementById('modal-status-pill');
+            const modalBadge = document.getElementById('modal-badge-container');
+            
+            modalTitle.innerText = title;
+            modalDesc.innerText = desc;
+            
+            // Clear current styles
+            modalBadge.className = 'w-32 h-32 rounded-full flex items-center justify-center mb-sm relative';
+            
+            if(status === 'unlocked') {
+                modalStatus.innerText = 'Unlocked';
+                modalStatus.className = 'px-4 py-1.5 rounded-full font-label-lg text-label-lg mt-md bg-secondary/20 text-secondary border border-secondary/30';
+                modalBadge.classList.add('bg-gradient-to-tr', 'from-secondary', 'to-secondary-container', 'achievement-glow-primary');
+                modalBadge.innerHTML = `<span class="material-symbols-outlined text-white text-6xl" data-icon="verified">verified</span>`;
+            } else {
+                modalStatus.innerText = 'Locked';
+                modalStatus.className = 'px-4 py-1.5 rounded-full font-label-lg text-label-lg mt-md bg-surface-variant text-on-surface-variant';
+                modalBadge.classList.add('bg-surface-container-highest', 'locked-badge');
+                modalBadge.innerHTML = `<span class="material-symbols-outlined text-on-surface-variant text-6xl" data-icon="lock">lock</span>`;
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('badge-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body></html>

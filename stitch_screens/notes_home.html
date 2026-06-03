@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#4e03b8",
+                    "secondary-fixed-dim": "#4fdbc8",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-container": "#171f33",
+                    "secondary": "#4fdbc8",
+                    "secondary-container": "#04b4a2",
+                    "inverse-primary": "#4059aa",
+                    "on-secondary-container": "#003f38",
+                    "tertiary-fixed": "#e9ddff",
+                    "background": "#0b1326",
+                    "on-tertiary-container": "#b89cff",
+                    "on-primary-container": "#90a8ff",
+                    "error-container": "#93000a",
+                    "surface-tint": "#b6c4ff",
+                    "secondary-fixed": "#71f8e4",
+                    "surface-container-low": "#131b2e",
+                    "primary-container": "#1e3a8a",
+                    "on-primary": "#05297a",
+                    "on-primary-fixed": "#00164e",
+                    "surface-dim": "#0b1326",
+                    "primary": "#b6c4ff",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "tertiary": "#d0bcff",
+                    "on-primary-fixed-variant": "#264191",
+                    "inverse-surface": "#dae2fd",
+                    "surface-variant": "#2d3449",
+                    "inverse-on-surface": "#283044",
+                    "surface-container-high": "#222a3d",
+                    "on-surface": "#dae2fd",
+                    "on-tertiary-fixed": "#23005c",
+                    "on-error-container": "#ffdad6",
+                    "outline": "#8f909d",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-bright": "#31394d",
+                    "error": "#ffb4ab",
+                    "on-surface-variant": "#c5c5d3",
+                    "outline-variant": "#444651",
+                    "on-tertiary": "#3c0091",
+                    "on-secondary": "#003731",
+                    "surface-container-lowest": "#060e20",
+                    "primary-fixed": "#dce1ff",
+                    "on-background": "#dae2fd",
+                    "surface-container-highest": "#2d3449",
+                    "surface": "#0b1326",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "lg": "24px",
+                    "base": "8px",
+                    "margin-desktop": "64px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "sm": "8px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-sm": ["Inter"],
+                    "label-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(23, 31, 51, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+        .ai-spark-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        .teal-glow-focus:focus-within {
+            box-shadow: 0 0 15px rgba(20, 184, 166, 0.3);
+            border-color: rgba(20, 184, 166, 0.5);
+        }
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm w-full">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="User Profile" data-alt="A professional headshot of a young university student with a friendly expression, styled in a clean digital vector art format. The background is a soft gradient of deep navy and teal, matching the intelligent companion brand aesthetic. The lighting is soft and cinematic, highlighting the contours of the face with a high-tech, modern feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo3dXxzAKtWCxWrNwJbAjWL-PDEBBC8mgBnbqQQYP8ZAnh06T5GRJcwyFN8PRkiqAHRAAw8QkFLKxu9QkVftXBU-6axVZbAmQOfg-TDsHCZnYzhdlh5oVwpe4PBPbN5CerhnTDaVYdbfxRzBQCny4GZqaC7iTDxu1sh6iq1qeL1J2BcI83pB7tdNF8DPgUlJEt5dngTIKZxOSJnh21okt87AIxD95aCWL0FXYK2FFXd54Le47SYZW6MpdM9q43BGLLQ04Jdb2owTk"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</header>
+<main class="pt-24 px-margin-mobile max-w-7xl mx-auto">
+<!-- Search & Filter Section -->
+<section class="mb-xl">
+<div class="relative group teal-glow-focus transition-all duration-300 rounded-xl border border-outline-variant bg-surface-container-low mb-lg">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-transparent border-none py-4 pl-12 pr-4 focus:ring-0 text-on-surface placeholder:text-outline-variant font-body-md" placeholder="Search your notes, ideas, or AI insights..." type="text"/>
+</div>
+<div class="flex gap-sm overflow-x-auto pb-2 no-scrollbar">
+<button class="whitespace-nowrap px-lg py-2 rounded-full bg-secondary-container text-on-secondary-container font-label-lg transition-transform active:scale-95">All</button>
+<button class="whitespace-nowrap px-lg py-2 rounded-full bg-surface-variant/50 text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">Courses</button>
+<button class="whitespace-nowrap px-lg py-2 rounded-full bg-surface-variant/50 text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">Personal</button>
+<button class="whitespace-nowrap px-lg py-2 rounded-full bg-surface-variant/50 text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">Research</button>
+<button class="whitespace-nowrap px-lg py-2 rounded-full bg-surface-variant/50 text-on-surface-variant font-label-lg hover:bg-surface-variant transition-colors">Drafts</button>
+</div>
+</section>
+<!-- Notes Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- AI Enhanced Note (Pinned/Large) -->
+<div class="md:col-span-2 glass-card ai-spark-glow p-lg rounded-xl flex flex-col justify-between group cursor-pointer hover:border-tertiary/40 transition-all">
+<div>
+<div class="flex justify-between items-start mb-md">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-label-sm flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                            AI Synthesized
+                        </span>
+<span class="text-outline text-label-sm">Edited 2h ago</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm group-hover:text-tertiary transition-colors">Quantum Mechanics: Wave-Particle Duality</h3>
+<p class="text-on-surface-variant line-clamp-3 mb-lg">Summary of today's lecture covering the double-slit experiment and De Broglie's hypothesis. AI suggests linking this to last week's Schrodinger Equation notes...</p>
+</div>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-lg text-label-sm">Physics 301</span>
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-lg text-label-sm">Lecture</span>
+<span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-lg text-label-sm">Core Concept</span>
+</div>
+</div>
+<!-- Standard Note 1 -->
+<div class="glass-card p-lg rounded-xl hover:bg-surface-container-high transition-all cursor-pointer border border-outline-variant/30">
+<div class="flex justify-between items-start mb-md">
+<span class="text-outline text-label-sm">Edited 1d ago</span>
+<span class="material-symbols-outlined text-outline text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Bio 101: Cell Division</h3>
+<p class="text-on-surface-variant line-clamp-4 mb-lg">Brief overview of Mitosis vs Meiosis. Need to add diagrams for Prophase and Metaphase stages. Review textbook chapter 4 for specific protein roles.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-lg text-label-sm">Bio 101</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-lg text-label-sm">Draft</span>
+</div>
+</div>
+<!-- Standard Note 2 -->
+<div class="glass-card p-lg rounded-xl hover:bg-surface-container-high transition-all cursor-pointer border border-outline-variant/30">
+<div class="flex justify-between items-start mb-md">
+<span class="text-outline text-label-sm">Edited 3d ago</span>
+<span class="material-symbols-outlined text-outline text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Thesis Brainstorming</h3>
+<p class="text-on-surface-variant line-clamp-4 mb-lg">Topic A: Impact of social media on attention spans. Topic B: Neural networks in medical diagnosis. Topic C: Sustainable urban architecture.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-lg text-label-sm">Research</span>
+</div>
+</div>
+<!-- Standard Note 3 -->
+<div class="glass-card p-lg rounded-xl hover:bg-surface-container-high transition-all cursor-pointer border border-outline-variant/30">
+<div class="flex justify-between items-start mb-md">
+<span class="text-outline text-label-sm">Edited May 12</span>
+<span class="material-symbols-outlined text-outline text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Grocery List &amp; Meal Prep</h3>
+<p class="text-on-surface-variant line-clamp-4 mb-lg">Spinach, Chicken breast, Brown rice, Almond milk, Avocados. Plan for overnight oats and meal prep Sunday evening.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-lg text-label-sm">Personal</span>
+</div>
+</div>
+<!-- Standard Note 4 -->
+<div class="glass-card p-lg rounded-xl hover:bg-surface-container-high transition-all cursor-pointer border border-outline-variant/30">
+<div class="flex justify-between items-start mb-md">
+<span class="text-outline text-label-sm">Edited May 10</span>
+<span class="material-symbols-outlined text-outline text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">History: Industrial Revolution</h3>
+<p class="text-on-surface-variant line-clamp-4 mb-lg">Key inventions: Steam engine, Spinning Jenny. Shift from agrarian to urban society. Impact on labor laws and child labor regulations.</p>
+<div class="flex flex-wrap gap-xs">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-lg text-label-sm">History</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-1 rounded-lg text-label-sm">Exam Prep</span>
+</div>
+</div>
+<!-- Empty State Illustration Placeholder (Subtle) -->
+<div class="lg:col-span-3 py-12 flex flex-col items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-6xl mb-md">auto_stories</span>
+<p class="font-label-lg">Captured thoughts will appear here</p>
+</div>
+</div>
+</main>
+<!-- FAB: Creating a New Note -->
+<button class="fixed right-6 bottom-24 w-14 h-14 rounded-2xl bg-gradient-to-br from-secondary to-tertiary text-on-secondary shadow-lg flex items-center justify-center transition-transform hover:scale-110 active:scale-90 z-[60]">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl z-50 rounded-t-xl shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-95 active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for category selection
+        const categoryButtons = document.querySelectorAll('button[class*="whitespace-nowrap"]');
+        categoryButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryButtons.forEach(b => {
+                    b.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+                    b.classList.add('bg-surface-variant/50', 'text-on-surface-variant');
+                });
+                btn.classList.add('bg-secondary-container', 'text-on-secondary-container');
+                btn.classList.remove('bg-surface-variant/50', 'text-on-surface-variant');
+            });
+        });
+
+        // Pulsing AI glow effect
+        setInterval(() => {
+            const aiCard = document.querySelector('.ai-spark-glow');
+            if (aiCard) {
+                aiCard.style.boxShadow = `0 0 ${20 + Math.sin(Date.now() / 500) * 10}px rgba(139, 92, 246, 0.3)`;
+            }
+        }, 50);
+    </script>
+</body></html>

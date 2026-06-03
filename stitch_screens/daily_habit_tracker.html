@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark - Habit Tracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+        .ai-glow-active {
+            box-shadow: 0 0 30px rgba(20, 184, 166, 0.3);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1326;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3449;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#2d3449",
+                        "on-primary-fixed": "#00164e",
+                        "background": "#0b1326",
+                        "tertiary-fixed": "#e9ddff",
+                        "outline-variant": "#444651",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "on-surface-variant": "#c5c5d3",
+                        "on-background": "#dae2fd",
+                        "surface": "#0b1326",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "surface-container-lowest": "#060e20",
+                        "tertiary": "#d0bcff",
+                        "surface-variant": "#2d3449",
+                        "on-tertiary-fixed": "#23005c",
+                        "on-primary-container": "#90a8ff",
+                        "on-primary": "#05297a",
+                        "secondary-fixed": "#71f8e4",
+                        "secondary-container": "#04b4a2",
+                        "on-tertiary-container": "#b89cff",
+                        "primary": "#b6c4ff",
+                        "primary-container": "#1e3a8a",
+                        "outline": "#8f909d",
+                        "on-secondary-container": "#003f38",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-primary-fixed-variant": "#264191",
+                        "surface-bright": "#31394d",
+                        "on-tertiary": "#3c0091",
+                        "inverse-surface": "#dae2fd",
+                        "surface-container": "#171f33",
+                        "surface-tint": "#b6c4ff",
+                        "surface-container-low": "#131b2e",
+                        "inverse-primary": "#4059aa",
+                        "on-secondary-fixed-variant": "#005048",
+                        "surface-container-high": "#222a3d",
+                        "secondary": "#4fdbc8",
+                        "surface-dim": "#0b1326",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#dce1ff",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "tertiary-container": "#4e03b8",
+                        "on-surface": "#dae2fd",
+                        "inverse-on-surface": "#283044",
+                        "error-container": "#93000a",
+                        "on-secondary": "#003731",
+                        "on-secondary-fixed": "#00201c",
+                        "on-error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "16px",
+                        "xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "margin-desktop": "64px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "margin-mobile": "20px",
+                        "xl": "32px",
+                        "gutter": "16px",
+                        "base": "8px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl fixed top-0 w-full z-50">
+<div class="flex justify-between items-center px-margin-mobile py-sm w-full md:px-margin-desktop">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A cinematic close-up portrait of a young professional with a focused expression, set against a blurred urban background with cool blue and teal lighting. The aesthetic is modern and high-quality, mirroring the deep navy and teal accents of a premium digital productivity app. The lighting is soft yet directional, highlighting detailed textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWrgTErIsDzFKnO9Kq55I6JeESeXWq02u822roFs1fG8WGMnrwFFuU0gwEzBm9_CyPwpQGD4ygXJVMcKc8ez6b0KUfW0cFUJO0ev9fi4GDg3INyD3SI36sVdf61Kf6PIOJAO0Bq9k0dLCv7x2Ko1ArOI1Q_YWtGViBtgYAotm7YSm6pjnOHC2Qs5Rs3bM0_tNHn6Yy8gUaqyEMIqM556FBqlQw1vmJE4WKOksnXKoFOPSTLerOs6T9K23m7PalBOY9kHg5iFoMWY0"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Header Section -->
+<section class="mb-xl">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-xs">Daily Rituals</h2>
+<p class="text-on-surface-variant font-body-md">Consistency is the spark of genius. Keep your streaks alive.</p>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Bento Grid - Left Column: Habits -->
+<div class="md:col-span-8 space-y-md">
+<!-- Habit Card 1 -->
+<div class="glass-card rounded-lg p-md flex items-center justify-between group hover:border-secondary/30 transition-all duration-300">
+<div class="flex items-center gap-md">
+<div class="relative w-14 h-14 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-secondary" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-dasharray="150.7" stroke-dashoffset="30" stroke-width="4"></circle>
+</svg>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface">Morning Review</h3>
+<div class="flex items-center gap-sm mt-1">
+<span class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">80% Done</span>
+<span class="text-on-surface-variant text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span> 12 Day Streak
+                                </span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-secondary/40 flex items-center justify-center transition-all duration-150 active:scale-90" onclick="toggleHabit(this)">
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">check</span>
+</button>
+</div>
+<!-- Habit Card 2 -->
+<div class="glass-card rounded-lg p-md flex items-center justify-between group hover:border-secondary/30 transition-all duration-300 ai-glow">
+<div class="flex items-center gap-md">
+<div class="relative w-14 h-14 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-secondary" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-dasharray="150.7" stroke-dashoffset="150.7" stroke-width="4"></circle>
+</svg>
+<span class="material-symbols-outlined text-on-surface-variant">water_drop</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface">Hydration</h3>
+<div class="flex items-center gap-sm mt-1">
+<span class="bg-surface-variant text-on-surface-variant text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Remaining: 1.2L</span>
+<span class="text-on-surface-variant text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span> 4 Day Streak
+                                </span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-outline/30 flex items-center justify-center transition-all duration-150 active:scale-90" onclick="toggleHabit(this)">
+<span class="material-symbols-outlined text-secondary opacity-0">check</span>
+</button>
+</div>
+<!-- Habit Card 3 -->
+<div class="glass-card rounded-lg p-md flex items-center justify-between group hover:border-secondary/30 transition-all duration-300">
+<div class="flex items-center gap-md">
+<div class="relative w-14 h-14 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-tertiary" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-dasharray="150.7" stroke-dashoffset="100" stroke-width="4"></circle>
+</svg>
+<span class="material-symbols-outlined text-tertiary">psychology</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface">Deep Work Session</h3>
+<div class="flex items-center gap-sm mt-1">
+<span class="bg-tertiary/10 text-tertiary text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">35m Left</span>
+<span class="text-on-surface-variant text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span> 28 Day Streak
+                                </span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-outline/30 flex items-center justify-center transition-all duration-150 active:scale-90" onclick="toggleHabit(this)">
+<span class="material-symbols-outlined text-secondary opacity-0">check</span>
+</button>
+</div>
+<!-- Habit Card 4 -->
+<div class="glass-card rounded-lg p-md flex items-center justify-between group hover:border-secondary/30 transition-all duration-300">
+<div class="flex items-center gap-md">
+<div class="relative w-14 h-14 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-surface-container-highest" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-secondary" cx="28" cy="28" fill="transparent" r="24" stroke="currentColor" stroke-dasharray="150.7" stroke-dashoffset="150.7" stroke-width="4"></circle>
+</svg>
+<span class="material-symbols-outlined text-on-surface-variant">fitness_center</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface">Evening Exercise</h3>
+<div class="flex items-center gap-sm mt-1">
+<span class="bg-surface-variant text-on-surface-variant text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Not Started</span>
+<span class="text-on-surface-variant text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_fire_department</span> 0 Day Streak
+                                </span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-outline/30 flex items-center justify-center transition-all duration-150 active:scale-90" onclick="toggleHabit(this)">
+<span class="material-symbols-outlined text-secondary opacity-0">check</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid - Right Column: Heatmap & Stats -->
+<div class="md:col-span-4 space-y-gutter">
+<!-- Heatmap Card -->
+<div class="glass-card rounded-lg p-md">
+<h3 class="font-label-lg text-on-surface mb-md flex items-center justify-between">
+                        Consistency Map
+                        <span class="text-on-surface-variant text-[10px] font-normal uppercase">Last 8 Weeks</span>
+</h3>
+<div class="grid grid-cols-7 gap-1">
+<!-- Heatmap dots - simulated -->
+<script>
+                            const colors = ['bg-surface-container-highest', 'bg-secondary/20', 'bg-secondary/50', 'bg-secondary'];
+                            for (let i = 0; i < 56; i++) {
+                                const level = Math.floor(Math.random() * 4);
+                                document.write(`<div class="w-full aspect-square rounded-sm ${colors[level]}"></div>`);
+                            }
+                        </script>
+</div>
+<div class="flex justify-between mt-sm text-label-sm text-on-surface-variant">
+<span>Less</span>
+<div class="flex gap-1">
+<div class="w-3 h-3 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3 h-3 rounded-sm bg-secondary/20"></div>
+<div class="w-3 h-3 rounded-sm bg-secondary/50"></div>
+<div class="w-3 h-3 rounded-sm bg-secondary"></div>
+</div>
+<span>More</span>
+</div>
+</div>
+<!-- Stats Card -->
+<div class="glass-card rounded-lg p-md bg-gradient-to-br from-surface-container to-surface-container-highest">
+<div class="flex justify-between items-start mb-md">
+<div>
+<p class="text-on-surface-variant text-label-sm">Total Mastery</p>
+<h4 class="font-display-lg text-[32px] text-secondary">92%</h4>
+</div>
+<div class="p-2 bg-secondary/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-label-sm leading-relaxed">
+                        You're in the <span class="text-primary font-bold">top 5%</span> of consistent users this month. Your AI Spark suggests focus on "Hydration" to boost cognitive load handling.
+                    </p>
+</div>
+<!-- Upcoming Goal Card -->
+<div class="glass-card rounded-lg p-md border-l-4 border-tertiary">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-tertiary">workspace_premium</span>
+<div>
+<h4 class="text-label-lg text-on-surface">30-Day Streak Badge</h4>
+<p class="text-label-sm text-on-surface-variant">2 days remaining</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB (Creation/AI) -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-gradient-to-tr from-primary to-tertiary rounded-full shadow-lg ai-glow flex items-center justify-center text-on-primary-fixed hover:scale-105 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 z-50 rounded-t-xl shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        function toggleHabit(btn) {
+            const icon = btn.querySelector('.material-symbols-outlined');
+            const parent = btn.closest('.glass-card');
+            
+            if (btn.classList.contains('bg-secondary')) {
+                // Untoggle
+                btn.classList.remove('bg-secondary', 'border-secondary');
+                btn.classList.add('border-outline/30');
+                icon.classList.add('opacity-0');
+                icon.style.color = '';
+                parent.classList.remove('ai-glow-active');
+            } else {
+                // Toggle
+                btn.classList.add('bg-secondary', 'border-secondary');
+                btn.classList.remove('border-outline/30');
+                icon.classList.remove('opacity-0');
+                icon.classList.add('text-on-secondary');
+                icon.style.fontVariationSettings = "'FILL' 1";
+                parent.classList.add('ai-glow-active');
+                
+                // Pulse effect
+                btn.classList.add('scale-110');
+                setTimeout(() => btn.classList.remove('scale-110'), 150);
+            }
+        }
+
+        // Simple parallax effect on cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-card');
+            const x = (window.innerWidth / 2 - e.pageX) / 50;
+            const y = (window.innerHeight / 2 - e.pageY) / 50;
+            
+            cards.forEach(card => {
+                // Very subtle movement
+                // card.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+</body></html>

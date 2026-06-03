@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark Note Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Plus+Jakarta+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2d3449;
+            border-radius: 10px;
+        }
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#4e03b8",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-secondary-fixed": "#00201c",
+                      "surface-container": "#171f33",
+                      "secondary": "#4fdbc8",
+                      "secondary-container": "#04b4a2",
+                      "inverse-primary": "#4059aa",
+                      "on-secondary-container": "#003f38",
+                      "tertiary-fixed": "#e9ddff",
+                      "background": "#0b1326",
+                      "on-tertiary-container": "#b89cff",
+                      "on-primary-container": "#90a8ff",
+                      "error-container": "#93000a",
+                      "surface-tint": "#b6c4ff",
+                      "secondary-fixed": "#71f8e4",
+                      "surface-container-low": "#131b2e",
+                      "primary-container": "#1e3a8a",
+                      "on-primary": "#05297a",
+                      "on-primary-fixed": "#00164e",
+                      "surface-dim": "#0b1326",
+                      "primary": "#b6c4ff",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "tertiary": "#d0bcff",
+                      "on-primary-fixed-variant": "#264191",
+                      "inverse-surface": "#dae2fd",
+                      "surface-variant": "#2d3449",
+                      "inverse-on-surface": "#283044",
+                      "surface-container-high": "#222a3d",
+                      "on-surface": "#dae2fd",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#8f909d",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "on-secondary-fixed-variant": "#005048",
+                      "surface-bright": "#31394d",
+                      "error": "#ffb4ab",
+                      "on-surface-variant": "#c5c5d3",
+                      "outline-variant": "#444651",
+                      "on-tertiary": "#3c0091",
+                      "on-secondary": "#003731",
+                      "surface-container-lowest": "#060e20",
+                      "primary-fixed": "#dce1ff",
+                      "on-background": "#dae2fd",
+                      "surface-container-highest": "#2d3449",
+                      "surface": "#0b1326",
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "on-error": "#690005"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "16px",
+                      "xl": "24px",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin-mobile": "20px",
+                      "lg": "24px",
+                      "base": "8px",
+                      "margin-desktop": "64px",
+                      "md": "16px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "label-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface selection:bg-tertiary/30">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm md:px-margin-desktop">
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors duration-200 text-on-surface">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<input class="bg-transparent border-none focus:ring-0 font-headline-md text-headline-md-mobile md:text-headline-md text-primary p-0 w-full md:max-w-md" placeholder="Note Title" type="text" value="Algorithms &amp; Complexity"/>
+</div>
+<button class="bg-secondary-container text-on-secondary-container px-md py-xs rounded-full font-label-lg transition-transform active:scale-95 duration-150">
+            Done
+        </button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-40 px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto min-h-screen">
+<!-- AI Assistant Chips -->
+<div class="flex flex-wrap gap-sm mb-lg animate-fade-in">
+<button class="flex items-center gap-xs px-md py-sm bg-tertiary-container/30 border border-tertiary/20 text-tertiary rounded-xl ai-glow transition-all hover:bg-tertiary-container/50">
+<span class="material-symbols-outlined text-[18px]" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-lg">Summarize</span>
+</button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-high border border-outline-variant/30 text-on-surface-variant rounded-xl transition-all hover:bg-surface-variant/50">
+<span class="material-symbols-outlined text-[18px]" data-icon="quiz">quiz</span>
+<span class="font-label-lg">Generate Quiz</span>
+</button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container-high border border-outline-variant/30 text-on-surface-variant rounded-xl transition-all hover:bg-surface-variant/50">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit_note">edit_note</span>
+<span class="font-label-lg">Improve Writing</span>
+</button>
+</div>
+<!-- Editor Area -->
+<div class="space-y-md">
+<div class="prose prose-invert max-w-none custom-scrollbar overflow-y-auto">
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+                    Complexity theory is a central topic in theoretical computer science. It focuses on classifying computational problems according to their inherent difficulty.
+                </p>
+<h2 class="font-headline-lg-mobile md:text-headline-lg text-on-surface mt-xl mb-md">P vs NP Problem</h2>
+<p class="font-body-md text-on-surface-variant mb-md">
+                    The P versus NP problem is a major unsolved problem in computer science. It asks whether every problem whose solution can be quickly verified can also be solved quickly.
+                </p>
+<div class="relative w-full rounded-xl overflow-hidden my-lg border border-outline-variant/30">
+<img class="w-full object-cover aspect-video" data-alt="A cinematic, high-detail visualization of complex mathematical equations and neural networks glowing in soft teal and purple against a deep navy background. The scene is lit with a futuristic, laboratory-style glow, emphasizing abstract data structures and intelligent nodes. The aesthetic is clean, sophisticated, and deeply integrated with the StudySpark dark-mode color palette, featuring subtle glassmorphic textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr5hzXtmc7Oo9IaehJ3zhwqz0HIebULFNACMD9JMHDUitlLJGk3gbKJ2V5_sVH56fA41ZbEHDA2G3Wg-mllbz-IUBy7xez6GYHietsGf7pbYpUnmDsTVIndtoX5MrrUcx43GFkm1UosUbTBI0FI-A17_EPb4IPKAF-w_A0-i9wvpwVQobsaL32W6PHDLKvcNPVfvrDGw9JSPW7bIDDzRfCG2pRnMjrrvVoJ_lNLtW6yT7c43wRSQpqqoAO4PZH9I-URLABR1Bqhg4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+<div class="absolute bottom-md left-md">
+<span class="bg-surface/80 backdrop-blur-md text-on-surface px-sm py-xs rounded text-label-sm">Figure 1.1: Complexity Visualization</span>
+</div>
+</div>
+<p class="font-body-md text-on-surface-variant mb-md">
+                    Key concepts to remember for the upcoming midterm:
+                </p>
+<ul class="list-disc list-inside space-y-sm font-body-md text-secondary">
+<li>Big O Notation (Upper bounds)</li>
+<li>NP-Completeness (Reduction principles)</li>
+<li>Space Complexity vs Time Complexity</li>
+</ul>
+<div class="min-h-[200px] outline-none text-on-surface-variant font-body-md leading-relaxed mt-lg cursor-text" contenteditable="true" id="main-editor">
+                    Continue typing your amazing study notes here...
+                </div>
+</div>
+</div>
+</main>
+<!-- Rich Text Formatting Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl rounded-t-xl shadow-lg md:max-w-2xl md:left-1/2 md:-translate-x-1/2 md:mb-md md:rounded-xl">
+<div class="flex justify-around items-center px-4 pb-4 pt-2 md:py-3">
+<!-- Formatting Groups -->
+<div class="flex items-center gap-xs">
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant" onclick="formatDoc('bold')">
+<span class="material-symbols-outlined" data-icon="format_bold">format_bold</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant" onclick="formatDoc('italic')">
+<span class="material-symbols-outlined" data-icon="format_italic">format_italic</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant" onclick="formatDoc('underline')">
+<span class="material-symbols-outlined" data-icon="format_underlined">format_underlined</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant/30"></div>
+<div class="flex items-center gap-xs">
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="format_list_bulleted">format_list_bulleted</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="format_list_numbered">format_list_numbered</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant/30"></div>
+<div class="flex items-center gap-xs">
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="add_photo_alternate">add_photo_alternate</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="attachment">attachment</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Contextual FAB (Hidden by default, shown on mobile focus) -->
+<button class="fixed bottom-24 right-margin-mobile w-14 h-14 bg-gradient-to-tr from-primary to-tertiary text-on-primary rounded-full shadow-xl flex items-center justify-center transition-transform active:scale-90 md:hidden">
+<span class="material-symbols-outlined" data-icon="spark">auto_awesome</span>
+</button>
+<script>
+        // Simple formatting simulation
+        function formatDoc(command) {
+            document.execCommand(command, false, null);
+        }
+
+        // Animation for entry
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.animate-fade-in');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // AI Chip Interaction
+        const aiChips = document.querySelectorAll('.ai-glow');
+        aiChips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                this.classList.add('animate-pulse');
+                setTimeout(() => {
+                    this.classList.remove('animate-pulse');
+                }, 2000);
+            });
+        });
+    </script>
+</body></html>

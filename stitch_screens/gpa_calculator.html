@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark | GPA Calculator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    body {
+      background-color: #0b1326;
+      font-family: 'Inter', sans-serif;
+      color: #dae2fd;
+    }
+    .font-headline { font-family: 'Plus Jakarta Sans', sans-serif; }
+    
+    .glass-card {
+      background: rgba(23, 31, 51, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .ai-glow {
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .ai-pulse {
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.2); }
+      50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+      background: #2d3449;
+      height: 6px;
+      border-radius: 3px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      margin-top: -5px;
+      background-color: #4fdbc8;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(79, 219, 200, 0.5);
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "background": "#0b1326",
+            "surface-container": "#171f33",
+            "tertiary-container": "#4e03b8",
+            "surface-variant": "#2d3449",
+            "secondary": "#4fdbc8",
+            "on-tertiary": "#3c0091",
+            "surface-dim": "#0b1326",
+            "on-secondary-container": "#003f38",
+            "tertiary": "#d0bcff",
+            "on-secondary": "#003731",
+            "secondary-fixed": "#71f8e4",
+            "inverse-primary": "#4059aa",
+            "surface": "#0b1326",
+            "surface-container-lowest": "#060e20",
+            "on-tertiary-container": "#b89cff",
+            "primary-fixed": "#dce1ff",
+            "primary-container": "#1e3a8a",
+            "surface-container-high": "#222a3d",
+            "surface-container-highest": "#2d3449",
+            "on-secondary-fixed": "#00201c",
+            "error-container": "#93000a",
+            "on-tertiary-fixed": "#23005c",
+            "on-secondary-fixed-variant": "#005048",
+            "outline-variant": "#444651",
+            "surface-tint": "#b6c4ff",
+            "on-tertiary-fixed-variant": "#5516be",
+            "on-primary-fixed": "#00164e",
+            "on-error": "#690005",
+            "error": "#ffb4ab",
+            "primary-fixed-dim": "#b6c4ff",
+            "on-surface-variant": "#c5c5d3",
+            "inverse-surface": "#dae2fd",
+            "on-primary-fixed-variant": "#264191",
+            "on-surface": "#dae2fd",
+            "on-error-container": "#ffdad6",
+            "outline": "#8f909d",
+            "secondary-fixed-dim": "#4fdbc8",
+            "tertiary-fixed": "#e9ddff",
+            "on-primary-container": "#90a8ff",
+            "secondary-container": "#04b4a2",
+            "tertiary-fixed-dim": "#d0bcff",
+            "inverse-on-surface": "#283044",
+            "on-primary": "#05297a",
+            "on-background": "#dae2fd",
+            "primary": "#b6c4ff",
+            "surface-container-low": "#131b2e",
+            "surface-bright": "#31394d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-desktop": "64px",
+            "base": "8px",
+            "lg": "24px",
+            "xs": "4px",
+            "xl": "32px",
+            "sm": "8px",
+            "gutter": "16px",
+            "margin-mobile": "20px",
+            "md": "16px"
+          },
+          "fontFamily": {
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "display-lg": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+          }
+        },
+      }
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen pb-32">
+<!-- Top AppBar -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile py-sm md:px-margin-desktop">
+<div class="flex items-center gap-md">
+<div class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-full transition-colors duration-200">notifications</button>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high ring-2 ring-primary/20">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a young male student in a bright library environment. He is wearing a clean navy blue polo shirt and has a focused, intelligent expression. The background shows blurred books and warm sunlight, following a high-end academic lifestyle aesthetic with deep contrasts and soft teal lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2UX1QxfmFnV7te9F6tP3TEo_ZEfXhiK_MbvIOnHy_QqkA9T9xwcVve5MtS5hSE0AUuhzKlpojUNxpkLvQ3CjDV-1_LtA2gDXRgOtinVWV1R1OcWeqYJhZ0Onkrc5vi4VMgPc4ZhE-CWdP77f9GY0E8Lxa2E1UpmiZKGtp5gvv650ek5tw0bpuANugl-hnnmINh_cdmhdiP1HPFhx0yVXE50pruZQqfID7lGoy7nwdTXhVrfvwcvrGOJ450PEeqCJhbyzBXsAG_M8"/>
+</div>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<!-- Hero Section / Context -->
+<div class="mb-xl">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">GPA Optimizer</h1>
+<p class="font-body-md text-on-surface-variant mt-xs">Project your academic future with AI-driven grade forecasting.</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Input Panel -->
+<div class="lg:col-span-8 flex flex-col gap-md">
+<!-- Target GPA Slider Card -->
+<section class="glass-card ai-glow rounded-xl p-md md:p-lg">
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-headline-md text-secondary flex items-center gap-xs">
+<span class="material-symbols-outlined" data-weight="fill">target</span>
+              Target GPA
+            </h2>
+<div class="font-display-lg text-primary" id="target-display">3.80</div>
+</div>
+<input class="w-full h-2 rounded-lg cursor-pointer accent-secondary" id="target-slider" max="4.00" min="0.00" step="0.05" type="range" value="3.80"/>
+<div class="flex justify-between mt-sm text-label-sm text-on-surface-variant">
+<span>0.00</span>
+<span>2.00</span>
+<span>4.00</span>
+</div>
+</section>
+<!-- Current Status & Course Inputs -->
+<section class="glass-card rounded-xl p-md md:p-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mb-lg">
+<div class="space-y-xs">
+<label class="text-label-lg text-on-surface-variant">Current CGPA</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg text-on-surface p-md focus:ring-2 focus:ring-primary" placeholder="3.45" type="number"/>
+</div>
+<div class="space-y-xs">
+<label class="text-label-lg text-on-surface-variant">Credits Earned</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg text-on-surface p-md focus:ring-2 focus:ring-primary" placeholder="64" type="number"/>
+</div>
+</div>
+<div class="border-t border-outline-variant pt-lg">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-on-surface">Ongoing Courses</h3>
+<button class="text-secondary flex items-center gap-xs font-label-lg hover:underline transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                Add Course
+              </button>
+</div>
+<!-- Dynamic Course Rows -->
+<div class="space-y-sm" id="course-list">
+<!-- Course Item 1 -->
+<div class="flex flex-col md:flex-row gap-sm p-sm bg-surface-container-low rounded-lg items-center">
+<div class="flex-1 w-full">
+<input class="w-full bg-transparent border-none text-on-surface font-body-md focus:ring-0" type="text" value="Advanced Machine Learning"/>
+</div>
+<div class="flex gap-sm w-full md:w-auto">
+<select class="bg-surface-variant border-none rounded-lg text-on-surface text-label-lg focus:ring-2 focus:ring-primary p-sm">
+<option>4 Credits</option>
+<option>3 Credits</option>
+<option>2 Credits</option>
+</select>
+<select class="bg-surface-variant border-none rounded-lg text-on-surface text-label-lg focus:ring-2 focus:ring-primary p-sm">
+<option>A (4.0)</option>
+<option>B+ (3.5)</option>
+<option>B (3.0)</option>
+</select>
+<button class="material-symbols-outlined text-error p-sm hover:bg-error-container/20 rounded-lg transition-colors">delete</button>
+</div>
+</div>
+<!-- Course Item 2 -->
+<div class="flex flex-col md:flex-row gap-sm p-sm bg-surface-container-low rounded-lg items-center">
+<div class="flex-1 w-full">
+<input class="w-full bg-transparent border-none text-on-surface font-body-md focus:ring-0" type="text" value="Cognitive Psychology"/>
+</div>
+<div class="flex gap-sm w-full md:w-auto">
+<select class="bg-surface-variant border-none rounded-lg text-on-surface text-label-lg focus:ring-2 focus:ring-primary p-sm">
+<option>3 Credits</option>
+<option>4 Credits</option>
+<option>2 Credits</option>
+</select>
+<select class="bg-surface-variant border-none rounded-lg text-on-surface text-label-lg focus:ring-2 focus:ring-primary p-sm">
+<option>A- (3.7)</option>
+<option>A (4.0)</option>
+<option>B (3.0)</option>
+</select>
+<button class="material-symbols-outlined text-error p-sm hover:bg-error-container/20 rounded-lg transition-colors">delete</button>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full bg-secondary text-on-secondary-container font-headline-md py-lg rounded-xl mt-xl hover:scale-[1.02] active:scale-95 transition-transform duration-150 flex justify-center items-center gap-sm">
+<span class="material-symbols-outlined">calculate</span>
+            Calculate Projection
+          </button>
+</section>
+</div>
+<!-- Right Column: AI Analysis -->
+<aside class="lg:col-span-4 flex flex-col gap-md">
+<!-- Spark AI Insights Card -->
+<div class="glass-card ai-glow ai-pulse rounded-xl overflow-hidden">
+<div class="p-md bg-tertiary-container/30 flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary">auto_awesome</span>
+<h3 class="font-headline-md text-tertiary">Spark Insights</h3>
+</div>
+<div class="p-md space-y-md">
+<div class="p-sm bg-surface-container-high rounded-lg border-l-4 border-tertiary">
+<p class="font-label-lg text-on-surface">Target Variance</p>
+<p class="font-body-md text-on-surface-variant mt-xs">You are currently <span class="text-tertiary font-bold">0.35 points</span> away from your goal.</p>
+</div>
+<div class="space-y-sm">
+<p class="font-label-lg text-on-surface-variant">Recommended Grades:</p>
+<ul class="space-y-xs">
+<li class="flex justify-between text-body-md">
+<span>Adv. ML</span>
+<span class="text-secondary font-bold">A</span>
+</li>
+<li class="flex justify-between text-body-md">
+<span>Cognitive Psych.</span>
+<span class="text-secondary font-bold">A-</span>
+</li>
+<li class="flex justify-between text-body-md border-t border-outline-variant pt-xs mt-xs">
+<span>Future 12 Credits</span>
+<span class="text-secondary font-bold">3.90 Avg</span>
+</li>
+</ul>
+</div>
+<div class="p-sm rounded-lg bg-surface-variant/30 italic text-label-sm text-on-surface-variant">
+              "Maintaining an A average over the next 15 credits is statistically the most viable path to your 3.80 goal."
+            </div>
+</div>
+</div>
+<!-- Grade History Visualization -->
+<div class="glass-card rounded-xl p-md">
+<h3 class="font-label-lg text-on-surface-variant mb-md uppercase tracking-wider">Projected Trajectory</h3>
+<div class="h-40 flex items-end gap-xs px-2">
+<!-- Simple Bar Chart -->
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[60%] hover:bg-primary transition-all duration-300 group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">3.2</div>
+</div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[65%] hover:bg-primary transition-all duration-300 group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">3.4</div>
+</div>
+<div class="flex-1 bg-surface-container-highest rounded-t-sm h-[75%] hover:bg-primary transition-all duration-300 group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs opacity-0 group-hover:opacity-100 transition-opacity">3.5</div>
+</div>
+<div class="flex-1 bg-secondary rounded-t-sm h-[85%] animate-pulse group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs opacity-100 text-secondary font-bold">3.8</div>
+</div>
+</div>
+<div class="flex justify-between mt-sm text-label-sm text-on-surface-variant">
+<span>Sem 1</span>
+<span>Sem 2</span>
+<span>Sem 3</span>
+<span class="text-secondary">Goal</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container/80 backdrop-blur-xl z-50 rounded-t-xl shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-label-sm font-label-sm">GPA</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined">assignment</span>
+<span class="text-label-sm font-label-sm">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-sm font-label-sm">Notes</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Profile</span>
+</div>
+</nav>
+<!-- Desktop Side/Bottom Nav Mock -->
+<nav class="hidden md:flex fixed bottom-8 left-1/2 -translate-x-1/2 glass-card rounded-full px-lg py-sm items-center gap-xl z-50">
+<button class="flex flex-col items-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] uppercase font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-[10px] uppercase font-bold">Analytics</span>
+</button>
+<div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-on-secondary shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined font-bold">add</span>
+</div>
+<button class="flex flex-col items-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">description</span>
+<span class="text-[10px] uppercase font-bold">Notes</span>
+</button>
+<button class="flex flex-col items-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] uppercase font-bold">Settings</span>
+</button>
+</nav>
+<script>
+    const slider = document.getElementById('target-slider');
+    const display = document.getElementById('target-display');
+
+    slider.addEventListener('input', (e) => {
+      display.textContent = parseFloat(e.target.value).toFixed(2);
+    });
+
+    // Simple interaction logic for course removal
+    document.querySelectorAll('.text-error').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.closest('.flex-col').style.opacity = '0';
+        setTimeout(() => {
+          this.closest('.flex-col').remove();
+        }, 200);
+      });
+    });
+  </script>
+</body></html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Quiz Generator - StudySpark</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-panel {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ai-pulse-glow {
+            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+            animation: pulse-purple 2s infinite;
+        }
+        @keyframes pulse-purple {
+            0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(139, 92, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4fdbc8;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "surface-container-highest": "#2d3449",
+                        "primary-fixed": "#dce1ff",
+                        "outline-variant": "#444651",
+                        "tertiary-container": "#4e03b8",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "on-error": "#690005",
+                        "inverse-surface": "#dae2fd",
+                        "secondary-container": "#04b4a2",
+                        "background": "#0b1326",
+                        "on-primary": "#05297a",
+                        "outline": "#8f909d",
+                        "surface-container": "#171f33",
+                        "surface-container-high": "#222a3d",
+                        "surface-variant": "#2d3449",
+                        "on-surface-variant": "#c5c5d3",
+                        "tertiary": "#d0bcff",
+                        "on-tertiary-fixed": "#23005c",
+                        "on-primary-fixed": "#00164e",
+                        "surface-bright": "#31394d",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "secondary": "#4fdbc8",
+                        "on-primary-fixed-variant": "#264191",
+                        "tertiary-fixed": "#e9ddff",
+                        "primary": "#b6c4ff",
+                        "error": "#ffb4ab",
+                        "on-secondary": "#003731",
+                        "surface-dim": "#0b1326",
+                        "on-tertiary": "#3c0091",
+                        "surface": "#0b1326",
+                        "on-background": "#dae2fd",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "on-surface": "#dae2fd",
+                        "inverse-primary": "#4059aa",
+                        "on-secondary-container": "#003f38",
+                        "primary-container": "#1e3a8a",
+                        "surface-container-low": "#131b2e",
+                        "surface-tint": "#b6c4ff",
+                        "surface-container-lowest": "#060e20",
+                        "on-tertiary-container": "#b89cff",
+                        "inverse-on-surface": "#283044",
+                        "on-secondary-fixed": "#00201c",
+                        "on-primary-container": "#90a8ff",
+                        "error-container": "#93000a",
+                        "secondary-fixed": "#71f8e4",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#005048"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "16px",
+                        "xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "16px",
+                        "margin-desktop": "64px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-lg": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+<img alt="user profile picture" data-alt="A professional studio portrait of a young male student with a warm, friendly expression. He has short hair and is wearing a modern casual outfit. The lighting is soft and cinematic with a deep navy and teal color palette in the background to match the high-end intelligent companion app aesthetic. The image conveys focus and approachability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkwEHv-NrPYpLLLtiI1Ixq8WiRNOjvsPolZ9CbF6uo7df_TC59Vr6--MZzgqn_L5KBzTK8nBqpiCkzYe9XUeH3zXLqCX331tT9nNXKGiCjXLNZFclmOTkjWMNs_Ouf2XUtI19jpdNNNTz8v0_Aovkxu52VVBWt9fVdIxZCqQSxiFDfcFIsrISaeBX-BPzJgznQoi-9J2jaSTip-xFntox83RBj4fl-kIENwkpjdy0w5yRcA4HHXi5QFVk9IYhL4o2yliCDHju_VII"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<!-- Hero Intro -->
+<section class="mb-xl">
+<div class="flex flex-col gap-2">
+<span class="text-secondary font-label-lg tracking-wider uppercase">AI Powered Intelligence</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Quiz Generator</h2>
+<p class="text-on-surface-variant max-w-2xl font-body-md text-body-md">Transform your study notes, PDFs, or lecture transcripts into interactive quizzes in seconds. Our AI analyzes your content to create challenging and relevant questions.</p>
+</div>
+</section>
+<!-- Bento Grid Configuration -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Source Material Card -->
+<div class="md:col-span-8 glass-panel rounded-lg p-md flex flex-col gap-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="description">description</span>
+<h3 class="font-headline-md text-body-lg text-on-surface">Source Material</h3>
+</div>
+<button class="text-secondary font-label-lg flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span> Upload PDF
+                    </button>
+</div>
+<div class="relative group">
+<textarea class="w-full h-64 bg-surface-container-low border-none rounded-lg p-md text-on-surface placeholder:text-outline-variant focus:ring-2 focus:ring-secondary transition-all outline-none resize-none" placeholder="Paste your study notes or material here..."></textarea>
+<div class="absolute bottom-4 right-4 text-outline-variant font-label-sm">
+                        Word Count: 0 / 5000
+                    </div>
+</div>
+</div>
+<!-- Settings Column -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Difficulty Card -->
+<div class="glass-panel rounded-lg p-md">
+<h3 class="font-label-lg text-on-surface mb-md">Difficulty Level</h3>
+<div class="flex flex-col gap-2">
+<label class="flex items-center justify-between p-3 rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-variant/30 transition-colors group">
+<span class="text-on-surface font-body-md">Easy</span>
+<input class="w-4 h-4 text-secondary bg-surface-container border-outline-variant focus:ring-secondary" name="difficulty" type="radio" value="easy"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg border border-secondary bg-secondary/10 cursor-pointer group">
+<span class="text-on-surface font-body-md">Medium</span>
+<input checked="" class="w-4 h-4 text-secondary bg-surface-container border-outline-variant focus:ring-secondary" name="difficulty" type="radio" value="medium"/>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg border border-outline-variant cursor-pointer hover:bg-surface-variant/30 transition-colors group">
+<span class="text-on-surface font-body-md">Hard</span>
+<input class="w-4 h-4 text-secondary bg-surface-container border-outline-variant focus:ring-secondary" name="difficulty" type="radio" value="hard"/>
+</label>
+</div>
+</div>
+<!-- Question Count Card -->
+<div class="glass-panel rounded-lg p-md">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-label-lg text-on-surface">Questions</h3>
+<span class="text-secondary font-headline-md" id="question-count-val">10</span>
+</div>
+<input class="w-full h-2 bg-surface-container-highest rounded-full appearance-none cursor-pointer" max="50" min="5" oninput="document.getElementById('question-count-val').innerText = this.value" type="range" value="10"/>
+<div class="flex justify-between mt-2 text-outline-variant font-label-sm">
+<span>5</span>
+<span>50</span>
+</div>
+</div>
+</div>
+<!-- Question Types Card -->
+<div class="md:col-span-12 glass-panel rounded-lg p-md">
+<h3 class="font-label-lg text-on-surface mb-md">Question Types</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-md">
+<label class="flex items-center gap-3 p-4 rounded-lg bg-surface-container-high border border-outline-variant cursor-pointer select-none">
+<input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<p class="text-on-surface font-label-lg">Multiple Choice</p>
+<p class="text-on-surface-variant text-xs">Standard 4 options</p>
+</div>
+</label>
+<label class="flex items-center gap-3 p-4 rounded-lg bg-surface-container-high border border-outline-variant cursor-pointer select-none">
+<input checked="" class="w-5 h-5 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<p class="text-on-surface font-label-lg">True / False</p>
+<p class="text-on-surface-variant text-xs">Binary logic</p>
+</div>
+</label>
+<label class="flex items-center gap-3 p-4 rounded-lg bg-surface-container-high border border-outline-variant cursor-pointer select-none">
+<input class="w-5 h-5 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<p class="text-on-surface font-label-lg">Fill in the Blank</p>
+<p class="text-on-surface-variant text-xs">Vocabulary testing</p>
+</div>
+</label>
+<label class="flex items-center gap-3 p-4 rounded-lg bg-surface-container-high border border-outline-variant cursor-pointer select-none">
+<input class="w-5 h-5 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary" type="checkbox"/>
+<div>
+<p class="text-on-surface font-label-lg">Matching</p>
+<p class="text-on-surface-variant text-xs">Concept relationship</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Action Section -->
+<div class="md:col-span-12 flex flex-col items-center justify-center py-xl">
+<button class="ai-pulse-glow group relative inline-flex items-center justify-center px-10 py-5 font-headline-md text-on-primary bg-secondary rounded-full overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95">
+<div class="absolute inset-0 w-full h-full bg-gradient-to-r from-secondary to-tertiary-fixed-dim opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<span class="relative flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+                        Generate Quiz
+                    </span>
+</button>
+<p class="mt-4 text-on-surface-variant font-label-sm text-center">AI will take approximately 10-15 seconds to process your material.</p>
+</div>
+</div>
+<!-- Featured Illustrations (Ambient) -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="relative h-64 rounded-xl overflow-hidden glass-panel">
+<img alt="AI logic visualization" class="w-full h-full object-cover mix-blend-overlay opacity-40" data-alt="A sophisticated abstract 3D visualization of neural networks and data points connecting in a deep cosmic space. The aesthetic features glowing purple and teal light trails that represent artificial intelligence and knowledge synthesis. The mood is highly intellectual and futuristic, aligned with a premium digital study tool." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCv9G0OneVrSQLdXHhGnuuuqJ3tHuTSVYc6Oguykiy4uli0phsNecshVWrM1Zmni8VisdxtF7KH8vFcqq76F9rCUeOoQE4du__hMiqlYNsL4P_Ojlc1ASfxfmKtabnQtfrXL7SiR8dXck9G03KmGfyXuaErbjTrV4uUOxFt58WTnT4K-790sU9gP9aiUDb9TuRThVUsp8APkozQ6dhEYDKZs2RLv21e1Gu-kInZ-awLtBtFaISD-fpLAc2OZSvdHrJchWimo4EH7es"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end">
+<h4 class="text-on-surface font-headline-md">Smart Analysis</h4>
+<p class="text-on-surface-variant font-body-md">Our algorithm detects key concepts and terminology automatically.</p>
+</div>
+</div>
+<div class="relative h-64 rounded-xl overflow-hidden glass-panel">
+<img alt="Productivity visualization" class="w-full h-full object-cover mix-blend-overlay opacity-40" data-alt="A macro shot of a sleek modern laptop screen showing complex educational data visualizations and code. The lighting is low-key with vibrant neon teal highlights reflecting off the keyboard. The image exudes a sense of deep focus and advanced technology for student productivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDll0mdupRxsQBRYvNPP50gGSCNpuXTjbpXcKD6O31XcW4scyLZV1dND2FYqiuCVrG4MwkZ1l_Hmq0P3eEU6EDVFU_suj4he7fqJKk8fVnLkNx4SBPaUVQdGIbaYTtrvjB8lAgGbU0dlPh4AAz2NQClPZyhuu6QBNDRuTGilr07I8qE92850UQ4sliodr5Onneu7K8wSqItvFCTEZgF6hsjcSUSHE0JIZ3ohF47gCSrCcyoO6ehg1tiU5PMqJ4vmL2gNLxxo04b9Pg"/>
+<div class="absolute inset-0 p-lg flex flex-col justify-end">
+<h4 class="text-on-surface font-headline-md">Focus Mode</h4>
+<p class="text-on-surface-variant font-body-md">Personalized questions tailored to your learning curve.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl z-50 rounded-t-xl shadow-lg">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="assignment">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 active:scale-90">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for difficulty selection
+        const difficultyRadios = document.querySelectorAll('input[name="difficulty"]');
+        difficultyRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                difficultyRadios.forEach(r => {
+                    r.closest('label').classList.remove('border-secondary', 'bg-secondary/10');
+                    r.closest('label').classList.add('border-outline-variant');
+                });
+                if (radio.checked) {
+                    radio.closest('label').classList.remove('border-outline-variant');
+                    radio.closest('label').classList.add('border-secondary', 'bg-secondary/10');
+                }
+            });
+        });
+
+        // Button Ripple/Glow logic interaction
+        const genBtn = document.querySelector('button.ai-pulse-glow');
+        genBtn.addEventListener('click', function() {
+            this.innerHTML = `
+                <span class="relative flex items-center gap-2">
+                    <svg class="animate-spin h-5 w-5 text-on-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Analyzing...
+                </span>
+            `;
+            setTimeout(() => {
+                this.innerHTML = `
+                <span class="relative flex items-center gap-2">
+                    <span class="material-symbols-outlined">bolt</span>
+                    Generate Quiz
+                </span>
+                `;
+            }, 3000);
+        });
+    </script>
+</body></html>

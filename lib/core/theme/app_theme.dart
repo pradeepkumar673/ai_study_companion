@@ -1,8 +1,9 @@
 // lib/core/theme/app_theme.dart
 //
 // StudySpark — Complete Material 3 theme configuration.
-// Two themes: SparkLight (warm cream & violet) + SparkDark (deep navy & electric blue).
-// Built on FlexColorScheme for advanced surface tinting and component overrides.
+// Redesigned to match the Google Stitch prototype theme exactly.
+// Fonts: Plus Jakarta Sans (Headings) + Inter (Body).
+// Colors: Deep blue/navy background, glassmorphism surface cards, vibrant secondary teal, warm primary blue-violet.
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -13,36 +14,39 @@ import 'package:google_fonts/google_fonts.dart';
 ///
 /// All raw hex values live here so the rest of the app only imports [AppColors].
 abstract final class AppColors {
-  // ── Primary (Electric Violet) ──
-  static const primary = Color(0xFF6C4FF8);        // vibrant brand violet
-  static const primaryContainer = Color(0xFFECE8FF);
-  static const onPrimaryContainer = Color(0xFF1E004E);
+  // ── Primary (Stitch Light Blue/Indigo) ──
+  static const primary = Color(0xFFB6C4FF);
+  static const primaryContainer = Color(0xFF1E3A8A);
+  static const onPrimaryContainer = Color(0xFF90A8FF);
 
-  // ── Secondary (Sky Teal) ──
-  static const secondary = Color(0xFF00BFAE);
-  static const secondaryContainer = Color(0xFFD0F5F2);
+  // ── Secondary (Stitch Sky Teal) ──
+  static const secondary = Color(0xFF4FDBC8);
+  static const secondaryContainer = Color(0xFF04B4A2);
+  static const onSecondaryContainer = Color(0xFF003F38);
 
-  // ── Tertiary (Sunset Orange) ──
-  static const tertiary = Color(0xFFFF6B3D);
-  static const tertiaryContainer = Color(0xFFFFE5DA);
+  // ── Tertiary (Stitch Soft Lavender) ──
+  static const tertiary = Color(0xFFD0BCFF);
+  static const tertiaryContainer = Color(0xFF4E03B8);
+  static const onTertiaryContainer = Color(0xFFB89CFF);
 
   // ── Error ──
-  static const error = Color(0xFFE53935);
+  static const error = Color(0xFFFFB4AB);
+  static const errorContainer = Color(0xFF93000A);
 
   // ── Surface (light) ──
   static const surfaceLight = Color(0xFFFAF8FF);
   static const backgroundLight = Color(0xFFF3F0FA);
 
-  // ── Surface (dark) ──
-  static const surfaceDark = Color(0xFF12101E);    // deep midnight
-  static const backgroundDark = Color(0xFF0D0B17);
+  // ── Surface (dark - Stitch Deep Navy) ──
+  static const surfaceDark = Color(0xFF0B1326);
+  static const backgroundDark = Color(0xFF0B1326);
 
   // ── Neutrals ──
-  static const neutral10 = Color(0xFF1A1625);
-  static const neutral20 = Color(0xFF2D2840);
-  static const neutral30 = Color(0xFF3F3A55);
-  static const neutral60 = Color(0xFF8F8AAA);
-  static const neutral90 = Color(0xFFE8E5F0);
+  static const neutral10 = Color(0xFF060E20); // lowest surface container
+  static const neutral20 = Color(0xFF171F33); // normal surface container (glass card base)
+  static const neutral30 = Color(0xFF131B2E); // low surface container
+  static const neutral60 = Color(0xFF8F909D); // outline
+  static const neutral90 = Color(0xFFDAE2FD); // on surface / text
   static const neutral99 = Color(0xFFFCFBFF);
 
   // ── Semantic / Chart Palette ──
@@ -54,9 +58,9 @@ abstract final class AppColors {
 
   // ── Subject Tag Colors ──
   static const List<Color> subjectPalette = [
-    Color(0xFF6C4FF8), // violet
-    Color(0xFF00BFAE), // teal
-    Color(0xFFFF6B3D), // orange
+    Color(0xFFB6C4FF), // primary
+    Color(0xFF4FDBC8), // teal
+    Color(0xFFD0BCFF), // purple
     Color(0xFF4C9DFF), // blue
     Color(0xFF2ED47A), // green
     Color(0xFFFFB547), // amber
@@ -67,62 +71,62 @@ abstract final class AppColors {
 
 /// ─── Typography Scale ────────────────────────────────────────────────────────
 ///
-/// Display/headline → Sora (geometric, modern)
-/// Body/label       → DM Sans (highly legible)
+/// Display/headline → Plus Jakarta Sans (modern, clean geometric)
+/// Body/label       → Inter (highly legible and neutral)
 abstract final class AppTypography {
   static TextTheme get textTheme {
-    final sora = GoogleFonts.soraTextTheme();
-    final dmSans = GoogleFonts.dmSansTextTheme();
+    final plusJakartaSans = GoogleFonts.plusJakartaSansTextTheme();
+    final inter = GoogleFonts.interTextTheme();
 
     return TextTheme(
       // Display — splash screens, hero numbers
-      displayLarge:  sora.displayLarge!.copyWith(
-        fontSize: 57, fontWeight: FontWeight.w700, letterSpacing: -1.5,
+      displayLarge:  plusJakartaSans.displayLarge!.copyWith(
+        fontSize: 57, fontWeight: FontWeight.w800, letterSpacing: -1.5,
       ),
-      displayMedium: sora.displayMedium!.copyWith(
+      displayMedium: plusJakartaSans.displayMedium!.copyWith(
         fontSize: 45, fontWeight: FontWeight.w700, letterSpacing: -1,
       ),
-      displaySmall:  sora.displaySmall!.copyWith(
+      displaySmall:  plusJakartaSans.displaySmall!.copyWith(
         fontSize: 36, fontWeight: FontWeight.w600, letterSpacing: -0.5,
       ),
       // Headline — screen titles
-      headlineLarge:  sora.headlineLarge!.copyWith(
+      headlineLarge:  plusJakartaSans.headlineLarge!.copyWith(
         fontSize: 32, fontWeight: FontWeight.w700,
       ),
-      headlineMedium: sora.headlineMedium!.copyWith(
-        fontSize: 28, fontWeight: FontWeight.w600,
-      ),
-      headlineSmall:  sora.headlineSmall!.copyWith(
+      headlineMedium: plusJakartaSans.headlineMedium!.copyWith(
         fontSize: 24, fontWeight: FontWeight.w600,
       ),
-      // Title — card titles, section headers
-      titleLarge:  dmSans.titleLarge!.copyWith(
-        fontSize: 22, fontWeight: FontWeight.w600,
+      headlineSmall:  plusJakartaSans.headlineSmall!.copyWith(
+        fontSize: 20, fontWeight: FontWeight.w600,
       ),
-      titleMedium: dmSans.titleMedium!.copyWith(
+      // Title — card titles, section headers
+      titleLarge:  inter.titleLarge!.copyWith(
+        fontSize: 18, fontWeight: FontWeight.w600,
+      ),
+      titleMedium: inter.titleMedium!.copyWith(
         fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.1,
       ),
-      titleSmall:  dmSans.titleSmall!.copyWith(
+      titleSmall:  inter.titleSmall!.copyWith(
         fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.1,
       ),
       // Body — default content text
-      bodyLarge:  dmSans.bodyLarge!.copyWith(
+      bodyLarge:  inter.bodyLarge!.copyWith(
         fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.15,
       ),
-      bodyMedium: dmSans.bodyMedium!.copyWith(
+      bodyMedium: inter.bodyMedium!.copyWith(
         fontSize: 14, fontWeight: FontWeight.w400, letterSpacing: 0.25,
       ),
-      bodySmall:  dmSans.bodySmall!.copyWith(
+      bodySmall:  inter.bodySmall!.copyWith(
         fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.4,
       ),
       // Label — buttons, chips, captions
-      labelLarge:  dmSans.labelLarge!.copyWith(
+      labelLarge:  inter.labelLarge!.copyWith(
         fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.1,
       ),
-      labelMedium: dmSans.labelMedium!.copyWith(
+      labelMedium: inter.labelMedium!.copyWith(
         fontSize: 12, fontWeight: FontWeight.w500, letterSpacing: 0.5,
       ),
-      labelSmall:  dmSans.labelSmall!.copyWith(
+      labelSmall:  inter.labelSmall!.copyWith(
         fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 0.5,
       ),
     );
@@ -239,7 +243,7 @@ abstract final class AppTheme {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       textTheme: AppTypography.textTheme,
       primaryTextTheme: AppTypography.textTheme,
-      fontFamily: GoogleFonts.dmSans().fontFamily,
+      fontFamily: GoogleFonts.inter().fontFamily,
       typography: Typography.material2021(),
     );
     return _applyComponentThemes(base, isDark: false);
@@ -248,13 +252,13 @@ abstract final class AppTheme {
   // ── Dark Theme ───────────────────────────────────────────────────────────
   static ThemeData get dark {
     final base = FlexThemeData.dark(
-      colors: FlexSchemeColor(
+      colors: const FlexSchemeColor(
         primary:          AppColors.primary,
-        primaryContainer: AppColors.neutral20,
+        primaryContainer: AppColors.primaryContainer,
         secondary:        AppColors.secondary,
-        secondaryContainer: const Color(0xFF004D47),
+        secondaryContainer: AppColors.secondaryContainer,
         tertiary:         AppColors.tertiary,
-        tertiaryContainer: const Color(0xFF4D2010),
+        tertiaryContainer: AppColors.tertiaryContainer,
         appBarColor:      AppColors.surfaceDark,
         error:            AppColors.error,
       ),
@@ -267,7 +271,7 @@ abstract final class AppTheme {
       visualDensity: FlexColorScheme.comfortablePlatformDensity,
       textTheme: AppTypography.textTheme,
       primaryTextTheme: AppTypography.textTheme,
-      fontFamily: GoogleFonts.dmSans().fontFamily,
+      fontFamily: GoogleFonts.inter().fontFamily,
       typography: Typography.material2021(),
     );
     return _applyComponentThemes(base, isDark: true);
@@ -294,19 +298,19 @@ abstract final class AppTheme {
       ),
 
       // ── Card ──
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         shape: AppShapes.large,
-        color: cs.surface,
+        color: isDark ? AppColors.neutral20 : cs.surface,
         surfaceTintColor: cs.primary,
         margin: EdgeInsets.zero,
-      },
+      ),
 
       // ── Navigation Bar (bottom) ──
       navigationBarTheme: NavigationBarThemeData(
         elevation: 0,
         height: 72,
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        backgroundColor: isDark ? AppColors.neutral20 : AppColors.surfaceLight,
         surfaceTintColor: Colors.transparent,
         indicatorColor: cs.primaryContainer,
         indicatorShape: AppShapes.medium.copyWith(
@@ -414,7 +418,7 @@ abstract final class AppTheme {
       ),
 
       // ── Dialog ──
-      dialogTheme: DialogTheme(
+      dialogTheme: DialogThemeData(
         elevation: 0,
         backgroundColor: cs.surface,
         surfaceTintColor: cs.primary,
@@ -425,7 +429,7 @@ abstract final class AppTheme {
         contentTextStyle: AppTypography.textTheme.bodyMedium!.copyWith(
           color: cs.onSurfaceVariant,
         ),
-      },
+      ),
 
       // ── Bottom Sheet ──
       bottomSheetTheme: BottomSheetThemeData(
@@ -491,7 +495,7 @@ abstract final class AppTheme {
       ),
 
       // ── Tab Bar ──
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: TabBarThemeData(
         labelStyle: AppTypography.textTheme.labelLarge,
         unselectedLabelStyle: AppTypography.textTheme.labelLarge!.copyWith(
           fontWeight: FontWeight.w500,
@@ -503,7 +507,7 @@ abstract final class AppTheme {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(3)),
         ),
         overlayColor: WidgetStateProperty.all(cs.primary.withOpacity(0.08)),
-      },
+      ),
     );
   }
 

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark | Notifications</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+        .ai-glow-purple {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+        .ai-glow-teal {
+            box-shadow: 0 0 20px rgba(20, 184, 166, 0.15);
+        }
+        .notification-item:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#31394d",
+                        "secondary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#23005c",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "secondary-container": "#04b4a2",
+                        "on-secondary": "#003731",
+                        "surface-variant": "#2d3449",
+                        "surface-container-low": "#131b2e",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#060e20",
+                        "on-primary-container": "#90a8ff",
+                        "on-background": "#dae2fd",
+                        "outline": "#8f909d",
+                        "inverse-primary": "#4059aa",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#b89cff",
+                        "primary-container": "#1e3a8a",
+                        "tertiary-container": "#4e03b8",
+                        "surface-container": "#171f33",
+                        "on-surface-variant": "#c5c5d3",
+                        "inverse-surface": "#dae2fd",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "surface-tint": "#b6c4ff",
+                        "primary": "#b6c4ff",
+                        "surface-dim": "#0b1326",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "surface-container-high": "#222a3d",
+                        "on-secondary-container": "#003f38",
+                        "surface-container-highest": "#2d3449",
+                        "on-secondary-fixed": "#00201c",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#0b1326",
+                        "tertiary-fixed": "#e9ddff",
+                        "outline-variant": "#444651",
+                        "tertiary": "#d0bcff",
+                        "inverse-on-surface": "#283044",
+                        "background": "#0b1326",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed": "#00164e",
+                        "on-primary-fixed-variant": "#264191",
+                        "on-tertiary": "#3c0091",
+                        "on-surface": "#dae2fd",
+                        "on-primary": "#05297a",
+                        "primary-fixed": "#dce1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "16px",
+                        "xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "margin-desktop": "64px",
+                        "xl": "32px",
+                        "margin-mobile": "20px",
+                        "lg": "24px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-margin-mobile h-16 w-full">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center overflow-hidden">
+<img alt="User profile photo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWNSPbOrJK69X9snTjbrmx6fGyahxvnbl0DXTP6qkyMKIimbPTNBPt8bdvjlj-rLWDGyu1Qy5oDZjk8OjkQ2k-yaCoTkoXjNH_mYT7qINWSYKFTDM6XbFI05x-Oh-aMuOWOAM_NPcZ0OplA9ohu7UZWT3DMsa6dP7HImvpPg-2wq1dX1qhYFpF5Se7_mSZrwg-1q4lHvDFHNXCRMXdCOHFxAfErpPJ729Ox1iQ2UUKHlPZVMfEtq5IIHbX2m-4G6ucpJY78na19mc"/>
+</div>
+<span class="font-headline-md text-headline-md font-bold text-secondary">StudySpark</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-bright/20 transition-colors p-2 rounded-full active:scale-95 duration-200" data-icon="search">search</button>
+<button class="material-symbols-outlined text-secondary hover:bg-surface-bright/20 transition-colors p-2 rounded-full active:scale-95 duration-200" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</button>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-4xl mx-auto">
+<!-- Header Section -->
+<div class="mb-xl flex justify-between items-end">
+<div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">Notifications</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Stay updated with your academic spark.</p>
+</div>
+<button class="font-label-lg text-label-lg text-secondary active:scale-95 transition-all">Mark all as read</button>
+</div>
+<!-- Section: Today -->
+<section class="mb-xl">
+<h2 class="font-label-lg text-label-lg text-outline uppercase tracking-widest mb-md ml-xs">Today</h2>
+<div class="space-y-md">
+<!-- Notification: Upcoming Deadline -->
+<div class="glass-card rounded-lg p-md flex gap-md items-start group hover:bg-surface-container-high transition-all">
+<div class="w-12 h-12 rounded-xl bg-error-container/20 flex items-center justify-center flex-shrink-0 text-error">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-on-surface">Upcoming Deadline</h3>
+<span class="font-label-sm text-label-sm text-outline">2h ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Advanced Calculus: Problem Set 4 is due at 11:59 PM tonight. You haven't started Task 3 yet.</p>
+<button class="bg-secondary text-on-secondary px-lg py-sm rounded-full font-label-lg text-label-lg active:scale-95 transition-all">Complete Task</button>
+</div>
+</div>
+<!-- Notification: AI Insight -->
+<div class="glass-card rounded-lg p-md flex gap-md items-start group hover:bg-surface-container-high transition-all ai-glow-purple border-tertiary/20">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center flex-shrink-0 text-tertiary">
+<span class="material-symbols-outlined" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-tertiary">AI Insight Ready</h3>
+<span class="font-label-sm text-label-sm text-outline">5h ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Spark has analyzed your last study session. We found a 15% improvement in your retention of Neural Networks concepts.</p>
+<button class="bg-tertiary text-on-tertiary px-lg py-sm rounded-full font-label-lg text-label-lg active:scale-95 transition-all">View Analysis</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Earlier -->
+<section>
+<h2 class="font-label-lg text-label-lg text-outline uppercase tracking-widest mb-md ml-xs">Earlier</h2>
+<div class="space-y-md">
+<!-- Notification: Task Reminder -->
+<div class="glass-card rounded-lg p-md flex gap-md items-start group hover:bg-surface-container-high transition-all opacity-80">
+<div class="w-12 h-12 rounded-xl bg-primary-container/20 flex items-center justify-center flex-shrink-0 text-primary">
+<span class="material-symbols-outlined" data-icon="alarm">alarm</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-on-surface">Task Reminder</h3>
+<span class="font-label-sm text-label-sm text-outline">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Time to review your notes for "Introduction to Psychology". Consistency is key to mastery!</p>
+<button class="border border-outline text-on-surface-variant px-lg py-sm rounded-full font-label-lg text-label-lg hover:bg-surface-bright/20 active:scale-95 transition-all">Open Notes</button>
+</div>
+</div>
+<!-- Notification: Achievement Unlocked -->
+<div class="glass-card rounded-lg p-md flex gap-md items-start group hover:bg-surface-container-high transition-all ai-glow-teal border-secondary/20">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center flex-shrink-0 text-secondary">
+<span class="material-symbols-outlined" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-label-lg text-label-lg text-secondary">Achievement Unlocked</h3>
+<span class="font-label-sm text-label-sm text-outline">2 days ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">7-Day Streak! You've been active for a full week. Your focus score is in the top 5% of users this week.</p>
+<button class="bg-secondary-container/30 text-secondary-fixed px-lg py-sm rounded-full font-label-lg text-label-lg active:scale-95 transition-all">Claim Badge</button>
+</div>
+</div>
+<!-- Bento Style Suggestion -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mt-xl">
+<div class="glass-card p-lg rounded-xl flex flex-col justify-center items-center text-center">
+<div class="w-16 h-16 bg-surface-container-highest rounded-full flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-secondary-fixed text-4xl" data-icon="settings">settings</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs">Preferences</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Customize your alert frequency.</p>
+<button class="mt-md font-label-lg text-label-lg text-primary underline underline-offset-4">Configure Settings</button>
+</div>
+<div class="relative overflow-hidden rounded-xl h-48 md:h-full group">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A clean, minimalist study space with a sleek laptop and a desk lamp casting a warm glow in a dark room. The atmosphere is quiet and focused, representing a premium academic environment with deep blues and soft cyan highlights. High resolution digital photography focusing on productivity and intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4BkZtuGrJhjjn1iX1Pn_R-nrudBfGmK4F5LSQut69Jk15WEDf17vnswwYfOvIeRdWDxE5Xw42KUeDLpqxjAuRUfqG9le8w0mNpxF1dydwbpq2P8sgupMJGDgtMdSdXP_qkBWsqjLqYBd_jFh7jHz-LsTsp4Icl9dw6E1dG1cggIjZslytktlBnQY8Wzt_wiy02F1W9FDCleXOW-q9JtmC7HGcKlGPUXdZsdH8hmhaebz7TaWNcNf2wOZ9IR0H0xiNBgz0MxYHU9s"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent opacity-80"></div>
+<div class="absolute bottom-md left-md right-md">
+<h4 class="font-label-lg text-label-lg text-white">Mastery Hub</h4>
+<p class="font-label-sm text-label-sm text-secondary">Explore new techniques</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-low/80 dark:bg-surface-container-low/80 backdrop-blur-xl border-t border-outline-variant/10 shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="task_alt">task_alt</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container/20 text-secondary dark:text-secondary-fixed rounded-full px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for notification dismissal (visual only)
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if(e.target.tagName !== 'BUTTON') {
+                    card.classList.toggle('ring-1');
+                    card.classList.toggle('ring-secondary/50');
+                }
+            });
+        });
+    </script>
+</body></html>

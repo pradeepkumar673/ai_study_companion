@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark Help Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#31394d",
+                        "secondary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#23005c",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "secondary-container": "#04b4a2",
+                        "on-secondary": "#003731",
+                        "surface-variant": "#2d3449",
+                        "surface-container-low": "#131b2e",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#060e20",
+                        "on-primary-container": "#90a8ff",
+                        "on-background": "#dae2fd",
+                        "outline": "#8f909d",
+                        "inverse-primary": "#4059aa",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#b89cff",
+                        "primary-container": "#1e3a8a",
+                        "tertiary-container": "#4e03b8",
+                        "surface-container": "#171f33",
+                        "on-surface-variant": "#c5c5d3",
+                        "inverse-surface": "#dae2fd",
+                        "secondary": "#4fdbc8",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "surface-tint": "#b6c4ff",
+                        "primary": "#b6c4ff",
+                        "surface-dim": "#0b1326",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "surface-container-high": "#222a3d",
+                        "on-secondary-container": "#003f38",
+                        "surface-container-highest": "#2d3449",
+                        "on-secondary-fixed": "#00201c",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "surface": "#0b1326",
+                        "tertiary-fixed": "#e9ddff",
+                        "outline-variant": "#444651",
+                        "tertiary": "#d0bcff",
+                        "inverse-on-surface": "#283044",
+                        "background": "#0b1326",
+                        "on-secondary-fixed-variant": "#005048",
+                        "on-primary-fixed": "#00164e",
+                        "on-primary-fixed-variant": "#264191",
+                        "on-tertiary": "#3c0091",
+                        "on-surface": "#dae2fd",
+                        "on-primary": "#05297a",
+                        "primary-fixed": "#dce1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "16px",
+                        "xl": "24px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "margin-desktop": "64px",
+                        "xl": "32px",
+                        "margin-mobile": "20px",
+                        "lg": "24px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "gutter": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(143, 144, 157, 0.1);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+        }
+        .ai-glow-hover:hover {
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-margin-mobile h-16">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-secondary/30">
+<img alt="Profile" data-alt="A professional high-resolution profile headshot of a young adult student with a friendly expression, set against a soft bokeh background of a modern university library. The lighting is warm and natural, following a premium dark-mode aesthetic with teal and navy blue undertones that match the StudySpark brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTOQ6Kl14s6MFLnNatTHnmGryb8tFS_LHtHRAH8HmdDdPlHc3bxs3m-9FMAvjAxBKFsKMI0FdTEFHgFxWnBFkuweNXFXLlDCc3Ix5A_hbk3QCxEyGzyDg5ZG2Q0L9at84Z-PjFEbMdHNeG-9z3xkJy52sB0bHpXdQd0OFmjcUrPhjiMuyYFvn10KvtKRYAuEpY0XL5j5eWzYUlQA9bEL5C0BkLrirg91B0_ht05jtadtk_S2EQ9kARi-Vc_FnppEbwwFFCL9f3wC4"/>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-secondary">StudySpark</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-bright/20 transition-colors active:scale-95 duration-200 text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-24 px-margin-mobile max-w-7xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-xl text-center">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg mb-md text-on-surface">How can we help?</h2>
+<div class="relative max-w-2xl mx-auto">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container border border-outline-variant/20 rounded-xl py-4 pl-12 pr-4 text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all ai-glow" placeholder="Search for tutorials, tools, or errors..." type="text"/>
+</div>
+</section>
+<!-- Category Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-xl">
+<!-- Category: Getting Started -->
+<div class="glass p-lg rounded-lg ai-glow-hover transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<h3 class="font-headline-md text-[18px] mb-xs text-on-surface">Getting Started</h3>
+<p class="font-body-md text-on-surface-variant text-sm">New to StudySpark? Learn the basics of setting up your academic workspace.</p>
+</div>
+<!-- Category: AI Tools -->
+<div class="glass p-lg rounded-lg ai-glow-hover transition-all cursor-pointer group relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2">
+<span class="text-[10px] font-bold bg-tertiary-container text-tertiary px-2 py-0.5 rounded-full uppercase tracking-wider">Spark AI</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-tertiary-container flex items-center justify-center mb-md group-hover:scale-110 transition-transform ai-glow">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h3 class="font-headline-md text-[18px] mb-xs text-on-surface">AI Tools</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Master AI summarization, smart flashcards, and automated study schedules.</p>
+</div>
+<!-- Category: Troubleshooting -->
+<div class="glass p-lg rounded-lg ai-glow-hover transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-error-container/20 flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">build</span>
+</div>
+<h3 class="font-headline-md text-[18px] mb-xs text-on-surface">Troubleshooting</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Facing issues? Find solutions for sync errors and technical glitches.</p>
+</div>
+<!-- Category: Premium Features -->
+<div class="glass p-lg rounded-lg ai-glow-hover transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/20 flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h3 class="font-headline-md text-[18px] mb-xs text-on-surface">Premium Features</h3>
+<p class="font-body-md text-on-surface-variant text-sm">Unlock the full power of StudySpark Pro with advanced analytics and storage.</p>
+</div>
+</section>
+<!-- Popular Articles -->
+<section class="mb-xl">
+<h2 class="font-headline-md text-headline-md mb-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">trending_up</span>
+                Popular Articles
+            </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center gap-md p-md glass rounded-lg hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined text-outline">description</span>
+<div class="flex-1">
+<h4 class="font-label-lg text-label-lg text-on-surface">How to import lecture slides?</h4>
+<p class="font-body-md text-on-surface-variant text-xs">PDF, PPTX, and Google Slides integration</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="flex items-center gap-md p-md glass rounded-lg hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined text-outline">description</span>
+<div class="flex-1">
+<h4 class="font-label-lg text-label-lg text-on-surface">Customizing AI study plans</h4>
+<p class="font-body-md text-on-surface-variant text-xs">Adjusting focus depth and intensity</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="flex items-center gap-md p-md glass rounded-lg hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined text-outline">description</span>
+<div class="flex-1">
+<h4 class="font-label-lg text-label-lg text-on-surface">Syncing across multiple devices</h4>
+<p class="font-body-md text-on-surface-variant text-xs">Setup for tablet, mobile, and web</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+<div class="flex items-center gap-md p-md glass rounded-lg hover:bg-surface-container-high transition-all cursor-pointer">
+<span class="material-symbols-outlined text-outline">description</span>
+<div class="flex-1">
+<h4 class="font-label-lg text-label-lg text-on-surface">Advanced Note Formatting</h4>
+<p class="font-body-md text-on-surface-variant text-xs">Using Markdown and LaTeX in StudySpark</p>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Contact Support Section -->
+<section class="glass p-xl rounded-xl relative overflow-hidden flex flex-col md:flex-row items-center gap-xl">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-secondary via-transparent to-transparent pointer-events-none"></div>
+<div class="w-full md:w-1/2 relative z-10">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">Can't find what you need?</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg">Our support team is available 24/7 to help you make the most of your study sessions.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-secondary text-on-secondary px-lg py-md rounded-lg font-label-lg flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-lg">
+<span class="material-symbols-outlined">chat</span>
+                        Start Live Chat
+                    </button>
+<button class="border-2 border-primary text-primary px-lg py-md rounded-lg font-label-lg flex items-center gap-2 hover:bg-primary/10 active:scale-95 transition-all">
+<span class="material-symbols-outlined">mail</span>
+                        Email Support
+                    </button>
+</div>
+</div>
+<div class="w-full md:w-1/2 flex justify-center">
+<div class="relative">
+<div class="absolute -inset-4 bg-secondary/20 blur-3xl rounded-full"></div>
+<img alt="Support Hero" class="w-64 h-64 rounded-xl object-cover border-4 border-surface-container-highest relative z-10 ai-glow" data-alt="A friendly, professional customer support representative wearing a sleek modern headset, smiling warmly at the camera. She is in a blurred high-tech office environment with soft teal and purple neon lighting accents. The overall image has a clean, minimalist, and trustworthy aesthetic that complements a premium academic AI application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChBHoHBVXtOkY4GBGuZuji13Q5tJXwIelZT2VL6h3UyWqQRh7WXvcpASFuM5mMzy34rbb_GKkYHzGmSFVc-yr_p2N1YqMMcMVjmtMecP9fqx2GRoa_iSLhwQuVd6sFpDCXZ-5eFDH6IzVdVGoS9Q-oVtDPgVKf8rukjrCbN2hW1t8NrHVn7S_GTygajSCZkaKC5a5ThCMpJGdJNpV9mkHDHuHALM4O7cM7GkERu0djNqPKBPMHqClLjFnlSWwbFx_NDiLye4tDg98"/>
+</div>
+</div>
+</section>
+</main>
+<!-- Contact Support FAB (Floating Action Button) -->
+<button class="fixed bottom-24 right-6 md:right-12 z-50 w-16 h-16 rounded-full bg-gradient-to-tr from-secondary to-tertiary text-on-secondary shadow-2xl flex items-center justify-center hover:scale-110 active:scale-90 transition-all group ai-glow">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-12 transition-transform">support_agent</span>
+<div class="absolute -top-12 right-0 bg-surface-container-highest text-on-surface px-3 py-1 rounded-lg text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity border border-outline-variant/30">
+            Talk to an Expert
+        </div>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-2 pb-safe bg-surface-container-low/80 backdrop-blur-xl border-t border-outline-variant/10 shadow-lg rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:text-secondary-fixed-dim transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container/20 text-secondary rounded-full px-4 py-1 active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for search bar focus
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('scale-[1.02]');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('scale-[1.02]');
+        });
+
+        // Simple parallax effect for AI glow cards
+        document.querySelectorAll('.ai-glow-hover').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark | AI Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        .spark-gradient {
+            background: linear-gradient(135deg, #b6c4ff 0%, #d0bcff 100%);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2d3449;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "surface-container-highest": "#2d3449",
+                      "primary-fixed": "#dce1ff",
+                      "outline-variant": "#444651",
+                      "tertiary-container": "#4e03b8",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-error": "#690005",
+                      "inverse-surface": "#dae2fd",
+                      "secondary-container": "#04b4a2",
+                      "background": "#0b1326",
+                      "on-primary": "#05297a",
+                      "outline": "#8f909d",
+                      "surface-container": "#171f33",
+                      "surface-container-high": "#222a3d",
+                      "surface-variant": "#2d3449",
+                      "on-surface-variant": "#c5c5d3",
+                      "tertiary": "#d0bcff",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-primary-fixed": "#00164e",
+                      "surface-bright": "#31394d",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "secondary": "#4fdbc8",
+                      "on-primary-fixed-variant": "#264191",
+                      "tertiary-fixed": "#e9ddff",
+                      "primary": "#b6c4ff",
+                      "error": "#ffb4ab",
+                      "on-secondary": "#003731",
+                      "surface-dim": "#0b1326",
+                      "on-tertiary": "#3c0091",
+                      "surface": "#0b1326",
+                      "on-background": "#dae2fd",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "on-surface": "#dae2fd",
+                      "inverse-primary": "#4059aa",
+                      "on-secondary-container": "#003f38",
+                      "primary-container": "#1e3a8a",
+                      "surface-container-low": "#131b2e",
+                      "surface-tint": "#b6c4ff",
+                      "surface-container-lowest": "#060e20",
+                      "on-tertiary-container": "#b89cff",
+                      "inverse-on-surface": "#283044",
+                      "on-secondary-fixed": "#00201c",
+                      "on-primary-container": "#90a8ff",
+                      "error-container": "#93000a",
+                      "secondary-fixed": "#71f8e4",
+                      "on-error-container": "#ffdad6",
+                      "on-secondary-fixed-variant": "#005048"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "xs": "4px",
+                      "base": "8px",
+                      "margin-mobile": "20px",
+                      "gutter": "16px",
+                      "margin-desktop": "64px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-lg": ["Inter"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm w-full">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="User" class="w-full h-full object-cover" data-alt="A high-quality close-up portrait of a young male student with a kind expression, set against a blurred academic library background. The lighting is soft and natural, emphasizing a modern and professional aesthetic. The color palette is dominated by cool blues and soft neutrals, fitting the deep-mode study application theme perfectly." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhtcP_Eirgchj6yxA9VmG3_Xoy-TkK_4fWNKW4iziydM0vAQ98xgxcKUgnwTHi6xwrG9_J0WEHzuRN4jmEOmNDQNhKhhiuBSmAcbyDITjuCOVVdoin99Xo0xmx4EdQtVDjtoEFSJ5RMGp1wp62UcUuchsHu4Nbz8OMKQbKfFJgPp104FUJzk0xcRanAdTq_qk1KzbMUyGw3eFBX4rPXAE1tqEemCTxVpfH4NuvuMy15fyvB6gkr9VUb-eBKduE1gvhTu50cAmsWDc"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">StudySpark</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 mt-[64px] mb-[80px] overflow-y-auto px-margin-mobile pt-lg custom-scrollbar">
+<div class="max-w-3xl mx-auto space-y-xl">
+<!-- Date Separator -->
+<div class="flex justify-center">
+<span class="px-md py-1 bg-surface-container rounded-full font-label-sm text-label-sm text-on-surface-variant">Today</span>
+</div>
+<!-- User Message -->
+<div class="flex justify-end items-start gap-md">
+<div class="glass-card p-md rounded-xl rounded-tr-none max-w-[80%]">
+<p class="font-body-md text-body-md text-on-surface">Can you help me understand the main points of the Schrödinger equation for my physics exam tomorrow?</p>
+</div>
+</div>
+<!-- AI Response -->
+<div class="flex justify-start items-start gap-md">
+<div class="w-10 h-10 rounded-full flex items-center justify-center spark-gradient ai-glow flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="glass-card p-md rounded-xl rounded-tl-none max-w-[80%] border-tertiary/20">
+<div class="flex items-center gap-xs mb-xs">
+<span class="font-label-lg text-label-lg text-tertiary">Spark AI</span>
+<span class="w-1 h-1 bg-tertiary rounded-full animate-pulse"></span>
+</div>
+<div class="space-y-md font-body-md text-body-md text-on-surface">
+<p>Absolutely! The Schrödinger equation is the fundamental law of motion in quantum mechanics. Here are the core pillars you'll need for your exam:</p>
+<ul class="list-disc pl-base space-y-base">
+<li><strong class="text-secondary">Wave Function (ψ):</strong> It describes the quantum state of a system and contains all the information we can know about it.</li>
+<li><strong class="text-secondary">Probability Density:</strong> The square of the wave function's magnitude gives us the probability of finding a particle at a specific point.</li>
+<li><strong class="text-secondary">Energy Quantization:</strong> Solving the equation often yields discrete "allowed" energy levels, explaining why atoms are stable.</li>
+</ul>
+<p>Would you like me to walk through a specific example, like the 'Particle in a Box' model?</p>
+</div>
+</div>
+</div>
+<!-- Suggested Prompts Section -->
+<div class="pt-xl space-y-md">
+<h3 class="font-label-lg text-label-lg text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+                    Suggested for your study session
+                </h3>
+<div class="flex flex-wrap gap-base">
+<button class="px-md py-sm glass-card hover:bg-primary-container/20 transition-all duration-200 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">summarize</span>
+                        Summarize my last lecture
+                    </button>
+<button class="px-md py-sm glass-card hover:bg-primary-container/20 transition-all duration-200 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+                        Explain Quantum Entanglement
+                    </button>
+<button class="px-md py-sm glass-card hover:bg-primary-container/20 transition-all duration-200 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">quiz</span>
+                        Generate 5 practice questions
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area (Input & Nav) -->
+<footer class="fixed bottom-0 w-full z-50">
+<!-- Message Input Area -->
+<div class="px-margin-mobile pb-xl">
+<div class="max-w-3xl mx-auto glass-card p-xs rounded-full flex items-center gap-xs ai-glow border-tertiary/10">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder-on-surface-variant/50" placeholder="Ask Spark anything..." type="text"/>
+<button class="w-10 h-10 rounded-full spark-gradient flex items-center justify-center text-on-primary shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar Shell -->
+<nav class="bg-surface-container/80 dark:bg-surface-container/80 backdrop-blur-xl rounded-t-xl shadow-lg fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2">
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-sm text-label-sm">Tasks</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-sm text-label-sm">Notes</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Analytics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-variant transition-transform duration-150 scale-95 active:scale-90">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+</footer>
+<!-- Background Atmospheric Effect -->
+<div class="fixed top-[-10%] right-[-10%] w-[50%] h-[50%] bg-tertiary/10 blur-[120px] rounded-full pointer-events-none -z-10"></div>
+<div class="fixed bottom-[-5%] left-[-5%] w-[40%] h-[40%] bg-secondary/5 blur-[100px] rounded-full pointer-events-none -z-10"></div>
+<script>
+        // Simple micro-interaction for input focus
+        const input = document.querySelector('input');
+        const inputContainer = input.parentElement;
+
+        input.addEventListener('focus', () => {
+            inputContainer.classList.add('border-primary/40');
+            inputContainer.style.boxShadow = '0 0 30px rgba(182, 196, 255, 0.15)';
+        });
+
+        input.addEventListener('blur', () => {
+            inputContainer.classList.remove('border-primary/40');
+            inputContainer.style.boxShadow = '0 0 20px rgba(139, 92, 246, 0.2)';
+        });
+    </script>
+</body></html>

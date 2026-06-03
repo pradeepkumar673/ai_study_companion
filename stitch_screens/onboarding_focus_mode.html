@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#060e20",
+            "on-surface": "#dae2fd",
+            "on-primary-container": "#90a8ff",
+            "inverse-on-surface": "#283044",
+            "tertiary": "#d0bcff",
+            "surface-container": "#171f33",
+            "on-primary-fixed": "#00164e",
+            "background": "#0b1326",
+            "primary": "#b6c4ff",
+            "surface-container-high": "#222a3d",
+            "on-tertiary-container": "#b89cff",
+            "on-secondary-fixed": "#00201c",
+            "primary-fixed-dim": "#b6c4ff",
+            "surface-tint": "#b6c4ff",
+            "surface-variant": "#2d3449",
+            "surface-bright": "#31394d",
+            "on-tertiary-fixed": "#23005c",
+            "on-secondary-container": "#003f38",
+            "error-container": "#93000a",
+            "outline": "#8f909d",
+            "on-error-container": "#ffdad6",
+            "inverse-primary": "#4059aa",
+            "surface-dim": "#0b1326",
+            "tertiary-container": "#4e03b8",
+            "primary-fixed": "#dce1ff",
+            "outline-variant": "#444651",
+            "on-background": "#dae2fd",
+            "surface-container-highest": "#2d3449",
+            "secondary-container": "#04b4a2",
+            "primary-container": "#1e3a8a",
+            "on-secondary": "#003731",
+            "secondary-fixed": "#71f8e4",
+            "on-secondary-fixed-variant": "#005048",
+            "error": "#ffb4ab",
+            "on-tertiary": "#3c0091",
+            "on-primary-fixed-variant": "#264191",
+            "on-primary": "#05297a",
+            "surface-container-low": "#131b2e",
+            "on-surface-variant": "#c5c5d3",
+            "tertiary-fixed": "#e9ddff",
+            "secondary-fixed-dim": "#4fdbc8",
+            "tertiary-fixed-dim": "#d0bcff",
+            "secondary": "#4fdbc8",
+            "on-error": "#690005",
+            "surface": "#0b1326",
+            "on-tertiary-fixed-variant": "#5516be",
+            "inverse-surface": "#dae2fd"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "8px",
+            "base": "8px",
+            "md": "16px",
+            "margin-mobile": "20px",
+            "xl": "32px",
+            "xs": "4px",
+            "margin-desktop": "64px",
+            "lg": "24px",
+            "gutter": "16px"
+          },
+          "fontFamily": {
+            "label-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "label-lg": ["Inter"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "display-lg": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .glass-effect {
+      background: rgba(23, 31, 51, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .ai-glow {
+      box-shadow: 0 0 24px rgba(139, 92, 246, 0.25);
+    }
+    .floating-anim {
+      animation: floating 4s ease-in-out infinite;
+    }
+    @keyframes floating {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      background-color: #0b1326;
+      color: #dae2fd;
+      overflow: hidden;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<main class="flex-grow flex flex-col items-center justify-center px-margin-mobile relative">
+<!-- Background Atmospheric Glows -->
+<div class="absolute top-1/4 left-1/4 w-64 h-64 bg-tertiary-container/20 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary-container/10 rounded-full blur-[120px] pointer-events-none"></div>
+<!-- Onboarding Illustration Container -->
+<div class="w-full max-w-lg mb-xl relative flex items-center justify-center overflow-hidden h-[360px]">
+<!-- Illustration -->
+<div class="relative w-full h-full flex items-center justify-center">
+<img alt="Student in focus mode" class="z-10 object-contain h-[320px]" data-alt="A cinematic 3D digital illustration of a student sitting in a cross-legged zen-like meditative pose, hovering slightly above a dark reflective surface. A glowing, holographic Pomodoro timer with a soft teal light floats in front of them. The background is a deep navy space filled with soft purple and teal particles. The lighting is ethereal and high-contrast, with a soft purple ai-glow emanating from the student's silhouette, emphasizing a calm, focused, and futuristic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQlxA_wYJy4VCtgJEn5Ly0VR-Tkf5gsUyieVqsv3oghF9hzRA3JOL6VsRQeelkOJJPaj1Z0D-IEMrmmrTRWV_kC44mzNZKHHm67D8kaej-VILrM_FtpaN2wcuOOXz2Kb9847hCiYXzMYKvYYRPuUjAFmaZqEPC-_I6ELhlhzzoEcYEKU24Tw7t6kqffV_V3T4l-9_Wtb2H3HHaHYufGzh5hAS3gGsp9QXuLeRDTVDCKmDsWdgaxKQ1GXXqsfIPulOZsXKELXPEhLc"/>
+<!-- Floating Elements -->
+<div class="absolute top-10 right-10 floating-anim" style="animation-delay: 0.5s;">
+<div class="glass-effect p-md rounded-xl ai-glow border-tertiary/20">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<div class="h-1.5 w-12 bg-tertiary/20 rounded-full mt-2"></div>
+</div>
+</div>
+<div class="absolute bottom-10 left-5 floating-anim" style="animation-delay: 1.2s;">
+<div class="glass-effect px-md py-sm rounded-full flex items-center gap-2 border-secondary/20">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-lg text-label-lg text-on-surface">Retention 98%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Text Content -->
+<div class="text-center w-full max-w-md z-10">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-md">
+        Master Your Focus
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl leading-relaxed">
+        Block distractions and boost retention with our intelligent focus mode and AI-generated flashcards.
+      </p>
+</div>
+<!-- Pagination Dots -->
+<div class="flex gap-sm mb-xl">
+<div class="h-1.5 w-1.5 rounded-full bg-surface-variant"></div>
+<div class="h-1.5 w-6 rounded-full bg-primary transition-all duration-300"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-surface-variant"></div>
+</div>
+</main>
+<!-- CTA Footer -->
+<footer class="p-margin-mobile pb-xl flex flex-col items-center gap-md">
+<button class="w-full max-w-md py-4 bg-secondary-container hover:bg-secondary-container/90 text-on-secondary-container font-label-lg text-label-lg rounded-xl transition-all duration-200 active:scale-[0.98] shadow-lg flex items-center justify-center gap-2" onclick="window.location.reload()">
+      Next
+      <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors">
+      Skip Intro
+    </button>
+</footer>
+<script>
+    // Simple micro-interaction for the next button hover
+    const btn = document.querySelector('button');
+    btn.addEventListener('mouseover', () => {
+      btn.style.boxShadow = "0 0 25px rgba(4, 180, 162, 0.4)";
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.boxShadow = "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)";
+    });
+  </script>
+</body></html>

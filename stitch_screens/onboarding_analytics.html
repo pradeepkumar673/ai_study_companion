@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark - Track Success</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#060e20",
+                        "on-surface": "#dae2fd",
+                        "on-primary-container": "#90a8ff",
+                        "inverse-on-surface": "#283044",
+                        "tertiary": "#d0bcff",
+                        "surface-container": "#171f33",
+                        "on-primary-fixed": "#00164e",
+                        "background": "#0b1326",
+                        "primary": "#b6c4ff",
+                        "surface-container-high": "#222a3d",
+                        "on-tertiary-container": "#b89cff",
+                        "on-secondary-fixed": "#00201c",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "surface-tint": "#b6c4ff",
+                        "surface-variant": "#2d3449",
+                        "surface-bright": "#31394d",
+                        "on-tertiary-fixed": "#23005c",
+                        "on-secondary-container": "#003f38",
+                        "error-container": "#93000a",
+                        "outline": "#8f909d",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#4059aa",
+                        "surface-dim": "#0b1326",
+                        "tertiary-container": "#4e03b8",
+                        "primary-fixed": "#dce1ff",
+                        "outline-variant": "#444651",
+                        "on-background": "#dae2fd",
+                        "surface-container-highest": "#2d3449",
+                        "secondary-container": "#04b4a2",
+                        "primary-container": "#1e3a8a",
+                        "on-secondary": "#003731",
+                        "secondary-fixed": "#71f8e4",
+                        "on-secondary-fixed-variant": "#005048",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#3c0091",
+                        "on-primary-fixed-variant": "#264191",
+                        "on-primary": "#05297a",
+                        "surface-container-low": "#131b2e",
+                        "on-surface-variant": "#c5c5d3",
+                        "tertiary-fixed": "#e9ddff",
+                        "secondary-fixed-dim": "#4fdbc8",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "secondary": "#4fdbc8",
+                        "on-error": "#690005",
+                        "surface": "#0b1326",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "inverse-surface": "#dae2fd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "base": "8px",
+                        "md": "16px",
+                        "margin-mobile": "20px",
+                        "xl": "32px",
+                        "xs": "4px",
+                        "margin-desktop": "64px",
+                        "lg": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        .ai-pulse {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.1); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
+        }
+        .floating {
+            animation: floating 4s infinite ease-in-out;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .chart-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s ease-in-out forwards;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col overflow-hidden">
+<!-- Onboarding Navigation Suppressed as per Task-Focused Rule -->
+<main class="flex-1 flex flex-col items-center justify-center px-margin-mobile relative">
+<!-- Background Atmospheric Glows -->
+<div class="absolute top-1/4 left-1/4 w-64 h-64 bg-tertiary/10 rounded-full blur-[100px] -z-10"></div>
+<div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-[120px] -z-10"></div>
+<!-- Illustration Section -->
+<div class="w-full max-w-md aspect-square relative mb-xl flex items-center justify-center">
+<!-- Main Illustration Image -->
+<div class="relative w-full h-full flex items-center justify-center">
+<!-- Abstract Data Visualization / Growth Chart Background -->
+<div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+<svg class="w-full h-full text-secondary" viewbox="0 0 400 400">
+<path class="chart-path" d="M50 350 Q100 320 150 250 T250 150 T350 50" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
+<circle cx="150" cy="250" fill="currentColor" r="6"></circle>
+<circle cx="250" cy="150" fill="currentColor" r="6"></circle>
+<circle class="ai-pulse" cx="350" cy="50" fill="currentColor" r="8"></circle>
+</svg>
+</div>
+<!-- Central Visual Assets -->
+<div class="relative z-10 flex flex-col items-center">
+<!-- Graduation Cap Icon -->
+<div class="floating mb-md bg-surface-container-high p-lg rounded-2xl ai-glow border border-white/5">
+<span class="material-symbols-outlined text-[64px] text-tertiary" style="font-variation-settings: 'FILL' 1;">school</span>
+</div>
+<!-- Floating Badges -->
+<div class="absolute -top-4 -right-4 floating" style="animation-delay: 0.5s;">
+<div class="glass-card p-md rounded-xl flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-label-lg text-label-lg text-on-surface">Ace Student</span>
+</div>
+</div>
+<div class="absolute bottom-10 -left-6 floating" style="animation-delay: 1.2s;">
+<div class="glass-card p-md rounded-xl flex items-center gap-sm">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-label-lg text-label-lg text-on-surface">GPA 4.0</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Conceptual Image Placeholder for Image Generation Model -->
+<img class="hidden" data-alt="A highly stylized, professional digital 3D illustration for an academic productivity app. The central focus is a glowing purple graduation cap floating above a series of vibrant teal and violet data analytics charts that represent student success. Floating around the cap are glassmorphic achievement badges with metallic accents. The lighting is dark and moody, with high-contrast neon glows in teal and soft purple, creating a premium and motivating atmosphere for a dark-mode user interface. 4k resolution, cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdWEJUePfC_lsMWou7IgLj7Qq2pxUyM-JMqKtoE0phm5xLR0-tbn3klwSCP5BDsiooMfuD_pjPu0CCknysn_dlsjpQsRZYcB0kFyMwNworuikPBt4l1gOjJ2bMTdiEDsQZN23jx22mzQ428DMWZBsIInuuSF8szfEHNy0JP937I24hlcMePMWiamsw70zTEj0-OmH9fIlysJEEpAUFyaM6tyDneZJf3lXA4mANjqDEF9DtZeSlxNpTU7fdcwmUuOdLhBQ_XsS12ug"/>
+</div>
+<!-- Content Section -->
+<div class="text-center max-w-sm">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-md tracking-tight">
+                Visualize Your Growth
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed px-sm">
+                From GPA tracking to detailed subject analytics, see exactly how you're improving every day.
+            </p>
+</div>
+<!-- Action Section -->
+<div class="w-full max-w-sm mt-xl px-margin-mobile flex flex-col items-center">
+<button class="w-full bg-secondary-container text-on-secondary-container font-label-lg text-label-lg py-lg rounded-xl hover:opacity-90 transition-all active:scale-[0.98] shadow-lg flex items-center justify-center gap-sm group">
+                Get Started
+                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<!-- Progress Indicators -->
+<div class="flex gap-sm mt-xl">
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<div class="w-8 h-2 rounded-full bg-secondary ai-glow"></div>
+</div>
+</div>
+</main>
+<footer class="py-lg text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant/50">
+            Powered by StudySpark AI
+        </p>
+</footer>
+<script>
+        // Micro-interactions for the "Get Started" button
+        const btn = document.querySelector('button');
+        btn.addEventListener('mouseenter', () => {
+            btn.classList.add('ai-glow');
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.classList.remove('ai-glow');
+        });
+
+        // Simple parallax for floating elements on mouse move (Desktop Only)
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const amount = 20;
+                const x = (e.clientX / window.innerWidth - 0.5) * amount;
+                const y = (e.clientY / window.innerHeight - 0.5) * amount;
+                
+                document.querySelectorAll('.floating').forEach((el, index) => {
+                    const factor = (index + 1) * 0.5;
+                    el.style.transform = `translate3d(${x * factor}px, ${y * factor}px, 0)`;
+                });
+            });
+        }
+    </script>
+</body></html>

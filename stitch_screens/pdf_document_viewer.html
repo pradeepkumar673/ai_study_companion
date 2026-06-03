@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudySpark - PDF Viewer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+        .ai-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3449;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#4e03b8",
+                      "secondary-fixed-dim": "#4fdbc8",
+                      "on-secondary-fixed": "#00201c",
+                      "surface-container": "#171f33",
+                      "secondary": "#4fdbc8",
+                      "secondary-container": "#04b4a2",
+                      "inverse-primary": "#4059aa",
+                      "on-secondary-container": "#003f38",
+                      "tertiary-fixed": "#e9ddff",
+                      "background": "#0b1326",
+                      "on-tertiary-container": "#b89cff",
+                      "on-primary-container": "#90a8ff",
+                      "error-container": "#93000a",
+                      "surface-tint": "#b6c4ff",
+                      "secondary-fixed": "#71f8e4",
+                      "surface-container-low": "#131b2e",
+                      "primary-container": "#1e3a8a",
+                      "on-primary": "#05297a",
+                      "on-primary-fixed": "#00164e",
+                      "surface-dim": "#0b1326",
+                      "primary": "#b6c4ff",
+                      "primary-fixed-dim": "#b6c4ff",
+                      "tertiary": "#d0bcff",
+                      "on-primary-fixed-variant": "#264191",
+                      "inverse-surface": "#dae2fd",
+                      "surface-variant": "#2d3449",
+                      "inverse-on-surface": "#283044",
+                      "surface-container-high": "#222a3d",
+                      "on-surface": "#dae2fd",
+                      "on-tertiary-fixed": "#23005c",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#8f909d",
+                      "on-tertiary-fixed-variant": "#5516be",
+                      "on-secondary-fixed-variant": "#005048",
+                      "surface-bright": "#31394d",
+                      "error": "#ffb4ab",
+                      "on-surface-variant": "#c5c5d3",
+                      "outline-variant": "#444651",
+                      "on-tertiary": "#3c0091",
+                      "on-secondary": "#003731",
+                      "surface-container-lowest": "#060e20",
+                      "primary-fixed": "#dce1ff",
+                      "on-background": "#dae2fd",
+                      "surface-container-highest": "#2d3449",
+                      "surface": "#0b1326",
+                      "tertiary-fixed-dim": "#d0bcff",
+                      "on-error": "#690005"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin-mobile": "20px",
+                      "lg": "24px",
+                      "base": "8px",
+                      "margin-desktop": "64px",
+                      "md": "16px",
+                      "xs": "4px",
+                      "sm": "8px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "label-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-hidden selection:bg-secondary-container/30">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl flex justify-between items-center px-margin-mobile py-sm w-full">
+<div class="flex items-center gap-md">
+<button class="p-xs hover:bg-surface-variant/50 transition-colors duration-200 rounded-full" onclick="history.back()">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<div>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary truncate max-w-[180px] md:max-w-md">Lecture_05_Operating_Systems.pdf</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Page 4 of 42</p>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-xs hover:bg-surface-variant/50 transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined text-on-surface" data-icon="search">search</span>
+</button>
+<button class="p-xs hover:bg-surface-variant/50 transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined text-on-surface" data-icon="bookmark">bookmark</span>
+</button>
+<button class="p-xs hover:bg-surface-variant/50 transition-colors duration-200 rounded-full">
+<span class="material-symbols-outlined text-on-surface" data-icon="share">share</span>
+</button>
+</div>
+</header>
+<!-- Main Content: PDF View -->
+<main class="h-screen pt-[72px] pb-[100px] overflow-y-auto px-margin-mobile flex flex-col items-center">
+<!-- AI Insight Overlay (Initially Hidden) -->
+<div class="hidden fixed top-24 right-margin-mobile w-80 z-40 glass-panel rounded-xl p-md ai-glow border-tertiary/20" id="ai-insight-panel">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-lg text-label-lg text-tertiary">AI Insights</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="toggleAI()">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div class="space-y-sm">
+<p class="font-body-md text-label-lg text-on-surface">Key Concepts on Page 4:</p>
+<ul class="text-sm text-on-surface-variant space-y-xs list-disc pl-md">
+<li>Process Scheduling Algorithms: FCFS vs SJF.</li>
+<li>Context Switching Overhead: Minimal vs Excessive.</li>
+<li>The concept of "Gantt Charts" for visualizing execution.</li>
+</ul>
+<div class="pt-sm border-t border-outline-variant">
+<button class="w-full py-xs bg-tertiary/10 hover:bg-tertiary/20 text-tertiary text-sm font-label-lg rounded-lg transition-colors">Generate Flashcards</button>
+</div>
+</div>
+</div>
+<!-- PDF Pages Simulation -->
+<div class="w-full max-w-4xl space-y-lg py-md">
+<!-- Page 3 (Partial) -->
+<div class="relative bg-surface-container-low rounded-lg overflow-hidden shadow-lg border border-outline-variant/30 opacity-50 select-none">
+<img alt="PDF Page 3" class="w-full h-auto" data-alt="A clean, minimalist high-resolution scan of an academic textbook page about computer science fundamentals. The layout is professional with diagrams of process states and black technical typography against a subtly textured off-white paper background. The atmosphere is academic and focused, reflecting a deep dark mode aesthetic in the surrounding UI elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6TJkLH545LPeNrwAn_gOck90rzcP_oRj5wmp6wbXv0FeNL90aNoOiGFYljQP5upAUqVBFml5OGtAadCHcMNn8BfalLmq7Y7bmJ2iBoimFu-yLO625mjnfSwaaYrYpKoobhUnweMA2e_CDsEfeJQemCyggfZgwTKtXmnq6KdtQTEG6PFufxK7-c0-iXXYB5uNGBJPMvnE4nc6XGHxJWNXED7yngnz7gVL7Z8UZWdw5LVJVUfpboa3gI9fXhZOHhWcf6o3E1B4AUcc"/>
+</div>
+<!-- Page 4 (Active Page) -->
+<div class="relative bg-white rounded-lg overflow-hidden shadow-2xl border-2 border-primary/20 ring-4 ring-primary/5">
+<img alt="PDF Page 4" class="w-full h-auto" data-alt="A highly detailed close-up shot of an educational document page featuring technical diagrams of operating system schedulers. The page has sharp black text, vibrant teal highlights on key terms, and blue diagram lines. The lighting is crisp and even, emphasizing the high-contrast professional dark-theme setting of the application it is viewed in." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGqFVfjf9viDedYOAstBbsq8dlxeSbkZzO5Cukt7NthzeSR3k93SVOW2ckYVk_3G7r_PtUZg8_hgPn0yRiiY0oFYxM1HzLOktc_Pr35TwfiWeH-2cOnTE3rd0SzUKmXLf8fOKECoR7iH8ThHACUMMgPze0n0oJqHY7BRvJ-yI5bZSzztJqdScFA3U6yuYcDUT8WMeTcoKhQ1bbLshbPIXZLn35Q9d2ws40bKBpmWqbAm4hM2vgciqEN4Jxv3X2aGQFhL7B3UPM0Ug"/>
+<!-- Interaction Overlays -->
+<div class="absolute top-[20%] left-[10%] w-[40%] h-[3%] bg-yellow-400/30 rounded-sm cursor-pointer hover:bg-yellow-400/50 transition-colors border-l-2 border-yellow-500" title="Highlighted text"></div>
+<!-- Floating Note -->
+<div class="absolute top-[35%] right-[5%] w-48 glass-panel p-xs rounded-lg shadow-xl border-secondary/30 scale-90 origin-top-right">
+<div class="flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">sticky_note_2</span>
+<span class="font-label-sm text-label-sm text-secondary">Note</span>
+</div>
+<p class="text-[10px] leading-tight text-on-surface">Review this diagram before the midterm. SJF is optimal but hard to predict.</p>
+</div>
+</div>
+<!-- Page 5 (Next Page) -->
+<div class="relative bg-surface-container-low rounded-lg overflow-hidden shadow-lg border border-outline-variant/30 select-none">
+<img alt="PDF Page 5" class="w-full h-auto" data-alt="A sophisticated digital representation of computer code and system architecture diagrams on a document page. The visuals are clean and modern, using a palette of blues and teals. The page is set against the deep navy background of a premium study application, maintaining a high-contrast and technologically advanced atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAindg5shBSDbJNQl0Q8wih9uGknIf_uJwndgSersij8hoSswxy7xOw5z4rv-Z-iY3gGEg2dur7iaHx47goH9H92FVGIlFV61t_S5XdzZkTO03U2oQuEuvQmKBfdqY4vDjkpUbc41ACtQzgciqtozf69jSSTEPp_ryxNVKkmRAdmu7WlwYwXJnnuDOHogRNMyiQlMe2ySAWs7RtX_sr2qcmpQdbkTbMAfn9cUu3GB6Foc_WOrroeRLGuJjeOjMSsCdQD0jU1VKzDDQ"/>
+<div class="absolute inset-0 bg-surface/40 backdrop-blur-[2px]"></div>
+</div>
+</div>
+</main>
+<!-- Floating Action Toolbar -->
+<div class="fixed bottom-margin-mobile left-1/2 -translate-x-1/2 w-auto min-w-[320px] z-50">
+<nav class="glass-panel rounded-full px-lg py-sm flex items-center justify-between gap-md shadow-2xl border-outline-variant/50">
+<div class="flex items-center gap-sm">
+<!-- Highlight Tool -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-200 p-2 rounded-full hover:bg-surface-variant/50 group">
+<span class="material-symbols-outlined group-active:scale-90" data-icon="brush">brush</span>
+</button>
+<!-- Text Tool -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-200 p-2 rounded-full hover:bg-surface-variant/50 group">
+<span class="material-symbols-outlined group-active:scale-90" data-icon="format_bold">format_bold</span>
+</button>
+<!-- Sticky Note Tool -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all duration-200 p-2 rounded-full hover:bg-surface-variant/50 group">
+<span class="material-symbols-outlined group-active:scale-90" data-icon="sticky_note_2">sticky_note_2</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="w-px h-6 bg-outline-variant"></div>
+<!-- AI Insights Button -->
+<button class="flex items-center gap-sm bg-gradient-to-r from-primary to-tertiary text-on-primary px-lg py-sm rounded-full font-label-lg ai-glow transition-all active:scale-95 hover:brightness-110" id="ai-btn" onclick="toggleAI()">
+<span class="material-symbols-outlined ai-pulse" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="hidden md:block">AI Insights</span>
+<span class="md:hidden">Insights</span>
+</button>
+</nav>
+</div>
+<!-- Script for micro-interactions -->
+<script>
+        function toggleAI() {
+            const panel = document.getElementById('ai-insight-panel');
+            const btn = document.getElementById('ai-btn');
+            
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                panel.classList.add('animate-in', 'fade-in', 'slide-in-from-bottom-4', 'duration-300');
+                btn.classList.add('ring-2', 'ring-tertiary', 'ring-offset-2', 'ring-offset-background');
+            } else {
+                panel.classList.add('hidden');
+                btn.classList.remove('ring-2', 'ring-tertiary', 'ring-offset-2', 'ring-offset-background');
+            }
+        }
+
+        // Simulating scroll tracking
+        const main = document.querySelector('main');
+        main.addEventListener('scroll', () => {
+            // Log scroll position for dynamic UI updates if needed
+        });
+    </script>
+</body></html>
