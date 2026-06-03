@@ -32,13 +32,11 @@ class ProfileRepository {
       displayName: 'Student',
       xp: 0,
       level: 1,
-      studyStreakDays: 0,
+      currentStreakDays: 0,
       pomodoroWorkMinutes: 25,
       pomodoroShortBreakMinutes: 5,
       pomodoroLongBreakMinutes: 15,
-      pomodoroSessionsBeforeLongBreak: 4,
-      enableSoundEffects: true,
-      enableNotifications: true,
+      pomodorosBeforeLongBreak: 4,
       createdAt: now,
       updatedAt: now,
     );
@@ -75,7 +73,7 @@ class ProfileRepository {
   /// Sets the streak to [days] (computed by [FocusRepository.computeCurrentStreak]).
   Future<void> setStreak(int days) async {
     final profile = await getOrCreateProfile();
-    profile.studyStreakDays = days;
+    profile.currentStreakDays = days;
     profile.updatedAt = DateTime.now().toUtc();
     await _isar.writeTxn(() => _isar.userModels.put(profile));
   }
@@ -108,7 +106,7 @@ class ProfileRepository {
     if (badge == null || badge.isUnlocked) return;
 
     badge.currentProgress = progress;
-    if (badge.currentProgress >= badge.requiredProgress) {
+    if (badge.currentProgress >= badge.requiredThreshold) {
       badge.isUnlocked = true;
       badge.unlockedAt = DateTime.now().toUtc();
     }

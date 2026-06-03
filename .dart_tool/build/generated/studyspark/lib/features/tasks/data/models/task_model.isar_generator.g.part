@@ -18,10 +18,10 @@ const TaskModelSchema = CollectionSchema(
       name: r'actualMinutes',
       type: IsarType.long,
     ),
-    r'attachmentPaths': PropertySchema(
+    r'allSubtasksDone': PropertySchema(
       id: 1,
-      name: r'attachmentPaths',
-      type: IsarType.stringList,
+      name: r'allSubtasksDone',
+      type: IsarType.bool,
     ),
     r'completedAt': PropertySchema(
       id: 2,
@@ -38,45 +38,45 @@ const TaskModelSchema = CollectionSchema(
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'deadline': PropertySchema(
+    r'daysUntilDeadline': PropertySchema(
       id: 5,
+      name: r'daysUntilDeadline',
+      type: IsarType.long,
+    ),
+    r'deadline': PropertySchema(
+      id: 6,
       name: r'deadline',
       type: IsarType.dateTime,
     ),
     r'description': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'description',
       type: IsarType.string,
     ),
     r'estimatedMinutes': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'estimatedMinutes',
       type: IsarType.long,
     ),
-    r'hasDeadline': PropertySchema(
-      id: 8,
-      name: r'hasDeadline',
-      type: IsarType.bool,
-    ),
-    r'isArchived': PropertySchema(
-      id: 9,
-      name: r'isArchived',
-      type: IsarType.bool,
-    ),
     r'isCompleted': PropertySchema(
-      id: 10,
+      id: 9,
       name: r'isCompleted',
       type: IsarType.bool,
     ),
     r'isOverdue': PropertySchema(
-      id: 11,
+      id: 10,
       name: r'isOverdue',
       type: IsarType.bool,
     ),
-    r'isStarred': PropertySchema(
-      id: 12,
-      name: r'isStarred',
+    r'isRecurring': PropertySchema(
+      id: 11,
+      name: r'isRecurring',
       type: IsarType.bool,
+    ),
+    r'localDeadlineKey': PropertySchema(
+      id: 12,
+      name: r'localDeadlineKey',
+      type: IsarType.string,
     ),
     r'notificationId': PropertySchema(
       id: 13,
@@ -175,32 +175,14 @@ const TaskModelSchema = CollectionSchema(
         )
       ],
     ),
-    r'subjectId': IndexSchema(
-      id: 440306668014799972,
-      name: r'subjectId',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'subjectId',
-          type: IndexType.hash,
-          caseSensitive: true,
-        )
-      ],
-    ),
-    r'status_deadline': IndexSchema(
-      id: 1735794883415591050,
-      name: r'status_deadline',
+    r'status': IndexSchema(
+      id: -107785170620420283,
+      name: r'status',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
           name: r'status',
-          type: IndexType.value,
-          caseSensitive: false,
-        ),
-        IndexPropertySchema(
-          name: r'deadline',
           type: IndexType.value,
           caseSensitive: false,
         )
@@ -219,40 +201,40 @@ const TaskModelSchema = CollectionSchema(
         )
       ],
     ),
-    r'isStarred': IndexSchema(
-      id: -2178181178741689717,
-      name: r'isStarred',
+    r'localDeadlineKey': IndexSchema(
+      id: -2105937807947378932,
+      name: r'localDeadlineKey',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'isStarred',
-          type: IndexType.value,
-          caseSensitive: false,
+          name: r'localDeadlineKey',
+          type: IndexType.hash,
+          caseSensitive: true,
         )
       ],
     ),
-    r'isArchived': IndexSchema(
-      id: 655844772568347876,
-      name: r'isArchived',
+    r'subjectId': IndexSchema(
+      id: 440306668014799972,
+      name: r'subjectId',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'isArchived',
-          type: IndexType.value,
-          caseSensitive: false,
+          name: r'subjectId',
+          type: IndexType.hash,
+          caseSensitive: true,
         )
       ],
     ),
-    r'createdAt': IndexSchema(
-      id: -3433535483987302584,
-      name: r'createdAt',
+    r'completedAt': IndexSchema(
+      id: -3156591011457686752,
+      name: r'completedAt',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'createdAt',
+          name: r'completedAt',
           type: IndexType.value,
           caseSensitive: false,
         )
@@ -273,14 +255,13 @@ int _taskModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.attachmentPaths.length * 3;
+  bytesCount += 3 + object.description.length * 3;
   {
-    for (var i = 0; i < object.attachmentPaths.length; i++) {
-      final value = object.attachmentPaths[i];
-      bytesCount += value.length * 3;
+    final value = object.localDeadlineKey;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.description.length * 3;
   bytesCount += 3 + object.subjectId.length * 3;
   bytesCount += 3 + object.subtasks.length * 3;
   {
@@ -309,18 +290,18 @@ void _taskModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.actualMinutes);
-  writer.writeStringList(offsets[1], object.attachmentPaths);
+  writer.writeBool(offsets[1], object.allSubtasksDone);
   writer.writeDateTime(offsets[2], object.completedAt);
   writer.writeLong(offsets[3], object.completedSubtaskCount);
   writer.writeDateTime(offsets[4], object.createdAt);
-  writer.writeDateTime(offsets[5], object.deadline);
-  writer.writeString(offsets[6], object.description);
-  writer.writeLong(offsets[7], object.estimatedMinutes);
-  writer.writeBool(offsets[8], object.hasDeadline);
-  writer.writeBool(offsets[9], object.isArchived);
-  writer.writeBool(offsets[10], object.isCompleted);
-  writer.writeBool(offsets[11], object.isOverdue);
-  writer.writeBool(offsets[12], object.isStarred);
+  writer.writeLong(offsets[5], object.daysUntilDeadline);
+  writer.writeDateTime(offsets[6], object.deadline);
+  writer.writeString(offsets[7], object.description);
+  writer.writeLong(offsets[8], object.estimatedMinutes);
+  writer.writeBool(offsets[9], object.isCompleted);
+  writer.writeBool(offsets[10], object.isOverdue);
+  writer.writeBool(offsets[11], object.isRecurring);
+  writer.writeString(offsets[12], object.localDeadlineKey);
   writer.writeLong(offsets[13], object.notificationId);
   writer.writeByte(offsets[14], object.priority.index);
   writer.writeDateTime(offsets[15], object.reminderAt);
@@ -347,16 +328,15 @@ TaskModel _taskModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TaskModel(
-    actualMinutes: reader.readLongOrNull(offsets[0]) ?? 0,
-    attachmentPaths: reader.readStringList(offsets[1]) ?? const [],
+    actualMinutes: reader.readLongOrNull(offsets[0]),
     completedAt: reader.readDateTimeOrNull(offsets[2]),
     createdAt: reader.readDateTimeOrNull(offsets[4]),
-    deadline: reader.readDateTimeOrNull(offsets[5]),
-    description: reader.readStringOrNull(offsets[6]) ?? '',
-    estimatedMinutes: reader.readLongOrNull(offsets[7]) ?? 0,
+    deadline: reader.readDateTimeOrNull(offsets[6]),
+    description: reader.readStringOrNull(offsets[7]) ?? '',
+    estimatedMinutes: reader.readLongOrNull(offsets[8]) ?? 30,
     id: id,
-    isArchived: reader.readBoolOrNull(offsets[9]) ?? false,
-    isStarred: reader.readBoolOrNull(offsets[12]) ?? false,
+    isRecurring: reader.readBoolOrNull(offsets[11]) ?? false,
+    localDeadlineKey: reader.readStringOrNull(offsets[12]),
     notificationId: reader.readLongOrNull(offsets[13]),
     priority:
         _TaskModelpriorityValueEnumMap[reader.readByteOrNull(offsets[14])] ??
@@ -376,9 +356,9 @@ TaskModel _taskModelDeserialize(
         ) ??
         const [],
     tags: reader.readStringList(offsets[21]) ?? const [],
-    title: reader.readStringOrNull(offsets[22]) ?? '',
+    title: reader.readString(offsets[22]),
     updatedAt: reader.readDateTimeOrNull(offsets[23]),
-    uuid: reader.readStringOrNull(offsets[24]) ?? '',
+    uuid: reader.readString(offsets[24]),
   );
   return object;
 }
@@ -391,9 +371,9 @@ P _taskModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readStringList(offset) ?? const []) as P;
+      return (reader.readBool(offset)) as P;
     case 2:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 3:
@@ -401,21 +381,21 @@ P _taskModelDeserializeProp<P>(
     case 4:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 5:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 6:
-      return (reader.readStringOrNull(offset) ?? '') as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 7:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
+      return (reader.readStringOrNull(offset) ?? '') as P;
     case 8:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 30) as P;
     case 9:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
+      return (reader.readBool(offset)) as P;
     case 10:
       return (reader.readBool(offset)) as P;
     case 11:
-      return (reader.readBool(offset)) as P;
-    case 12:
       return (reader.readBoolOrNull(offset) ?? false) as P;
+    case 12:
+      return (reader.readStringOrNull(offset)) as P;
     case 13:
       return (reader.readLongOrNull(offset)) as P;
     case 14:
@@ -445,11 +425,11 @@ P _taskModelDeserializeProp<P>(
     case 21:
       return (reader.readStringList(offset) ?? const []) as P;
     case 22:
-      return (reader.readStringOrNull(offset) ?? '') as P;
+      return (reader.readString(offset)) as P;
     case 23:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 24:
-      return (reader.readStringOrNull(offset) ?? '') as P;
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -488,12 +468,14 @@ const _TaskModelstatusEnumValueMap = {
   'inProgress': 1,
   'done': 2,
   'cancelled': 3,
+  'archived': 4,
 };
 const _TaskModelstatusValueEnumMap = {
   0: TaskStatus.todo,
   1: TaskStatus.inProgress,
   2: TaskStatus.done,
   3: TaskStatus.cancelled,
+  4: TaskStatus.archived,
 };
 
 Id _taskModelGetId(TaskModel object) {
@@ -578,10 +560,10 @@ extension TaskModelQueryWhereSort
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhere> anyStatusDeadline() {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhere> anyStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'status_deadline'),
+        const IndexWhereClause.any(indexName: r'status'),
       );
     });
   }
@@ -594,26 +576,10 @@ extension TaskModelQueryWhereSort
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhere> anyIsStarred() {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhere> anyCompletedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'isStarred'),
-      );
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhere> anyIsArchived() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'isArchived'),
-      );
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhere> anyCreatedAt() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'createdAt'),
+        const IndexWhereClause.any(indexName: r'completedAt'),
       );
     });
   }
@@ -867,74 +833,29 @@ extension TaskModelQueryWhere
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> subjectIdEqualTo(
-      String subjectId) {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> statusEqualTo(
+      TaskStatus status) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'subjectId',
-        value: [subjectId],
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> subjectIdNotEqualTo(
-      String subjectId) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [],
-              upper: [subjectId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [subjectId],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [subjectId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'subjectId',
-              lower: [],
-              upper: [subjectId],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusEqualToAnyDeadline(TaskStatus status) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'status_deadline',
+        indexName: r'status',
         value: [status],
       ));
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusNotEqualToAnyDeadline(TaskStatus status) {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> statusNotEqualTo(
+      TaskStatus status) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
+              indexName: r'status',
               lower: [],
               upper: [status],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
+              indexName: r'status',
               lower: [status],
               includeLower: false,
               upper: [],
@@ -942,13 +863,13 @@ extension TaskModelQueryWhere
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
+              indexName: r'status',
               lower: [status],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
+              indexName: r'status',
               lower: [],
               upper: [status],
               includeUpper: false,
@@ -957,14 +878,13 @@ extension TaskModelQueryWhere
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusGreaterThanAnyDeadline(
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> statusGreaterThan(
     TaskStatus status, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'status_deadline',
+        indexName: r'status',
         lower: [status],
         includeLower: include,
         upper: [],
@@ -972,14 +892,13 @@ extension TaskModelQueryWhere
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusLessThanAnyDeadline(
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> statusLessThan(
     TaskStatus status, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'status_deadline',
+        indexName: r'status',
         lower: [],
         upper: [status],
         includeUpper: include,
@@ -987,8 +906,7 @@ extension TaskModelQueryWhere
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusBetweenAnyDeadline(
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> statusBetween(
     TaskStatus lowerStatus,
     TaskStatus upperStatus, {
     bool includeLower = true,
@@ -996,130 +914,10 @@ extension TaskModelQueryWhere
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'status_deadline',
+        indexName: r'status',
         lower: [lowerStatus],
         includeLower: includeLower,
         upper: [upperStatus],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusEqualToDeadlineIsNull(TaskStatus status) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'status_deadline',
-        value: [status, null],
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusEqualToDeadlineIsNotNull(TaskStatus status) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'status_deadline',
-        lower: [status, null],
-        includeLower: false,
-        upper: [
-          status,
-        ],
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> statusDeadlineEqualTo(
-      TaskStatus status, DateTime? deadline) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'status_deadline',
-        value: [status, deadline],
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusEqualToDeadlineNotEqualTo(TaskStatus status, DateTime? deadline) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
-              lower: [status],
-              upper: [status, deadline],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
-              lower: [status, deadline],
-              includeLower: false,
-              upper: [status],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
-              lower: [status, deadline],
-              includeLower: false,
-              upper: [status],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'status_deadline',
-              lower: [status],
-              upper: [status, deadline],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusEqualToDeadlineGreaterThan(
-    TaskStatus status,
-    DateTime? deadline, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'status_deadline',
-        lower: [status, deadline],
-        includeLower: include,
-        upper: [status],
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusEqualToDeadlineLessThan(
-    TaskStatus status,
-    DateTime? deadline, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'status_deadline',
-        lower: [status],
-        upper: [status, deadline],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
-      statusEqualToDeadlineBetween(
-    TaskStatus status,
-    DateTime? lowerDeadline,
-    DateTime? upperDeadline, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'status_deadline',
-        lower: [status, lowerDeadline],
-        includeLower: includeLower,
-        upper: [status, upperDeadline],
         includeUpper: includeUpper,
       ));
     });
@@ -1235,109 +1033,21 @@ extension TaskModelQueryWhere
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> isStarredEqualTo(
-      bool isStarred) {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
+      localDeadlineKeyIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'isStarred',
-        value: [isStarred],
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> isStarredNotEqualTo(
-      bool isStarred) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isStarred',
-              lower: [],
-              upper: [isStarred],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isStarred',
-              lower: [isStarred],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isStarred',
-              lower: [isStarred],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isStarred',
-              lower: [],
-              upper: [isStarred],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> isArchivedEqualTo(
-      bool isArchived) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'isArchived',
-        value: [isArchived],
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> isArchivedNotEqualTo(
-      bool isArchived) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isArchived',
-              lower: [],
-              upper: [isArchived],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isArchived',
-              lower: [isArchived],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isArchived',
-              lower: [isArchived],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'isArchived',
-              lower: [],
-              upper: [isArchived],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> createdAtIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'createdAt',
+        indexName: r'localDeadlineKey',
         value: [null],
       ));
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> createdAtIsNotNull() {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
+      localDeadlineKeyIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'createdAt',
+        indexName: r'localDeadlineKey',
         lower: [null],
         includeLower: false,
         upper: [],
@@ -1345,91 +1055,201 @@ extension TaskModelQueryWhere
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> createdAtEqualTo(
-      DateTime? createdAt) {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> localDeadlineKeyEqualTo(
+      String? localDeadlineKey) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'createdAt',
-        value: [createdAt],
+        indexName: r'localDeadlineKey',
+        value: [localDeadlineKey],
       ));
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> createdAtNotEqualTo(
-      DateTime? createdAt) {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause>
+      localDeadlineKeyNotEqualTo(String? localDeadlineKey) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'createdAt',
+              indexName: r'localDeadlineKey',
               lower: [],
-              upper: [createdAt],
+              upper: [localDeadlineKey],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'createdAt',
-              lower: [createdAt],
+              indexName: r'localDeadlineKey',
+              lower: [localDeadlineKey],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'createdAt',
-              lower: [createdAt],
+              indexName: r'localDeadlineKey',
+              lower: [localDeadlineKey],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'createdAt',
+              indexName: r'localDeadlineKey',
               lower: [],
-              upper: [createdAt],
+              upper: [localDeadlineKey],
               includeUpper: false,
             ));
       }
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> createdAtGreaterThan(
-    DateTime? createdAt, {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> subjectIdEqualTo(
+      String subjectId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'subjectId',
+        value: [subjectId],
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> subjectIdNotEqualTo(
+      String subjectId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'subjectId',
+              lower: [],
+              upper: [subjectId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'subjectId',
+              lower: [subjectId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'subjectId',
+              lower: [subjectId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'subjectId',
+              lower: [],
+              upper: [subjectId],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> completedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'completedAt',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> completedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'completedAt',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> completedAtEqualTo(
+      DateTime? completedAt) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'completedAt',
+        value: [completedAt],
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> completedAtNotEqualTo(
+      DateTime? completedAt) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'completedAt',
+              lower: [],
+              upper: [completedAt],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'completedAt',
+              lower: [completedAt],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'completedAt',
+              lower: [completedAt],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'completedAt',
+              lower: [],
+              upper: [completedAt],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> completedAtGreaterThan(
+    DateTime? completedAt, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'createdAt',
-        lower: [createdAt],
+        indexName: r'completedAt',
+        lower: [completedAt],
         includeLower: include,
         upper: [],
       ));
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> createdAtLessThan(
-    DateTime? createdAt, {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> completedAtLessThan(
+    DateTime? completedAt, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'createdAt',
+        indexName: r'completedAt',
         lower: [],
-        upper: [createdAt],
+        upper: [completedAt],
         includeUpper: include,
       ));
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> createdAtBetween(
-    DateTime? lowerCreatedAt,
-    DateTime? upperCreatedAt, {
+  QueryBuilder<TaskModel, TaskModel, QAfterWhereClause> completedAtBetween(
+    DateTime? lowerCompletedAt,
+    DateTime? upperCompletedAt, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'createdAt',
-        lower: [lowerCreatedAt],
+        indexName: r'completedAt',
+        lower: [lowerCompletedAt],
         includeLower: includeLower,
-        upper: [upperCreatedAt],
+        upper: [upperCompletedAt],
         includeUpper: includeUpper,
       ));
     });
@@ -1439,7 +1259,25 @@ extension TaskModelQueryWhere
 extension TaskModelQueryFilter
     on QueryBuilder<TaskModel, TaskModel, QFilterCondition> {
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      actualMinutesEqualTo(int value) {
+      actualMinutesIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'actualMinutes',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      actualMinutesIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'actualMinutes',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      actualMinutesEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'actualMinutes',
@@ -1450,7 +1288,7 @@ extension TaskModelQueryFilter
 
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
       actualMinutesGreaterThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1464,7 +1302,7 @@ extension TaskModelQueryFilter
 
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
       actualMinutesLessThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1478,8 +1316,8 @@ extension TaskModelQueryFilter
 
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
       actualMinutesBetween(
-    int lower,
-    int upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1495,229 +1333,12 @@ extension TaskModelQueryFilter
   }
 
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+      allSubtasksDoneEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'attachmentPaths',
+        property: r'allSubtasksDone',
         value: value,
-        caseSensitive: caseSensitive,
       ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'attachmentPaths',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'attachmentPaths',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'attachmentPaths',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'attachmentPaths',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'attachmentPaths',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementContains(String value,
-          {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'attachmentPaths',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementMatches(String pattern,
-          {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'attachmentPaths',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'attachmentPaths',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsElementIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'attachmentPaths',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachmentPaths',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachmentPaths',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachmentPaths',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachmentPaths',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachmentPaths',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
-      attachmentPathsLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'attachmentPaths',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
     });
   }
 
@@ -1912,6 +1533,62 @@ extension TaskModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      daysUntilDeadlineEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'daysUntilDeadline',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      daysUntilDeadlineGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'daysUntilDeadline',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      daysUntilDeadlineLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'daysUntilDeadline',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      daysUntilDeadlineBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'daysUntilDeadline',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -2180,16 +1857,6 @@ extension TaskModelQueryFilter
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> hasDeadlineEqualTo(
-      bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'hasDeadline',
-        value: value,
-      ));
-    });
-  }
-
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -2243,16 +1910,6 @@ extension TaskModelQueryFilter
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> isArchivedEqualTo(
-      bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isArchived',
-        value: value,
-      ));
-    });
-  }
-
   QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> isCompletedEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
@@ -2273,12 +1930,166 @@ extension TaskModelQueryFilter
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> isStarredEqualTo(
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition> isRecurringEqualTo(
       bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isStarred',
+        property: r'isRecurring',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'localDeadlineKey',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'localDeadlineKey',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'localDeadlineKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'localDeadlineKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'localDeadlineKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'localDeadlineKey',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'localDeadlineKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'localDeadlineKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'localDeadlineKey',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'localDeadlineKey',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'localDeadlineKey',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterFilterCondition>
+      localDeadlineKeyIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'localDeadlineKey',
+        value: '',
       ));
     });
   }
@@ -3453,6 +3264,18 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByAllSubtasksDone() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'allSubtasksDone', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByAllSubtasksDoneDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'allSubtasksDone', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByCompletedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'completedAt', Sort.asc);
@@ -3488,6 +3311,19 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByDaysUntilDeadline() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'daysUntilDeadline', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      sortByDaysUntilDeadlineDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'daysUntilDeadline', Sort.desc);
     });
   }
 
@@ -3528,30 +3364,6 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByHasDeadline() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hasDeadline', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByHasDeadlineDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hasDeadline', Sort.desc);
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsArchived() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isArchived', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsArchivedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isArchived', Sort.desc);
-    });
-  }
-
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isCompleted', Sort.asc);
@@ -3576,15 +3388,28 @@ extension TaskModelQuerySortBy on QueryBuilder<TaskModel, TaskModel, QSortBy> {
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsStarred() {
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsRecurring() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isStarred', Sort.asc);
+      return query.addSortBy(r'isRecurring', Sort.asc);
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsStarredDesc() {
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByIsRecurringDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isStarred', Sort.desc);
+      return query.addSortBy(r'isRecurring', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> sortByLocalDeadlineKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDeadlineKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      sortByLocalDeadlineKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDeadlineKey', Sort.desc);
     });
   }
 
@@ -3723,6 +3548,18 @@ extension TaskModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByAllSubtasksDone() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'allSubtasksDone', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByAllSubtasksDoneDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'allSubtasksDone', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByCompletedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'completedAt', Sort.asc);
@@ -3758,6 +3595,19 @@ extension TaskModelQuerySortThenBy
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByDaysUntilDeadline() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'daysUntilDeadline', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      thenByDaysUntilDeadlineDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'daysUntilDeadline', Sort.desc);
     });
   }
 
@@ -3798,18 +3648,6 @@ extension TaskModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByHasDeadline() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hasDeadline', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByHasDeadlineDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'hasDeadline', Sort.desc);
-    });
-  }
-
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -3819,18 +3657,6 @@ extension TaskModelQuerySortThenBy
   QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsArchived() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isArchived', Sort.asc);
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsArchivedDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isArchived', Sort.desc);
     });
   }
 
@@ -3858,15 +3684,28 @@ extension TaskModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsStarred() {
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsRecurring() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isStarred', Sort.asc);
+      return query.addSortBy(r'isRecurring', Sort.asc);
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsStarredDesc() {
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByIsRecurringDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'isStarred', Sort.desc);
+      return query.addSortBy(r'isRecurring', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy> thenByLocalDeadlineKey() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDeadlineKey', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QAfterSortBy>
+      thenByLocalDeadlineKeyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'localDeadlineKey', Sort.desc);
     });
   }
 
@@ -3999,9 +3838,9 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByAttachmentPaths() {
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByAllSubtasksDone() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'attachmentPaths');
+      return query.addDistinctBy(r'allSubtasksDone');
     });
   }
 
@@ -4024,6 +3863,12 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByDaysUntilDeadline() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'daysUntilDeadline');
+    });
+  }
+
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByDeadline() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'deadline');
@@ -4043,18 +3888,6 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByHasDeadline() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'hasDeadline');
-    });
-  }
-
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByIsArchived() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'isArchived');
-    });
-  }
-
   QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByIsCompleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isCompleted');
@@ -4067,9 +3900,17 @@ extension TaskModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByIsStarred() {
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByIsRecurring() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'isStarred');
+      return query.addDistinctBy(r'isRecurring');
+    });
+  }
+
+  QueryBuilder<TaskModel, TaskModel, QDistinct> distinctByLocalDeadlineKey(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'localDeadlineKey',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -4151,16 +3992,15 @@ extension TaskModelQueryProperty
     });
   }
 
-  QueryBuilder<TaskModel, int, QQueryOperations> actualMinutesProperty() {
+  QueryBuilder<TaskModel, int?, QQueryOperations> actualMinutesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'actualMinutes');
     });
   }
 
-  QueryBuilder<TaskModel, List<String>, QQueryOperations>
-      attachmentPathsProperty() {
+  QueryBuilder<TaskModel, bool, QQueryOperations> allSubtasksDoneProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'attachmentPaths');
+      return query.addPropertyName(r'allSubtasksDone');
     });
   }
 
@@ -4183,6 +4023,12 @@ extension TaskModelQueryProperty
     });
   }
 
+  QueryBuilder<TaskModel, int, QQueryOperations> daysUntilDeadlineProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'daysUntilDeadline');
+    });
+  }
+
   QueryBuilder<TaskModel, DateTime?, QQueryOperations> deadlineProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'deadline');
@@ -4201,18 +4047,6 @@ extension TaskModelQueryProperty
     });
   }
 
-  QueryBuilder<TaskModel, bool, QQueryOperations> hasDeadlineProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'hasDeadline');
-    });
-  }
-
-  QueryBuilder<TaskModel, bool, QQueryOperations> isArchivedProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'isArchived');
-    });
-  }
-
   QueryBuilder<TaskModel, bool, QQueryOperations> isCompletedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isCompleted');
@@ -4225,9 +4059,16 @@ extension TaskModelQueryProperty
     });
   }
 
-  QueryBuilder<TaskModel, bool, QQueryOperations> isStarredProperty() {
+  QueryBuilder<TaskModel, bool, QQueryOperations> isRecurringProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'isStarred');
+      return query.addPropertyName(r'isRecurring');
+    });
+  }
+
+  QueryBuilder<TaskModel, String?, QQueryOperations>
+      localDeadlineKeyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'localDeadlineKey');
     });
   }
 

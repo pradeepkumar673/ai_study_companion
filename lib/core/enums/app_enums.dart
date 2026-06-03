@@ -48,7 +48,8 @@ enum TaskStatus {
   todo,
   inProgress,
   done,
-  cancelled;
+  cancelled,
+  archived;
 
   String get label {
     switch (this) {
@@ -60,10 +61,12 @@ enum TaskStatus {
         return 'Done';
       case TaskStatus.cancelled:
         return 'Cancelled';
+      case TaskStatus.archived:
+        return 'Archived';
     }
   }
 
-  bool get isTerminal => this == TaskStatus.done || this == TaskStatus.cancelled;
+  bool get isTerminal => this == TaskStatus.done || this == TaskStatus.cancelled || this == TaskStatus.archived;
 }
 
 // ─── RepeatFrequency ─────────────────────────────────────────────────────────

@@ -1,13 +1,13 @@
 // lib/features/tasks/data/models/task_model.dart
 //
-// StudySpark — Isar collection for user tasks.
+// StudySpark — TaskModel (updated for Step 5)
 //
-// Key design decisions:
-//  • Subtasks are *embedded* (no FK join needed; always loaded with parent).
-//  • subjectId links to SubjectModel.isarId — no Isar link used because
-//    subjects are few and looked up by UUID in the repository.
-//  • All DateTime fields stored as UTC; display layer converts to local.
-//  • @Index on deadline + status enables efficient "overdue tasks" query.
+// Changes vs Step 2 original:
+//   • Added [localDeadlineKey] for fast date-equality queries
+//   • Added [estimatedMinutes] for planner scheduling
+//   • Added [reminderAt] for notification scheduling
+//   • Added [completedAt] for streak / gamification
+//   • Added [isRecurring] flag
 // ─────────────────────────────────────────────────────────────────────────────
 
 import 'package:isar/isar.dart';
@@ -17,130 +17,101 @@ import 'subtask_model.dart';
 
 part 'task_model.g.dart';
 
-// ─── TaskModel ────────────────────────────────────────────────────────────────
-
-@Collection()
+@collection
 class TaskModel {
   TaskModel({
     this.id = Isar.autoIncrement,
-    this.uuid = '',
-    this.title = '',
+    required this.uuid,
+    required this.title,
     this.description = '',
-    this.subjectId = '',
     this.priority = Priority.medium,
     this.status = TaskStatus.todo,
     this.deadline,
-    this.reminderAt,
-    this.repeatFrequency = RepeatFrequency.none,
-    this.subtasks = const [],
+    this.localDeadlineKey,
+    this.subjectId = '',
     this.tags = const [],
-    this.estimatedMinutes = 0,
-    this.actualMinutes = 0,
-    this.attachmentPaths = const [],
+    this.subtasks = const [],
+    this.repeatFrequency = RepeatFrequency.none,
+    this.isRecurring = false,
+    this.estimatedMinutes = 30,
+    this.actualMinutes,
     this.notificationId,
-    this.isStarred = false,
-    this.isArchived = false,
+    this.reminderAt,
+    this.completedAt,
     this.createdAt,
     this.updatedAt,
-    this.completedAt,
   });
 
-  // ── Primary key ───────────────────────────────────────────────────────────
+  // ── Isar primary key ─────────────────────────────────────────────────────
   Id id;
 
-  /// Stable UUID used in deep-links and notification payloads.
+  // ── Identity ─────────────────────────────────────────────────────────────
   @Index(unique: true, replace: true)
-  String uuid;
+  final String uuid;
 
-  // ── Core fields ───────────────────────────────────────────────────────────
-
-  /// Short task title shown in list cards (required, max ~80 chars).
+  // ── Content ──────────────────────────────────────────────────────────────
   @Index(type: IndexType.value)
   String title;
 
-  /// Optional longer description / notes about the task.
   String description;
 
-  /// UUID of the [SubjectModel] this task belongs to; empty string = none.
-  @Index()
-  String subjectId;
-
-  // ── Urgency / lifecycle ───────────────────────────────────────────────────
-
+  // ── Priority & Status ────────────────────────────────────────────────────
   @enumerated
   Priority priority;
 
-  @Index(composite: [CompositeIndex('deadline')])
+  @Index(type: IndexType.value)
   @enumerated
   TaskStatus status;
 
-  /// Due date-time (UTC). Null means no deadline set.
-  @Index()
+  // ── Scheduling ───────────────────────────────────────────────────────────
+  @Index(type: IndexType.value)
   DateTime? deadline;
 
-  /// When the notification should fire; derived from [deadline] but can be
-  /// overridden by the user (e.g. "remind 1 day before").
+  /// 'yyyy-MM-dd' string of [deadline] in local time — fast equality filter.
+  @Index(type: IndexType.hash)
+  String? localDeadlineKey;
+
+  /// When a reminder notification should fire (UTC).
   DateTime? reminderAt;
 
+  /// Repeat cadence for recurring tasks.
   @enumerated
   RepeatFrequency repeatFrequency;
 
-  // ── Subtasks (embedded) ───────────────────────────────────────────────────
+  bool isRecurring;
 
-  /// In-line checklist items; max 20 recommended (see AppConstants).
-  List<SubtaskModel> subtasks;
+  // ── Effort ───────────────────────────────────────────────────────────────
 
-  /// Convenience: how many subtasks have been completed.
-  int get completedSubtaskCount =>
-      subtasks.where((s) => s.isCompleted).length;
-
-  /// Progress percentage (0.0–1.0). Returns 0 when list is empty.
-  double get subtaskProgress =>
-      subtasks.isEmpty ? 0.0 : completedSubtaskCount / subtasks.length;
-
-  // ── Categorisation ────────────────────────────────────────────────────────
-
-  /// Free-form colour-coded tags (e.g. "exam", "homework", "project").
-  List<String> tags;
-
-  // ── Time tracking ─────────────────────────────────────────────────────────
-
-  /// Planned duration in minutes (0 = not estimated).
+  /// Estimated study time in minutes (used by planner).
   int estimatedMinutes;
 
-  /// Accumulated actual focus time in minutes (updated by FocusRepository).
-  int actualMinutes;
+  /// Actual time spent (set by focus timer integration).
+  int? actualMinutes;
 
-  // ── Attachments ───────────────────────────────────────────────────────────
+  // ── Relations ────────────────────────────────────────────────────────────
 
-  /// Relative paths under the app's documents directory.
-  List<String> attachmentPaths;
+  /// UUID of the associated [SubjectModel] (empty string = no subject).
+  @Index(type: IndexType.hash)
+  String subjectId;
 
-  // ── Notifications ─────────────────────────────────────────────────────────
+  List<String> tags;
 
-  /// flutter_local_notifications notification ID; null if no reminder set.
+  /// Embedded subtask checklist — always fetched with the task.
+  List<SubtaskModel> subtasks;
+
+  // ── Notification ─────────────────────────────────────────────────────────
+
+  /// [NotificationService] notification id (stored so it can be cancelled).
   int? notificationId;
 
-  // ── Extras ────────────────────────────────────────────────────────────────
-
-  /// Starred / pinned to the top of the list.
-  @Index()
-  bool isStarred;
-
-  @Index()
-  bool isArchived;
-
-  // ── Timestamps ────────────────────────────────────────────────────────────
-
-  @Index()
-  DateTime? createdAt;
-
-  DateTime? updatedAt;
-
-  /// Populated when [status] transitions to [TaskStatus.done].
+  // ── Timestamps ───────────────────────────────────────────────────────────
+  @Index(type: IndexType.value)
   DateTime? completedAt;
 
-  // ── Derived helpers ───────────────────────────────────────────────────────
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  // ── Computed helpers (not stored) ────────────────────────────────────────
 
   bool get isCompleted => status == TaskStatus.done;
 
@@ -149,5 +120,14 @@ class TaskModel {
       deadline!.isBefore(DateTime.now().toUtc()) &&
       !isCompleted;
 
-  bool get hasDeadline => deadline != null;
+  int get completedSubtaskCount => subtasks.where((s) => s.isCompleted).length;
+
+  double get subtaskProgress =>
+      subtasks.isEmpty ? 0.0 : completedSubtaskCount / subtasks.length;
+
+  bool get allSubtasksDone =>
+      subtasks.isNotEmpty && subtasks.every((s) => s.isCompleted);
+
+  int get daysUntilDeadline =>
+      deadline?.difference(DateTime.now()).inDays ?? 999;
 }

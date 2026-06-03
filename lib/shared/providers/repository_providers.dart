@@ -157,32 +157,9 @@ final gamificationServiceProvider = Provider<GamificationService>((ref) {
 
 // ── Tasks ─────────────────────────────────────────────────────────────────────
 
-/// All non-archived tasks — reactive Isar stream.
-final allTasksProvider = StreamProvider<List<TaskModel>>((ref) {
-  return ref.watch(taskRepositoryProvider).watchAllTasks();
-});
-
-/// Tasks filtered by the current [taskFilterProvider] state.
-final filteredTasksProvider = StreamProvider<List<TaskModel>>((ref) {
-  final filter = ref.watch(taskFilterProvider);
-  final repo = ref.watch(taskRepositoryProvider);
-
-  if (filter.status != null) {
-    return repo.watchTasksByStatus(filter.status!);
-  }
-  if (filter.priority != null) {
-    return repo.watchTasksByPriority(filter.priority!);
-  }
-  if (filter.subjectId != null) {
-    return repo.watchTasksBySubject(filter.subjectId!);
-  }
-  return repo.watchAllTasks();
-});
-
 /// Tasks due today (used on the dashboard).
-final todayTasksProvider = StreamProvider<List<TaskModel>>((ref) {
-  final now = DateTime.now();
-  return ref.watch(taskRepositoryProvider).watchTasksDueToday(now);
+final todayTasksProvider = FutureProvider<List<TaskModel>>((ref) async {
+  return ref.watch(taskRepositoryProvider).getTasksForDay(_todayKey());
 });
 
 // ── Task filter notifier ──────────────────────────────────────────────────────
