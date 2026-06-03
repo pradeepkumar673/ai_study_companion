@@ -252,16 +252,16 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
           tooltip: editor.isPinned ? 'Unpin' : 'Pin',
         ),
 
-        // AI summary placeholder
+        // AI summary button
         IconButton(
           icon: const Icon(Icons.auto_awesome_rounded),
-          tooltip: 'AI Summary (coming soon)',
-          onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('AI Summary — HuggingFace integration coming soon'),
-              duration: Duration(seconds: 2),
-            ),
-          ),
+          tooltip: 'AI Summary',
+          onPressed: () {
+            context.push('/ai/summarizer', extra: {
+              'text': _contentCtrl.text,
+              'title': _titleCtrl.text,
+            });
+          },
         ),
 
         // Save button

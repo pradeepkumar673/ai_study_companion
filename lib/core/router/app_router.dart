@@ -50,6 +50,13 @@ import '../../features/analytics/presentation/screens/analytics_screen.dart';
 // ── Profile tab ─────────────────────────────────────────────────────────────
 import '../../features/profile/presentation/screens/profile_screen.dart';
 
+// ── AI Hub & Assistant (Step 5 AI) ──────────────────────────────────────────
+import '../../features/ai/assistant/presentation/screens/ai_hub_screen.dart';
+import '../../features/ai/assistant/presentation/screens/ai_assistant_screen.dart';
+import '../../features/ai/summarizer/presentation/screens/ai_summarizer_screen.dart';
+import '../../features/ai/flashcard_generator/presentation/screens/ai_flashcard_generator_screen.dart';
+import '../../features/ai/quiz_generator/presentation/screens/ai_quiz_generator_screen.dart';
+
 part 'app_router.g.dart';
 
 // ─── Route Name Constants ─────────────────────────────────────────────────────
@@ -171,6 +178,40 @@ GoRouter appRouter(AppRouterRef ref) {
                       key: state.pageKey,
                       child: const FocusModeScreen(),
                     ),
+                  ),
+                  // ── Step 5: AI Hub (/dashboard → /ai) ───────────────────
+                  GoRoute(
+                    path: 'ai',
+                    name: 'ai-hub',
+                    builder: (context, state) => const AiHubScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'assistant',
+                        name: 'ai-assistant',
+                        builder: (_, __) => const AiAssistantScreen(),
+                      ),
+                      GoRoute(
+                        path: 'summarizer',
+                        name: 'ai-summarizer',
+                        builder: (_, state) {
+                          final extra = state.extra as Map<String, String>?;
+                          return AiSummarizerScreen(
+                            initialText: extra?['text'],
+                            noteTitle: extra?['title'],
+                          );
+                        },
+                      ),
+                      GoRoute(
+                        path: 'flashcards',
+                        name: 'ai-flashcards',
+                        builder: (_, __) => const AiFlashcardGeneratorScreen(),
+                      ),
+                      GoRoute(
+                        path: 'quiz',
+                        name: 'ai-quiz',
+                        builder: (_, __) => const AiQuizGeneratorScreen(),
+                      ),
+                    ],
                   ),
                 ],
               ),

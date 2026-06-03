@@ -59,6 +59,8 @@ dependencies:
 
   # ─── AI / HTTP ───────────────────────────────────────────────────
   dio: ^5.5.0+1                   # HTTP client for API calls
+  http: ^1.2.0
+  flutter_secure_storage: ^9.0.0
 
   # ─── Icons & Assets ──────────────────────────────────────────────
   hugeicons: ^0.0.7               # 3800+ Huge icon pack

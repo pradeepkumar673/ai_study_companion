@@ -11,6 +11,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/enums/app_enums.dart';
 import '../../../../core/theme/app_theme.dart';
@@ -848,31 +849,37 @@ class _QuickAccessGrid extends StatelessWidget {
         icon: Icons.timer_rounded,
         label: 'Pomodoro',
         color: AppColors.primary,
+        onTap: () => context.push('/focus/timer'),
       ),
       _QuickAction(
         icon: Icons.psychology_rounded,
         label: 'AI Assistant',
         color: const Color(0xFF7C3AED),
+        onTap: () => context.push('/ai'),
       ),
       _QuickAction(
         icon: Icons.add_task_rounded,
         label: 'Add Task',
         color: AppColors.secondary,
+        onTap: () => context.go('/tasks'),
       ),
       _QuickAction(
         icon: Icons.style_rounded,
         label: 'Flashcards',
         color: AppColors.tertiary,
+        onTap: () => context.go('/profile'), // Or routing to flashcards
       ),
       _QuickAction(
         icon: Icons.edit_note_rounded,
         label: 'Notes',
         color: AppColors.chartAmber,
+        onTap: () => context.go('/notes'),
       ),
       _QuickAction(
         icon: Icons.flag_rounded,
         label: 'Goals',
         color: AppColors.chartPink,
+        onTap: () => context.go('/profile'),
       ),
     ];
 
