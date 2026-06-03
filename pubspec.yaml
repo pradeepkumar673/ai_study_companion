@@ -1,0 +1,88 @@
+name: studyspark
+description: StudySpark - Smart Student Productivity App
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ─── State Management ────────────────────────────────────────────
+  flutter_riverpod: ^2.5.1        # Reactive state management (v2 with code-gen support)
+  riverpod_annotation: ^2.3.5     # @riverpod code-generation annotations
+
+  # ─── Navigation ──────────────────────────────────────────────────
+  go_router: ^14.2.7              # Declarative routing with deep-link support
+
+  # ─── Local Database ──────────────────────────────────────────────
+  isar: ^3.1.0+1                  # Blazing-fast embedded NoSQL database
+  isar_flutter_libs: ^3.1.0+1     # Platform-specific Isar binaries
+  path_provider: ^2.1.3           # Filesystem paths for DB storage
+
+  # ─── UI & Theming ────────────────────────────────────────────────
+  google_fonts: ^6.2.1            # 1000+ Google Fonts at runtime
+  flex_color_scheme: ^7.3.1       # Advanced Material 3 theming
+  flutter_animate: ^4.5.0         # Declarative animation chaining
+  lottie: ^3.1.2                  # Lottie JSON animation player
+  shimmer: ^3.0.0                 # Skeleton loading shimmer effect
+  cached_network_image: ^3.3.1    # Network images with disk/memory cache
+  fl_chart: ^0.68.0               # Beautiful animated charts
+  percent_indicator: ^4.2.3       # Circular & linear progress indicators
+  flutter_staggered_grid_view: ^0.7.0  # Masonry / staggered grid layouts
+  gap: ^3.0.1                     # Type-safe SizedBox replacement
+
+  # ─── Forms & Input ───────────────────────────────────────────────
+  reactive_forms: ^17.0.1         # Reactive forms with validation
+  flutter_colorpicker: ^1.1.0     # HSV color picker widget
+
+  # ─── Notifications & Scheduling ──────────────────────────────────
+  flutter_local_notifications: ^17.2.2   # Local push notifications
+  timezone: ^0.9.4                # Timezone-aware scheduling
+
+  # ─── Utilities ───────────────────────────────────────────────────
+  intl: ^0.19.0                   # Internationalization & date formatting
+  uuid: ^4.4.0                    # RFC 4122 UUID generation
+  freezed_annotation: ^2.4.1      # Immutable data classes
+  json_annotation: ^4.9.0         # JSON serialization annotations
+  equatable: ^2.0.5               # Value equality without boilerplate
+  collection: ^1.18.0             # Extended collection utilities
+  logger: ^2.4.0                  # Pretty-printing structured logger
+  shared_preferences: ^2.3.1      # Key-value persistence for settings
+
+  # ─── AI / HTTP (Hugging Face integration placeholder) ────────────
+  dio: ^5.5.0+1                   # Powerful HTTP client with interceptors
+  retrofit: ^4.1.0                # Type-safe REST client (annotation-based)
+
+  # ─── Icons & Assets ──────────────────────────────────────────────
+  hugeicons: ^0.0.7               # 3800+ Huge icon pack
+  flutter_svg: ^2.0.10+1          # SVG rendering
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+  # ─── Code Generation ─────────────────────────────────────────────
+  build_runner: ^2.4.11           # Source-code generation runner
+  riverpod_generator: ^2.4.3      # Generates @riverpod providers
+  freezed: ^2.5.2                 # Generates immutable unions & data classes
+  json_serializable: ^6.8.0       # Generates fromJson/toJson
+  isar_generator: ^3.1.0+1        # Generates Isar schema code
+  retrofit_generator: ^8.1.0      # Generates Retrofit HTTP clients
+
+flutter:
+  uses-material-design: true
+
+  # ─── Assets ──────────────────────────────────────────────────────
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/animations/         # Lottie JSON files
+
+  # ─── Fonts (supplemented by google_fonts at runtime) ─────────────
+  # Google Fonts used: Clash Display (display), DM Sans (body)
+  # These are loaded via google_fonts package — no manual font listing needed
