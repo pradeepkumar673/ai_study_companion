@@ -9,11 +9,12 @@
 //   file_picker: ^8.1.2
 // ─────────────────────────────────────────────────────────────────────────────
 
-import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:file_picker/file_picker.dart';
 
 import '../../../../core/theme/app_theme.dart';
 
@@ -29,7 +30,7 @@ class PdfViewerScreen extends StatefulWidget {
     this.title,
   });
 
-  /// If provided, opens this file directly.
+  /// If provided, opens this file directly (native paths only).
   final String? filePath;
   final String? title;
 
@@ -38,22 +39,21 @@ class PdfViewerScreen extends StatefulWidget {
 }
 
 class _PdfViewerScreenState extends State<PdfViewerScreen> {
-  File? _file;
+  Uint8List? _bytes;
   String? _fileName;
   bool _loading = false;
   int _currentPage = 1;
   int _totalPages = 0;
 
-  // SfPdfViewerController — instantiate only when plugin is available.
-  // final SfPdfViewerController _pdfCtrl = SfPdfViewerController();
+  bool get _hasPdf => _bytes != null && _bytes!.isNotEmpty;
 
   @override
   void initState() {
     super.initState();
-    if (widget.filePath != null) {
-      _file = File(widget.filePath!);
-      _fileName = widget.title ??
-          widget.filePath!.split(Platform.pathSeparator).last;
+    if (widget.filePath != null && !kIsWeb) {
+      _fileName = widget.title ?? widget.filePath!.split(RegExp(r'[/\\]')).last;
+    } else if (widget.filePath != null && kIsWeb) {
+      _fileName = widget.title ?? 'document.pdf';
     }
   }
 
@@ -63,11 +63,13 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf'],
+        withData: kIsWeb,
       );
-      if (result != null && result.files.single.path != null) {
+      if (result != null) {
+        final file = result.files.single;
         setState(() {
-          _file = File(result.files.single.path!);
-          _fileName = result.files.single.name;
+          _fileName = file.name;
+          _bytes = file.bytes;
           _currentPage = 1;
           _totalPages = 0;
         });
@@ -104,20 +106,16 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
           ],
         ),
         actions: [
-          if (_file != null && _pdfViewerAvailable) ...[
+          if (_hasPdf && _pdfViewerAvailable) ...[
             IconButton(
               icon: const Icon(Icons.keyboard_arrow_up_rounded),
               tooltip: 'Previous page',
-              onPressed: () {
-                // _pdfCtrl.previousPage();
-              },
+              onPressed: () {},
             ),
             IconButton(
               icon: const Icon(Icons.keyboard_arrow_down_rounded),
               tooltip: 'Next page',
-              onPressed: () {
-                // _pdfCtrl.nextPage();
-              },
+              onPressed: () {},
             ),
           ],
           IconButton(
@@ -130,27 +128,22 @@ class _PdfViewerScreenState extends State<PdfViewerScreen> {
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
-          : _file == null
+          : !_hasPdf
               ? _EmptyPdfState(onPick: _pickPdf)
               : _pdfViewerAvailable
                   ? _buildPdfViewer()
-                  : _PluginPlaceholder(file: _file!, fileName: _fileName),
+                  : _PluginPlaceholder(
+                      fileName: _fileName,
+                      sizeBytes: _bytes!.length,
+                    ),
     );
   }
 
   Widget _buildPdfViewer() {
-    // ── Uncomment when syncfusion_flutter_pdfviewer is in pubspec ─────────
-    // return SfPdfViewer.file(
-    //   _file!,
-    //   controller: _pdfCtrl,
-    //   onPageChanged: (PdfPageChangedDetails d) {
-    //     setState(() => _currentPage = d.newPageNumber);
-    //   },
-    //   onDocumentLoaded: (PdfDocumentLoadedDetails d) {
-    //     setState(() => _totalPages = d.document.pages.count);
-    //   },
-    // );
-    return _PluginPlaceholder(file: _file!, fileName: _fileName);
+    return _PluginPlaceholder(
+      fileName: _fileName,
+      sizeBytes: _bytes?.length,
+    );
   }
 }
 
@@ -209,9 +202,9 @@ class _EmptyPdfState extends StatelessWidget {
 // ─── Plugin placeholder ───────────────────────────────────────────────────────
 
 class _PluginPlaceholder extends StatelessWidget {
-  const _PluginPlaceholder({required this.file, this.fileName});
-  final File file;
+  const _PluginPlaceholder({this.fileName, this.sizeBytes});
   final String? fileName;
+  final int? sizeBytes;
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +213,6 @@ class _PluginPlaceholder extends StatelessWidget {
 
     return Column(
       children: [
-        // File info card
         Padding(
           padding: const EdgeInsets.all(16),
           child: Container(
@@ -253,15 +245,12 @@ class _PluginPlaceholder extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 2),
-                      FutureBuilder<int>(
-                        future: file.length(),
-                        builder: (_, snap) => Text(
-                          snap.hasData
-                              ? '${(snap.data! / 1024).toStringAsFixed(1)} KB'
-                              : 'Calculating…',
-                          style: tt.bodySmall!.copyWith(
-                              color: cs.onSurfaceVariant),
-                        ),
+                      Text(
+                        sizeBytes != null
+                            ? '${(sizeBytes! / 1024).toStringAsFixed(1)} KB'
+                            : 'Calculating…',
+                        style: tt.bodySmall!.copyWith(
+                            color: cs.onSurfaceVariant),
                       ),
                     ],
                   ),
@@ -270,10 +259,7 @@ class _PluginPlaceholder extends StatelessWidget {
             ),
           ),
         ),
-
         const Divider(),
-
-        // Placeholder notice
         Expanded(
           child: Center(
             child: Padding(

@@ -12,12 +12,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
-
 import '../../../../core/enums/app_enums.dart';
 import '../../../../core/theme/app_theme.dart';
-import '../../../../shared/providers/isar_provider.dart';
+import '../../../../shared/providers/repository_providers.dart';
 import '../../../mood/data/models/mood_entry_model.dart';
+import '../../data/repositories/analytics_repository.dart';
 import '../providers/analytics_providers.dart';
 
 final _dateFmt = DateFormat('yyyy-MM-dd');
@@ -380,19 +379,14 @@ class _MoodLogSheetState extends ConsumerState<_MoodLogSheet> {
 
   Future<void> _save() async {
     setState(() => _saving = true);
-    final isar = ref.read(isarProvider);
-    final today = DateTime.now();
-    final entry = MoodEntryModel(
-      uuid: const Uuid().v4(),
+    final repo = ref.read(moodRepositoryProvider);
+    await repo.logMood(
       mood: _mood,
       energyLevel: _energy,
       stressLevel: _stress,
       sleepHours: _sleep,
       note: _noteController.text.trim(),
-      localDateKey: DateFormat('yyyy-MM-dd').format(today),
-      loggedAt: today,
     );
-    await isar.writeTxn(() => isar.moodEntryModels.put(entry));
     setState(() => _saving = false);
     widget.onSaved();
     if (mounted) Navigator.pop(context);

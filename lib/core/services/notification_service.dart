@@ -18,6 +18,7 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -27,9 +28,14 @@ import 'package:timezone/timezone.dart' as tz;
 class NotificationService {
   NotificationService._(this._plugin);
 
-  final FlutterLocalNotificationsPlugin _plugin;
+  final FlutterLocalNotificationsPlugin? _plugin;
+
+  bool get _isWebStub => _plugin == null;
 
   // ── Initialisation ────────────────────────────────────────────────────────
+
+  /// No-op notification service for web builds.
+  static NotificationService web() => NotificationService._(null);
 
   /// Creates and initialises the service.  Call once from [main.dart].
   static Future<NotificationService> init() async {
@@ -57,7 +63,8 @@ class NotificationService {
 
   /// Requests iOS notification permission.  Call during onboarding.
   Future<bool?> requestPermission() async {
-    return _plugin
+    if (_isWebStub) return true;
+    return _plugin!
         .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(alert: true, badge: true, sound: true);
@@ -85,12 +92,13 @@ class NotificationService {
     required DateTime scheduledAt,
     String? payload, // e.g. "task:uuid-here" for deep-link routing
   }) async {
+    if (_isWebStub) return id;
     // Notifications in the past are silently skipped.
     if (scheduledAt.isBefore(DateTime.now())) return id;
 
     final tzTime = tz.TZDateTime.from(scheduledAt, tz.local);
 
-    await _plugin.zonedSchedule(
+    await _plugin!.zonedSchedule(
       id,
       title,
       body,
@@ -111,7 +119,8 @@ class NotificationService {
     required String sessionType, // e.g. "Work", "Short Break"
     required String nextType,    // e.g. "Short Break", "Work"
   }) async {
-    await _plugin.show(
+    if (_isWebStub) return;
+    await _plugin!.show(
       0, // reuse id 0 for all transient pomodoro alerts
       '✅ $sessionType complete!',
       'Time for a $nextType',
@@ -146,7 +155,8 @@ class NotificationService {
     int hour = 20,
     int minute = 0,
   }) async {
-    await _plugin.zonedSchedule(
+    if (_isWebStub) return;
+    await _plugin!.zonedSchedule(
       2, // reserved id for streak reminder
       '🔥 Keep your streak alive!',
       "You haven't studied today yet. Open StudySpark to stay on track.",
@@ -162,10 +172,16 @@ class NotificationService {
   // ── Cancel helpers ────────────────────────────────────────────────────────
 
   /// Cancels a single notification by [id].
-  Future<void> cancelNotification(int id) => _plugin.cancel(id);
+  Future<void> cancelNotification(int id) {
+    if (_isWebStub) return Future.value();
+    return _plugin!.cancel(id);
+  }
 
   /// Cancels all scheduled notifications (e.g. on sign-out).
-  Future<void> cancelAll() => _plugin.cancelAll();
+  Future<void> cancelAll() {
+    if (_isWebStub) return Future.value();
+    return _plugin!.cancelAll();
+  }
 
   // ── Private helpers ───────────────────────────────────────────────────────
 
@@ -221,3 +237,11 @@ class NotificationService {
     debugPrint('[NotificationService] tapped: $payload');
   }
 }
+
+/// Injected from main.dart via ProviderScope.overrides.
+final notificationServiceProvider = Provider<NotificationService>((ref) {
+  throw UnimplementedError(
+    'notificationServiceProvider must be overridden with an initialised '
+    'NotificationService instance. See main.dart.',
+  );
+});

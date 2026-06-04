@@ -22,6 +22,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../features/profile/data/repositories/profile_repository.dart';
 import '../../features/focus/data/repositories/focus_repository.dart';
 import '../../features/tasks/data/repositories/task_repository.dart';
+import '../enums/app_enums.dart';
 
 // ─── XP Award Constants ───────────────────────────────────────────────────────
 
@@ -119,7 +120,7 @@ class GamificationService {
 
     // Badge checks.
     final counts = await taskRepo.getStatusCounts();
-    final completedCount = counts[TaskStatus.completed] ?? 0;
+    final completedCount = counts[TaskStatus.done] ?? 0;
 
     await profileRepo.unlockBadge(BadgeKeys.firstTask);
     await profileRepo.updateBadgeProgress(BadgeKeys.tasks10, completedCount);
@@ -221,7 +222,7 @@ class GamificationService {
 
   Future<int> _totalFocusMinutes() async {
     // Sum completed sessions across all time.
-    final summaries = await focusRepo.getWeeklyFocusSummary(dayCount: 365);
-    return summaries.fold(0, (sum, s) => sum + s.totalMinutes);
+    final summaries = await focusRepo.getWeeklyFocusSummary();
+    return summaries.fold<int>(0, (int sum, s) => sum + s.totalMinutes);
   }
 }

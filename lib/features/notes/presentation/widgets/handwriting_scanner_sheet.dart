@@ -5,8 +5,9 @@
 // Gracefully falls back to a placeholder if the plugin is unavailable.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,7 +31,7 @@ class HandwritingScannerSheet extends StatefulWidget {
 }
 
 class _HandwritingScannerSheetState extends State<HandwritingScannerSheet> {
-  File? _imageFile;
+  Uint8List? _imageBytes;
   String _scannedText = '';
   bool _scanning = false;
   bool _done = false;
@@ -51,14 +52,15 @@ class _HandwritingScannerSheetState extends State<HandwritingScannerSheet> {
     );
     if (picked == null) return;
 
+    final bytes = await picked.readAsBytes();
     setState(() {
-      _imageFile = File(picked.path);
+      _imageBytes = bytes;
       _scannedText = '';
       _done = false;
     });
 
     if (_mlkitAvailable) {
-      await _runOcr(File(picked.path));
+      await _runOcr(bytes);
     } else {
       // Simulate a short delay to show the "scanning" state
       setState(() => _scanning = true);
@@ -74,7 +76,7 @@ class _HandwritingScannerSheetState extends State<HandwritingScannerSheet> {
     }
   }
 
-  Future<void> _runOcr(File file) async {
+  Future<void> _runOcr(Uint8List bytes) async {
     setState(() => _scanning = true);
     try {
       // ── Uncomment when google_mlkit_text_recognition is in pubspec ─────
@@ -164,7 +166,7 @@ class _HandwritingScannerSheetState extends State<HandwritingScannerSheet> {
           const Divider(height: 16),
 
           // Pick source buttons
-          if (_imageFile == null) ...[
+          if (_imageBytes == null) ...[
             Expanded(child: _PickerPlaceholder(onPick: _pickImage)),
           ] else ...[
             // Image preview
@@ -172,8 +174,8 @@ class _HandwritingScannerSheetState extends State<HandwritingScannerSheet> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ClipRRect(
                 borderRadius: AppShapes.r12,
-                child: Image.file(
-                  _imageFile!,
+                child: Image.memory(
+                  _imageBytes!,
                   height: size.height * 0.28,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -190,7 +192,7 @@ class _HandwritingScannerSheetState extends State<HandwritingScannerSheet> {
                 children: [
                   OutlinedButton.icon(
                     onPressed: () => setState(() {
-                      _imageFile = null;
+                      _imageBytes = null;
                       _scannedText = '';
                       _done = false;
                     }),
@@ -202,7 +204,7 @@ class _HandwritingScannerSheetState extends State<HandwritingScannerSheet> {
                     FilledButton.icon(
                       onPressed: _scanning
                           ? null
-                          : () => _runOcr(_imageFile!),
+                          : () => _runOcr(_imageBytes!),
                       icon: _scanning
                           ? const SizedBox(
                               width: 16,

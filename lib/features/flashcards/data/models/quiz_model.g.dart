@@ -148,7 +148,7 @@ const QuizQuestionModelSchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'questionText',
-          type: IndexType.hash,
+          type: IndexType.value,
           caseSensitive: true,
         )
       ],
@@ -425,6 +425,15 @@ extension QuizQuestionModelQueryWhereSort
   }
 
   QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhere>
+      anyQuestionText() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'questionText'),
+      );
+    });
+  }
+
+  QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhere>
       anyCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -679,6 +688,102 @@ extension QuizQuestionModelQueryWhere
               lower: [],
               upper: [questionText],
               includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhereClause>
+      questionTextGreaterThan(
+    String questionText, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'questionText',
+        lower: [questionText],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhereClause>
+      questionTextLessThan(
+    String questionText, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'questionText',
+        lower: [],
+        upper: [questionText],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhereClause>
+      questionTextBetween(
+    String lowerQuestionText,
+    String upperQuestionText, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'questionText',
+        lower: [lowerQuestionText],
+        includeLower: includeLower,
+        upper: [upperQuestionText],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhereClause>
+      questionTextStartsWith(String QuestionTextPrefix) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'questionText',
+        lower: [QuestionTextPrefix],
+        upper: ['$QuestionTextPrefix\u{FFFFF}'],
+      ));
+    });
+  }
+
+  QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhereClause>
+      questionTextIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'questionText',
+        value: [''],
+      ));
+    });
+  }
+
+  QueryBuilder<QuizQuestionModel, QuizQuestionModel, QAfterWhereClause>
+      questionTextIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'questionText',
+              upper: [''],
+            ))
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'questionText',
+              lower: [''],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'questionText',
+              lower: [''],
+            ))
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'questionText',
+              upper: [''],
             ));
       }
     });

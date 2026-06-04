@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../shared/providers/repository_providers.dart';
+import '../../../../core/enums/app_enums.dart';
 import '../../data/models/note_model.dart';
 
 part 'notes_provider.g.dart';

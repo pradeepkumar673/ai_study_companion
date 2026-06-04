@@ -544,9 +544,8 @@ class _SliderTile extends StatelessWidget {
           ),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              thumbRadius: 8,
+              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
               trackHeight: 4,
-              overlayRadius: 16,
             ),
             child: Slider(
               value: value.toDouble(),

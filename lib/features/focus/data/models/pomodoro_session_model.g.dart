@@ -190,7 +190,7 @@ PomodoroSessionModel _pomodoroSessionModelDeserialize(
     localDateKey: reader.readStringOrNull(offsets[4]) ?? '',
     mode: _PomodoroSessionModelmodeValueEnumMap[
             reader.readByteOrNull(offsets[5])] ??
-        PomodoroMode.work,
+        PomodoroMode.pomodoro,
     plannedDurationSeconds: reader.readLongOrNull(offsets[6]) ?? 1500,
     uuid: reader.readStringOrNull(offsets[7]) ?? '',
     wasCompleted: reader.readBoolOrNull(offsets[8]) ?? false,
@@ -218,7 +218,7 @@ P _pomodoroSessionModelDeserializeProp<P>(
     case 5:
       return (_PomodoroSessionModelmodeValueEnumMap[
               reader.readByteOrNull(offset)] ??
-          PomodoroMode.work) as P;
+          PomodoroMode.pomodoro) as P;
     case 6:
       return (reader.readLongOrNull(offset) ?? 1500) as P;
     case 7:

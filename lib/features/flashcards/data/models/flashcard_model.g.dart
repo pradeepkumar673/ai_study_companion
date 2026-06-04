@@ -176,7 +176,7 @@ const FlashcardModelSchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'front',
-          type: IndexType.hash,
+          type: IndexType.value,
           caseSensitive: true,
         )
       ],
@@ -189,7 +189,7 @@ const FlashcardModelSchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'back',
-          type: IndexType.hash,
+          type: IndexType.value,
           caseSensitive: true,
         )
       ],
@@ -440,6 +440,22 @@ extension FlashcardModelQueryWhereSort
   QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhere> anyFront() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'front'),
+      );
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhere> anyBack() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'back'),
+      );
     });
   }
 
@@ -711,6 +727,100 @@ extension FlashcardModelQueryWhere
     });
   }
 
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      frontGreaterThan(
+    String front, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'front',
+        lower: [front],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause> frontLessThan(
+    String front, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'front',
+        lower: [],
+        upper: [front],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause> frontBetween(
+    String lowerFront,
+    String upperFront, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'front',
+        lower: [lowerFront],
+        includeLower: includeLower,
+        upper: [upperFront],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      frontStartsWith(String FrontPrefix) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'front',
+        lower: [FrontPrefix],
+        upper: ['$FrontPrefix\u{FFFFF}'],
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      frontIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'front',
+        value: [''],
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      frontIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'front',
+              upper: [''],
+            ))
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'front',
+              lower: [''],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'front',
+              lower: [''],
+            ))
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'front',
+              upper: [''],
+            ));
+      }
+    });
+  }
+
   QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause> backEqualTo(
       String back) {
     return QueryBuilder.apply(this, (query) {
@@ -751,6 +861,100 @@ extension FlashcardModelQueryWhere
               lower: [],
               upper: [back],
               includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      backGreaterThan(
+    String back, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'back',
+        lower: [back],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause> backLessThan(
+    String back, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'back',
+        lower: [],
+        upper: [back],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause> backBetween(
+    String lowerBack,
+    String upperBack, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'back',
+        lower: [lowerBack],
+        includeLower: includeLower,
+        upper: [upperBack],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      backStartsWith(String BackPrefix) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'back',
+        lower: [BackPrefix],
+        upper: ['$BackPrefix\u{FFFFF}'],
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      backIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'back',
+        value: [''],
+      ));
+    });
+  }
+
+  QueryBuilder<FlashcardModel, FlashcardModel, QAfterWhereClause>
+      backIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'back',
+              upper: [''],
+            ))
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'back',
+              lower: [''],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'back',
+              lower: [''],
+            ))
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'back',
+              upper: [''],
             ));
       }
     });

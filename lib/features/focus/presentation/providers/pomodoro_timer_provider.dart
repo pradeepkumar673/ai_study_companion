@@ -165,7 +165,7 @@ class PomodoroTimerNotifier extends Notifier<PomodoroTimerState> {
 
   @override
   PomodoroTimerState build() {
-    ref.onDispose(_ticker?.cancel);
+    ref.onDispose(() => _ticker?.cancel());
     return const PomodoroTimerState();
   }
 
@@ -308,7 +308,7 @@ class PomodoroTimerNotifier extends Notifier<PomodoroTimerState> {
     final session = PomodoroSessionModel(
       uuid: _uuid.v4(),
       mode: state.phase == PomodoroPhase.work
-          ? PomodoroMode.work
+          ? PomodoroMode.pomodoro
           : PomodoroMode.shortBreak,
       plannedDurationSeconds: state.totalSeconds,
       actualDurationSeconds: elapsed,

@@ -8,16 +8,10 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../shared/providers/isar_provider.dart';
+import '../../../../features/mood/data/models/mood_entry_model.dart';
+import '../../../../shared/providers/repository_providers.dart';
 import '../../data/models/gpa_entry_model.dart';
 import '../../data/repositories/analytics_repository.dart';
-
-// ─── Repository provider ──────────────────────────────────────────────────────
-
-final analyticsRepositoryProvider = Provider<AnalyticsRepository>((ref) {
-  final isar = ref.watch(isarProvider);
-  return AnalyticsRepository(isar);
-});
 
 // ─── Subject Performance ──────────────────────────────────────────────────────
 
@@ -155,13 +149,3 @@ final moodCorrelationsProvider =
   return ref.watch(analyticsRepositoryProvider).getMoodCorrelations();
 });
 
-/// Last 30 mood entries for the chart.
-final recentMoodEntriesProvider = FutureProvider<List<dynamic>>((ref) async {
-  // Loaded by analytics repository which reads isar directly
-  final isar = ref.watch(isarProvider);
-  return isar.moodEntryModels
-      .where()
-      .sortByLoggedAtDesc()
-      .limit(30)
-      .findAll();
-});

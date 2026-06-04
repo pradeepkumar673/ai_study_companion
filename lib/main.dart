@@ -1,14 +1,13 @@
 // lib/main.dart
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/bootstrap/app_bootstrap.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'core/services/notification_service.dart';
-import 'shared/providers/isar_provider.dart';
 import 'shared/providers/repository_providers.dart';
 import 'shared/providers/theme_provider.dart';
 
@@ -53,24 +52,19 @@ Future<void> main() async {
 
   await runZonedGuarded(
     () async {
-      await SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
+      if (!kIsWeb) {
+        await SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ]);
+      }
 
-      // Bootstrap dependencies
-      final isar               = await bootstrapIsar();
-      final notificationService = await NotificationService.init();
-      final prefs              = await SharedPreferences.getInstance();
+      final overrides = await buildProviderOverrides();
 
       runApp(
         ProviderScope(
           observers: [StudySparkObserver()],
-          overrides: [
-            isarProvider.overrideWithValue(isar),
-            notificationServiceProvider.overrideWithValue(notificationService),
-            sharedPreferencesProvider.overrideWithValue(prefs),
-          ],
+          overrides: overrides,
           child: const StudySparkApp(),
         ),
       );

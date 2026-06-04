@@ -154,7 +154,7 @@ const NoteModelSchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'plainTextPreview',
-          type: IndexType.hash,
+          type: IndexType.value,
           caseSensitive: true,
         )
       ],
@@ -469,6 +469,14 @@ extension NoteModelQueryWhereSort
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'title'),
+      );
+    });
+  }
+
+  QueryBuilder<NoteModel, NoteModel, QAfterWhere> anyPlainTextPreview() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'plainTextPreview'),
       );
     });
   }
@@ -794,6 +802,101 @@ extension NoteModelQueryWhere
               lower: [],
               upper: [plainTextPreview],
               includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<NoteModel, NoteModel, QAfterWhereClause>
+      plainTextPreviewGreaterThan(
+    String plainTextPreview, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'plainTextPreview',
+        lower: [plainTextPreview],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<NoteModel, NoteModel, QAfterWhereClause>
+      plainTextPreviewLessThan(
+    String plainTextPreview, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'plainTextPreview',
+        lower: [],
+        upper: [plainTextPreview],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<NoteModel, NoteModel, QAfterWhereClause> plainTextPreviewBetween(
+    String lowerPlainTextPreview,
+    String upperPlainTextPreview, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'plainTextPreview',
+        lower: [lowerPlainTextPreview],
+        includeLower: includeLower,
+        upper: [upperPlainTextPreview],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<NoteModel, NoteModel, QAfterWhereClause>
+      plainTextPreviewStartsWith(String PlainTextPreviewPrefix) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'plainTextPreview',
+        lower: [PlainTextPreviewPrefix],
+        upper: ['$PlainTextPreviewPrefix\u{FFFFF}'],
+      ));
+    });
+  }
+
+  QueryBuilder<NoteModel, NoteModel, QAfterWhereClause>
+      plainTextPreviewIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'plainTextPreview',
+        value: [''],
+      ));
+    });
+  }
+
+  QueryBuilder<NoteModel, NoteModel, QAfterWhereClause>
+      plainTextPreviewIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'plainTextPreview',
+              upper: [''],
+            ))
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'plainTextPreview',
+              lower: [''],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.greaterThan(
+              indexName: r'plainTextPreview',
+              lower: [''],
+            ))
+            .addWhereClause(IndexWhereClause.lessThan(
+              indexName: r'plainTextPreview',
+              upper: [''],
             ));
       }
     });

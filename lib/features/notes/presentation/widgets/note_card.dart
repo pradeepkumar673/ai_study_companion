@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/enums/app_enums.dart';
 import '../../../../shared/providers/repository_providers.dart';
 import '../../data/models/note_model.dart';
 

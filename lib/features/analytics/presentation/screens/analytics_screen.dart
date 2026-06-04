@@ -10,18 +10,18 @@
 //   5. Monthly heatmap (contributions-style)
 // ─────────────────────────────────────────────────────────────────────────────
 
+import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
-import 'package:isar/isar.dart';
-
 import '../../../../core/enums/app_enums.dart';
 import '../../../../core/theme/app_theme.dart';
-import '../../../../shared/providers/isar_provider.dart';
+import '../../../../shared/providers/repository_providers.dart';
 import '../../../focus/data/models/pomodoro_session_model.dart';
+import '../../../focus/data/repositories/focus_repository.dart';
 import '../providers/analytics_providers.dart';
 import '../widgets/cgpa_tracker.dart';
 import '../widgets/gpa_calculator_widget.dart';
@@ -39,69 +39,42 @@ final _timeOf = DateFormat('h:mm a');
 
 // ─── Providers ───────────────────────────────────────────────────────────────
 
-/// Last 30 sessions from Isar, descending.
+/// Last 30 completed sessions, descending.
 final recentSessionsProvider =
     FutureProvider<List<PomodoroSessionModel>>((ref) async {
-  final isar = ref.watch(isarProvider);
-  return isar.pomodoroSessionModels
-      .filter()
-      .wasCompletedEqualTo(true)
-      .sortByCompletedAtDesc()
-      .limit(30)
-      .findAll();
+  return ref.watch(focusRepositoryProvider).getRecentSessions(limit: 30);
 });
 
 /// Daily totals for the past 7 days.
 final weeklyMinutesProvider =
     FutureProvider<List<_DayData>>((ref) async {
-  final isar = ref.watch(isarProvider);
+  final summaries =
+      await ref.watch(focusRepositoryProvider).getWeeklyFocusSummary();
   final today = DateTime.now();
-
-  final days = <_DayData>[];
-  for (int i = 6; i >= 0; i--) {
-    final day = today.subtract(Duration(days: i));
+  return List.generate(7, (i) {
+    final day = today.subtract(Duration(days: 6 - i));
     final key = _dateFmt.format(day);
-    final sessions = await isar.pomodoroSessionModels
-        .filter()
-        .localDateKeyEqualTo(key)
-        .wasCompletedEqualTo(true)
-        .findAll();
-    final totalSecs = sessions
-        .where((s) => s.mode == PomodoroMode.pomodoro)
-        .fold(0, (sum, s) => sum + s.actualDurationSeconds);
-    days.add(_DayData(day: day, minutes: totalSecs ~/ 60));
-  }
-  return days;
+    final match = summaries.where((s) => s.dateKey == key).firstOrNull;
+    return _DayData(day: day, minutes: match?.totalMinutes ?? 0);
+  });
 });
 
 /// Total cumulative stats.
 final totalStatsProvider = FutureProvider<_TotalStats>((ref) async {
-  final isar = ref.watch(isarProvider);
-  final all = await isar.pomodoroSessionModels
-      .filter()
-      .wasCompletedEqualTo(true)
-      .modeEqualTo(PomodoroMode.pomodoro)
-      .findAll();
+  final focusRepo = ref.watch(focusRepositoryProvider);
+  final streak = await focusRepo.computeCurrentStreak();
+  final all = (await focusRepo.getSessionsInRange(
+    DateTime(2000),
+    DateTime.now().add(const Duration(days: 1)),
+  ))
+      .where((s) => s.wasCompleted && s.mode == PomodoroMode.pomodoro)
+      .toList();
 
   if (all.isEmpty) return const _TotalStats();
 
   final totalSecs = all.fold(0, (sum, s) => sum + s.actualDurationSeconds);
   final totalHours = totalSecs / 3600;
   final sessionCount = all.length;
-
-  // streak
-  final today = DateTime.now();
-  int streak = 0;
-  for (int i = 0; i < 365; i++) {
-    final key = _dateFmt.format(today.subtract(Duration(days: i)));
-    final hasSession =
-        all.any((s) => s.localDateKey == key);
-    if (hasSession) {
-      streak++;
-    } else if (i > 0) {
-      break;
-    }
-  }
 
   // best day
   final byDay = <String, int>{};
@@ -660,10 +633,10 @@ class _MonthlyHeatmap extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isar = ref.watch(isarProvider);
+    final focusRepo = ref.watch(focusRepositoryProvider);
 
     return FutureBuilder<Map<String, int>>(
-      future: _buildHeatmapData(isar),
+      future: _buildHeatmapData(focusRepo),
       builder: (context, snap) {
         if (!snap.hasData) return const SizedBox.shrink();
         final data = snap.data!;
@@ -730,19 +703,20 @@ class _MonthlyHeatmap extends ConsumerWidget {
     );
   }
 
-  Future<Map<String, int>> _buildHeatmapData(Isar isar) async {
+  Future<Map<String, int>> _buildHeatmapData(FocusRepository focusRepo) async {
     final today = DateTime.now();
     final start = today.subtract(const Duration(days: 83));
-    final sessions = await isar.pomodoroSessionModels
-        .filter()
-        .completedAtGreaterThan(start.toUtc())
-        .wasCompletedEqualTo(true)
-        .findAll();
+    final sessions = await focusRepo.getSessionsInRange(
+      start,
+      today.add(const Duration(days: 1)),
+    );
+    final completed =
+        sessions.where((s) => s.wasCompleted && s.completedAt != null);
 
     final map = <String, int>{};
-    for (final s in sessions) {
+    for (final s in completed) {
       final key = _dateFmt.format(s.completedAt!.toLocal());
-      map[key] = (map[key] ?? 0) + s.actualDurationSeconds ~/ 60;
+      map[key] = (map[key] ?? 0) + (s.actualDurationSeconds ~/ 60);
     }
     return map;
   }

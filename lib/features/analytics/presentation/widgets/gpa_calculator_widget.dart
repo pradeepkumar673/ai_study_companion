@@ -16,6 +16,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import '../../data/models/gpa_entry_model.dart';
+import '../../../../shared/providers/repository_providers.dart';
 import '../providers/analytics_providers.dart';
 
 // ─── Grade tables ─────────────────────────────────────────────────────────────

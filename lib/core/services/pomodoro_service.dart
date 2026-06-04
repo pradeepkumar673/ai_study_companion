@@ -22,14 +22,21 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
 import '../../core/enums/app_enums.dart';
+import '../../features/focus/data/models/pomodoro_session_model.dart';
 import '../../features/focus/data/repositories/focus_repository.dart';
 import '../../features/profile/data/repositories/profile_repository.dart';
-import 'notification_service.dart';
+import 'notification_service.dart' show NotificationService, notificationServiceProvider;
+import '../../shared/providers/repository_providers.dart' show focusRepositoryProvider, profileRepositoryProvider;
 
 // ─── PomodoroPhase ────────────────────────────────────────────────────────────
 
 /// The four possible phases of the Pomodoro cycle.
+final _pomodoroDateFmt = DateFormat('yyyy-MM-dd');
+const _pomodoroUuid = Uuid();
+
 enum PomodoroPhase { work, shortBreak, longBreak, idle }
 
 // ─── PomodoroState ────────────────────────────────────────────────────────────
@@ -332,18 +339,18 @@ class PomodoroNotifier extends Notifier<PomodoroState> {
     final focusRepo = ref.read(focusRepositoryProvider);
     final profileRepo = ref.read(profileRepositoryProvider);
 
-    await focusRepo.saveSession(
+    final session = PomodoroSessionModel(
+      uuid: _pomodoroUuid.v4(),
       mode: PomodoroMode.pomodoro,
-      status: status,
       plannedDurationSeconds: _workSeconds,
       actualDurationSeconds: actualSeconds,
-      subjectId: state.linkedSubjectId ?? '',
-      taskId: state.linkedTaskId ?? '',
-      pauseCount: state.pauseCount,
-      totalPausedSeconds: _pauseAccumulator,
-      distractionCount: state.distractionCount,
-      startedAt: _sessionStart,
+      completedAt: DateTime.now().toUtc(),
+      localDateKey: _pomodoroDateFmt.format(DateTime.now()),
+      wasCompleted: status == SessionStatus.completed,
+      linkedTaskId: state.linkedTaskId ?? '',
+      label: '',
     );
+    await focusRepo.saveSession(session);
 
     // Award XP: 10 per completed session, 3 for abandoned.
     if (status == SessionStatus.completed) {
@@ -390,3 +397,7 @@ class PomodoroNotifier extends Notifier<PomodoroState> {
     _autoStartBreaks = autoStartBreaks;
   }
 }
+/// Stateful Pomodoro timer ([PomodoroNotifier]).
+final pomodoroProvider = NotifierProvider<PomodoroNotifier, PomodoroState>(
+  PomodoroNotifier.new,
+);
